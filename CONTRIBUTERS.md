@@ -3,3 +3,4 @@
 - [@Meet1103](https://github.com/Meet1103)
 - [@Avelansh](https://github.com/Avelansh)
 - [@AkinAguda](https://github.com/AkinAguda)
+- [@gideonlexy](https://github.com/gideonlexy)
