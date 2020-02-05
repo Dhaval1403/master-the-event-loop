@@ -4,3 +4,4 @@
 - [@Avelansh](https://github.com/Avelansh)
 - [@AkinAguda](https://github.com/AkinAguda)
 - [@gideonlexy](https://github.com/gideonlexy)
+- [@anaol](https://github.com/anaol)
