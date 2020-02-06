@@ -7,4 +7,4 @@
 - [@anaol](https://github.com/anaol)
 - [@tubacatal](https://github.com/tubacatal)
 - [@brainy099](https://github.com/brainy099)
-- [@faizhameed](https://github.com/faizhameed/)
+  <!-- - [@faizhameed](https://github.com/faizhameed/) -->
