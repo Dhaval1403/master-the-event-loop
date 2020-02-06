@@ -1,0 +1,30 @@
+.modal-content {
+	position: absolute;
+	background-color: #0000002e;
+	z-index: 100000;
+	width: 100vw;
+	height: 100vw;
+	display: grid;
+	justify-items: center;
+	align-items: baseline;
+}
+.inner-modal {
+	display: block;
+	z-index: 100000;
+	width: 50%;
+	height: auto;
+	margin: 0 auto;
+	background-color: antiquewhite;
+	padding: 10px;
+	box-shadow: 0 0 10px 5px;
+}
+.inner-modal button {
+	float: right;
+	cursor: pointer;
+	padding: 10px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.493);
+}
+.inner-modal * {
+	z-index: 1;
+}
