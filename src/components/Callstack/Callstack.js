@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
+import './Callstack.styles.css';
 
 class Callstack extends Component {
-	handlePlay = () => {
-		const stack = [...this.props];
-		switch (stack) {
-			case 'Web_Api':
-				return;
-			case 'console.log':
-				return;
-			default:
-		}
-	};
 	render() {
+		const { callstack } = this.props;
 		return (
-			<div>
-				<button className="button" onClick={this.handlePlay}>
-					Play
-				</button>
+			<div className="call-stack">
+				<div className="title">Callstack</div>
+				<div className="body">
+					<div className="top"></div>
+					<div className="down">Start()</div>
+				</div>
 			</div>
 		);
 	}
