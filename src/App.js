@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Callstack from './components/callstack/Callstack';
+import Callstack from './components/Callstack/Callstack';
 import WebApi from './components/web-api/WebApi';
+import Console from './components/Console/Console';
 
 class App extends Component {
 	render() {
@@ -9,6 +10,7 @@ class App extends Component {
 			<React.Fragment>
 				<Callstack />
 				<WebApi />
+				<Console />
 			</React.Fragment>
 		);
 	}
