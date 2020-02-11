@@ -6,10 +6,10 @@ import WebApi from './components/web-api/WebApi';
 class App extends Component {
 	render() {
 		return (
-			<div>
+			<React.Fragment>
 				<Callstack />
 				<WebApi />
-			</div>
+			</React.Fragment>
 		);
 	}
 }
