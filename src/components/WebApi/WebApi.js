@@ -1,10 +1,17 @@
 import React from 'react';
 
+import './WebApi.styles.css';
+
 const WebApi = input => {
 	return (
-		<div>
-			<h4>Web Apis</h4>
-			<div>{/*input*/}</div>
+		<div className="web-api">
+			<div className="title">Web Apis</div>
+			<div className="body">
+				<ul>
+					<li>$.on('button', 'click', ...)</li>
+					<li>timeout()</li>
+				</ul>
+			</div>
 		</div>
 	);
 };
