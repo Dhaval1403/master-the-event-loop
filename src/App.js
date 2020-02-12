@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Callstack from './components/Callstack/Callstack';
-import WebApi from './components/web-api/WebApi';
+import WebApi from './components/WebApi/WebApi';
 import Console from './components/Console/Console';
 
 class App extends Component {
