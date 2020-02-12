@@ -1,0 +1,31 @@
+.console {
+	margin: 20px auto;
+	border: 1px solid grey;
+	width: 800px;
+	border-radius: 10px;
+	background-color: #fff;
+	font-weight: 400;
+	font-size: 14px;
+	letter-spacing: 1px;
+	line-height: 1.5;
+}
+
+.console-title {
+	padding: 10px;
+	border-bottom: 1px solid grey;
+}
+
+span {
+	border-right: 1px solid grey;
+	padding: 0px 5px;
+}
+
+.console-body {
+	height: 200px;
+	padding: 10px;
+	text-align: left;
+}
+
+.console-body p {
+	border-bottom: 1px solid rgba(201, 201, 201, 0.685);
+}
