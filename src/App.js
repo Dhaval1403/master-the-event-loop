@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+import CallbackQueue from "./components/CallbackQueue/CallbackQueue";
+import queue from "./components/CallbackQueue/queue";
 
 class App extends Component {
-
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            <code>MASTER THE EVENT LOOP</code>
-          </p>
-        </header>
-      </div>
-    );
+    return <CallbackQueue queue={queue} />;
   }
 }
 
