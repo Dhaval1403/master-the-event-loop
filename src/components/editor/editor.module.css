@@ -1,10 +1,13 @@
 .codeMirror {
-  text-align: left;
-  height: auto;
+	text-align: left;
+	height: auto;
 }
 .activeLine {
-  background-color: rgba(128, 128, 128, 0.4);
+	background-color: rgba(128, 128, 128, 0.4);
 }
 .inactive {
-  background-color: transparent;
+	background-color: transparent;
+}
+.gutter {
+	background-color: red;
 }
