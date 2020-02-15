@@ -1,33 +1,29 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+
+import './CallbackQueue.styles.css';
 
 class CallbackQueue extends Component {
-  constructor(props) {
-    super();
-  }
+	constructor(props) {
+		super();
+	}
 
-  render() {
-    const values = [];
-    let trav = this.props.queue.head;
-    let key = 0;
-    while (trav !== null) {
-      values.push(
-        <div
-          key={key}
-          style={{
-            backgroundColor: "yellow",
-            padding: "16px",
-            border: "1px solid black",
-            color: "black"
-          }}
-        >
-          {trav.value}
-        </div>
-      );
-      trav = trav.next;
-      ++key;
-    }
-    return <div style={{ display: "flex" }}>{values}</div>;
-  }
+	render() {
+		const values = [];
+		let trav = this.props.queue;
+		while (trav !== null) {
+			values.push(<li>{trav.value}</li>);
+			trav = trav.next;
+		}
+
+		return (
+			<div className="callback-queue">
+				<div className="title">Callback Queue</div>
+				<div className="body">
+					<ul>{values}</ul>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default CallbackQueue;
