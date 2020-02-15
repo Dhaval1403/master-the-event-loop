@@ -16,7 +16,7 @@ const queue = {
 			this.tail = node;
 		}
 	},
-	pop: () => {
+	pop: function() {
 		// if queue is empty
 		if (this.head === null) return null;
 		const head = this.head;
