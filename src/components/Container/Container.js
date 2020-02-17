@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import CallbackQueue from '../CallbackQueue/CallbackQueue';
+import CallbackQueue from '../CallbackQueue/CallbackQueue';
 import Callstack from '../Callstack/Callstack';
 import WebApi from '../WebApi/WebApi';
 import Console from '../Console/Console';
@@ -8,6 +8,8 @@ import { Header } from '../Header/Header';
 
 import { Main } from '../../styles/layout';
 import { Normalize } from '../../styles/normalize';
+
+import queue from '../CallbackQueue/queue';
 
 export const Container = () => {
 	return (
@@ -23,7 +25,7 @@ export const Container = () => {
 
 				<Console />
 
-				{/* <CallbackQueue queue={queue.head} /> */}
+				<CallbackQueue queue={queue.head} />
 			</Main>
 		</>
 	);
