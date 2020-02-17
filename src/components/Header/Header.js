@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HeaderStyled, LinkTo } from './HeaderStyled';
+import { HeaderStyled } from './HeaderStyled';
 import { Box, Flex } from '../../styles/flex';
 import { Container } from '../../styles/layout';
 import { Title4, Title5 } from '../../styles/text';
@@ -25,7 +25,7 @@ const Header = ({ toggleHelp }) => {
 						</Box>
 
 						<Box>
-							<Title5 color="colorBlue" onClick={toggleHelp}>
+							<Title5 style={{ cursor: 'pointer' }} color="colorBlue" onClick={toggleHelp}>
 								HELP
 							</Title5>
 						</Box>

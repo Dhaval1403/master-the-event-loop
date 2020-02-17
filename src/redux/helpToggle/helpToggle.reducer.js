@@ -1,7 +1,7 @@
 import { helpTypes } from './helpToggle.types';
 
 const INITIAL_STATE = {
-	isHelp: true,
+	isHelp: false,
 };
 
 export const helpReducer = (state = INITIAL_STATE, action) => {

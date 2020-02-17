@@ -13,12 +13,23 @@ const Help = ({ isHelp, toggleHelp }) => {
 							<button onClick={toggleHelp} className="cls-btn">
 								close
 							</button>
+							<h2>Master the Javscript Event Loop</h2>
+							<p>
+								This project is based on how the javascript event loop works under the hood. You can
+								enter your javascript code and visually understand the Javascript event loop process
+							</p>
 							<h3>How javascript event loop works</h3>
 							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure aperiam beatae dicta
-								iste quam suscipit a odio blanditiis deserunt labore possimus, obcaecati sed
-								recusandae id doloribus inventore nemo officia reprehenderit.
+								Under the hood, the javascript engine works by two things Memory Stack: a place
+								where memory is allocated by the js engine to store the values Call Stack: With a
+								call stack we can have running codes like: <br />
+								<span className="code-snippet">console.log(“Hi”);</span>
+								Js is a single-threaded language. So we only need to worry about one thing
 							</p>
+							<iframe
+								className="video-embed"
+								src="https://www.youtube.com/embed/hGSHfObcVf4"
+							></iframe>
 						</div>
 					</div>
 				</div>
