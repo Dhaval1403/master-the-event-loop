@@ -4,20 +4,21 @@ import CallbackQueue from '../CallbackQueue/CallbackQueue';
 import Callstack from '../Callstack/Callstack';
 import WebApi from '../WebApi/WebApi';
 import Console from '../Console/Console';
-import { Header } from '../Header/Header';
-
+import Header from '../Header/Header';
 import { Main } from '../../styles/layout';
 import { Normalize } from '../../styles/normalize';
+import Help from '../Help/Help';
 
 import queue from '../CallbackQueue/queue';
 
-export const Container = () => {
+const Container = () => {
+
 	return (
 		<>
 			<Normalize />
 
 			<Header />
-
+			<Help />
 			<Main>
 				<Callstack />
 
@@ -30,3 +31,5 @@ export const Container = () => {
 		</>
 	);
 };
+
+export default Container;
