@@ -2,6 +2,7 @@ import React from 'react';
 import './Help.styles.css';
 import { connect } from 'react-redux';
 import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions';
+import helpImage from './master-the-event-loop.png';
 
 const Help = ({ isHelp, toggleHelp }) => {
 	return (
@@ -30,6 +31,7 @@ const Help = ({ isHelp, toggleHelp }) => {
 								className="video-embed"
 								src="https://www.youtube.com/embed/hGSHfObcVf4"
 							></iframe>
+							<img className="image-embed" src={helpImage} alt="master the event loop" />
 						</div>
 					</div>
 				</div>
