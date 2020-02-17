@@ -51,3 +51,8 @@
 	margin: 0 auto;
 	min-height: 450px;
 }
+.inner-modal .image-embed {
+	width: 90%;
+	display: block;
+	margin: 0 auto;
+}
