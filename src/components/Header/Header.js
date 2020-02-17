@@ -10,14 +10,14 @@ import { variable } from '../../styles/variable';
 export const Header = () => {
 	return (
 		<>
-			<HeaderStyled id="header">
+			<HeaderStyled>
 				<Container mx="auto" px={{ d: 4, md: 3 }}>
 					<Flex
 						alignItems="center"
 						display="flex"
 						flexWrap="wrap"
 						justifyContent={{ d: 'flex-end', md: 'space-between' }}
-						minHeight={{ d: variable.headerHeightMobile, md: variable.headerHeight }}
+						minHeight={variable.headerHeight}
 					>
 						<Box mx={{ d: 'auto', md: 0 }} width="auto">
 							<Title4 color="colorBlue">MASTER THE EVENT LOOP</Title4>
