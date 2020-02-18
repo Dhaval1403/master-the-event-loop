@@ -3,7 +3,11 @@ import './Help.styles.css';
 import { connect } from 'react-redux';
 import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions';
 import helpImage from '../../assets/master-the-event-loop.png';
-import helpImage2 from '../../assets/master-the-event-loop-2.png';
+import gif_1 from '../../assets/animation1.gif';
+import gif_2 from '../../assets/animation2.gif';
+import gif_3 from '../../assets/animation3.gif';
+import gif_4 from '../../assets/animation4.gif';
+import gif_5 from '../../assets/animation5.gif';
 import playButton from '../../assets/play.png';
 
 const Help = ({ isHelp, toggleHelp }) => {
@@ -41,21 +45,37 @@ const Help = ({ isHelp, toggleHelp }) => {
 								button. Woohooo!! See the magic that javascript does for us behind the scenes.
 								Excited? Let's get started
 							</p>
-
-							<p>
-								Below attached are some extra resources for you if you want to dive deep into the
-								topic. It includes some images, articles and youtube videos.
-							</p>
 						</div>
+
+						<p>
+							Below attached are some extra resources for you if you want to dive deep into the
+							topic. It includes some images, articles, animations and youtube videos.
+						</p>
 
 						<div className="resources">
 							<img className="resource-item" src={helpImage} alt="master the event loop" />
-							<img className="resource-item" src={helpImage2} alt="master the event loop" />
 
 							<iframe
 								className="resource-item"
 								src="https://www.youtube.com/embed/hGSHfObcVf4"
 							></iframe>
+						</div>
+
+						<div className="resources">
+							<img className="resource-item" src={gif_1} alt="animations" />
+							<img className="resource-item" src={gif_2} alt="animations" />
+							<img className="resource-item" src={gif_3} alt="animations" />
+							<img className="resource-item" src={gif_4} alt="animations" />
+							<img className="resource-item" src={gif_5} alt="animations" />
+							<p>
+								(Source of these animations: &nbsp;
+								<a
+									style={{ color: 'blue' }}
+									href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+								>
+									this awesome article)
+								</a>
+							</p>
 						</div>
 					</div>
 				</div>
