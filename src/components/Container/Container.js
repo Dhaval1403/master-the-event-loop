@@ -1,12 +1,13 @@
 import React from 'react';
 
-// import CallbackQueue from '../CallbackQueue/CallbackQueue';
+import CallbackQueue from '../CallbackQueue/CallbackQueue';
+import queue from '../CallbackQueue/queue';
 import Callstack from '../Callstack/Callstack';
 import WebApi from '../WebApi/WebApi';
 import Console from '../Console/Console';
 import { Header } from '../Header/Header';
 
-import { Main } from '../../styles/layout';
+import { Cell, Grid } from '../../styles/grid';
 import { Normalize } from '../../styles/normalize';
 
 export const Container = () => {
@@ -16,15 +17,27 @@ export const Container = () => {
 
 			<Header />
 
-			<Main>
-				<Callstack />
+			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
+				<Cell>
+					<Callstack />
+				</Cell>
 
-				<WebApi />
+				<Cell>
+					<WebApi />
+				</Cell>
 
-				<Console />
+				<Cell>
+					<Callstack />
+				</Cell>
 
-				{/* <CallbackQueue queue={queue.head} /> */}
-			</Main>
+				<Cell>
+					<Console />
+				</Cell>
+
+				<Cell>
+					<CallbackQueue queue={queue.head} />
+				</Cell>
+			</Grid>
 		</>
 	);
 };

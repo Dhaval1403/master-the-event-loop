@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import './Callstack.styles.css';
 
-import { ListBox, ListTitle } from '../../styles/box';
+import { ConsoleBox, ConsoleTitle } from '../../styles/console';
 import { Box, Flex } from '../../styles/flex';
 import { Span } from '../../styles/text';
 
@@ -17,9 +17,9 @@ class Callstack extends Component {
 			// 	</div>
 			// </div>
 
-			<ListBox>
+			<ConsoleBox>
 				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-					<ListTitle>Callstack</ListTitle>
+					<ConsoleTitle>Callstack</ConsoleTitle>
 				</Box>
 
 				<Box display="flex" height="350px" justifyContent="center" mt="20px">
@@ -27,7 +27,7 @@ class Callstack extends Component {
 						<Span>Start()</Span>
 					</Flex>
 				</Box>
-			</ListBox>
+			</ConsoleBox>
 		);
 	}
 }
