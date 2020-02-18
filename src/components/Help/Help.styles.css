@@ -1,58 +1,57 @@
-.modal-content {
-	position: absolute;
-	background-color: #0000002e;
+.modal-container {
+	position: fixed;
+	background-color: #aaa;
 	z-index: 100000;
-	width: 100vw;
-	height: 100vw;
-	display: grid;
-	justify-items: center;
-	align-items: baseline;
-}
-.inner-modal {
-	display: block;
-	z-index: 100000;
-	width: 50%;
-	height: auto;
-	margin: 0 auto;
-	background-color: antiquewhite;
-	padding: 10px;
-	box-shadow: 0 0 10px 5px;
-}
-.inner-modal button {
-	float: right;
-	cursor: pointer;
-	padding: 10px;
-	color: white;
-	background-color: rgba(0, 0, 0, 0.493);
-}
-.inner-modal * {
-	z-index: 1;
-}
-.inner-modal .code-snippet {
-	background: #f4f4f4;
-	border: 1px solid #ddd;
-	border-left: 3px solid #f36d33;
-	color: #666;
-	page-break-inside: avoid;
-	font-family: monospace;
-	font-size: 15px;
-	line-height: 1.6;
-	margin-bottom: 1.6em;
-	max-width: 100%;
-	overflow: auto;
-	padding: 1em 1.5em;
-	display: block;
-	word-wrap: break-word;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
 }
 
-.inner-modal .video-embed {
-	width: 90%;
-	display: block;
-	margin: 0 auto;
-	min-height: 450px;
+.modal-body {
+	z-index: 100000;
+	width: 60%;
+	height: 75vh;
+	overflow-y: auto;
+	background-color: antiquewhite;
+	padding: 1rem;
+	border-radius: 10px;
 }
-.inner-modal .image-embed {
-	width: 90%;
-	display: block;
-	margin: 0 auto;
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.8rem;
+}
+
+.modal-header button {
+	color: white;
+	background-color: rgba(0, 0, 0, 0.493);
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 0.5rem 1rem;
+}
+
+.modal-content {
+	margin-bottom: 0.8rem;
+}
+
+.play-button {
+	width: 20px;
+	height: 20px;
+	margin: 0 0.5rem;
+}
+
+.resources {
+	display: grid;
+	justify-items: center;
+	grid-template-columns: 1fr;
+	gap: 25px;
+	margin-bottom: 0.8rem;
+}
+
+.resource-item {
+	width: 75%;
+	height: 250px;
 }
