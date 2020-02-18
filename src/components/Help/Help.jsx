@@ -34,10 +34,10 @@ const Help = ({ isHelp, toggleHelp }) => {
 							</p>
 
 							<p>
-								This project is based on how the javascript event loop works under the hood. It is
-								the visual representation of how javascript actually works. What exactly happens
-								when javascript encounters something like 'setTimeout', setInterval or fetch? How
-								javascript deals with this asynchronous code because javascript is a single threaded
+								This project is based on how the Javascript event loop works under the hood. It is
+								the visual representation which shows you that how Javascript works internally. What exactly happens
+								when javascript encounters something like 'setTimeout', 'setInterval' or 'fetch'? How
+								Javascript deals with this asynchronous code because Javascript is a single threaded
 								language, it means that it can handle one thing at a time. Don't worry, we have
 								tried our best to explain this topic in the easiest way possible with some cool
 								animations & visuals. To get started write some code in the 'Code Editor' & hit that
@@ -45,12 +45,12 @@ const Help = ({ isHelp, toggleHelp }) => {
 								button. Woohooo!! See the magic that javascript does for us behind the scenes.
 								Excited? Let's get started
 							</p>
+							
+							<p>
+								Below attached are some extra resources for you if you want to dive deep into the
+								topic. It includes some images, articles, animations and youtube videos.
+							</p>
 						</div>
-
-						<p>
-							Below attached are some extra resources for you if you want to dive deep into the
-							topic. It includes some images, articles, animations and youtube videos.
-						</p>
 
 						<div className="resources">
 							<img className="resource-item" src={helpImage} alt="master the event loop" />
