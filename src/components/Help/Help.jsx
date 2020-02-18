@@ -47,20 +47,16 @@ const Help = ({ isHelp, toggleHelp }) => {
 							</p>
 							
 							<p>
-								Below attached are some extra resources for you if you want to dive deep into the
-								topic. It includes some images, articles, animations and youtube videos.
+								Below are the some really cool animations which will show you how the event loop works in 5 steps. Source of animations 
+								<a
+									style={{ color: 'blue' }}
+									href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+								>
+									this awesome article)
+								</a>
 							</p>
 						</div>
-
-						<div className="resources">
-							<img className="resource-item" src={helpImage} alt="master the event loop" />
-
-							<iframe
-								className="resource-item"
-								src="https://www.youtube.com/embed/hGSHfObcVf4"
-							></iframe>
-						</div>
-
+						
 						<div className="resources">
 							<img className="resource-item" src={gif_1} alt="animations" />
 							<img className="resource-item" src={gif_2} alt="animations" />
@@ -68,12 +64,44 @@ const Help = ({ isHelp, toggleHelp }) => {
 							<img className="resource-item" src={gif_4} alt="animations" />
 							<img className="resource-item" src={gif_5} alt="animations" />
 							<p>
-								(Source of these animations: &nbsp;
+								(Source of animations: &nbsp;
 								<a
 									style={{ color: 'blue' }}
 									href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
 								>
 									this awesome article)
+								</a>
+							</p>
+						</div>
+
+						<div className="resources">
+							<p>Below attached are some extra resources for you if you want to dive deep into the
+								topic. It includes some images, articles, animations and youtube videos.</p>
+							
+							<img className="resource-item" src={helpImage} alt="master the event loop" />
+
+							<iframe
+								className="resource-item"
+								src="https://www.youtube.com/embed/hGSHfObcVf4"
+							></iframe>
+							
+							<p className="resource-item">
+								Javascript Visualized Event Loop
+								<a
+									style={{ color: 'blue' }}
+									href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+								>
+									here
+								</a>
+							</p>
+							
+							<p className="resource-item">
+								How Javascript Works?
+								<a
+									style={{ color: 'blue' }}
+									href="https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5"
+								>
+									here
 								</a>
 							</p>
 						</div>
