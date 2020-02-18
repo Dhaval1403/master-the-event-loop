@@ -53,6 +53,12 @@
 	margin-bottom: 0.8rem;
 }
 
+.resources-title {
+	font-weight: bold;
+	text-decoration: underline;
+	margin-bottom: 0.5rem;
+}
+
 .resource-item {
 	width: 75%;
 	height: 250px;
