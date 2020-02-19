@@ -1,8 +1,19 @@
-import React from 'react';
-import './EventLoop.styles.css';
+import React, { useState } from 'react'
+import './EventLoop.styles.css'
 
-const EventLoop = props => {
-	return <>Event Loop Component</>;
-};
+const EventLoop = (props) => {
+	const [spin, setSpin] = useState(false)
 
-export default EventLoop;
+	setTimeout(() => {
+		setSpin(true)
+	}, 1000)
+
+	return (
+		<div className={'arrow ' + (spin ? 'spin' : '')}>
+			<div className="circle" />
+			<div className="triangle" />
+		</div>
+	)
+}
+
+export default EventLoop
