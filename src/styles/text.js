@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
-import { layout, space, typography } from 'styled-system';
+import styled, { css } from 'styled-components'
+import { layout, space, typography } from 'styled-system'
 
-import { variable } from './variable';
+import { variable } from './variable'
 
 const title = css`
 	${layout};
@@ -25,7 +25,7 @@ const title = css`
 				width: 70px;
 			}
 		`};
-`;
+`
 
 export const P = styled.p`
 	${layout};
@@ -34,7 +34,7 @@ export const P = styled.p`
 	color: ${({ color, themeColor }) =>
 		color ? variable[color] : themeColor === 'light' ? variable.colorWhite : variable.colorBlack2};
 	${({ whiteSpace }) => whiteSpace && `white-space: ${whiteSpace}`};
-`;
+`
 
 export const Span = styled.span`
 	${layout};
@@ -42,7 +42,7 @@ export const Span = styled.span`
 	${typography};
 	${({ color }) => color && `color: ${variable[color]}`};
 	${({ whiteSpace }) => whiteSpace && `white-space: ${whiteSpace}`};
-`;
+`
 
 export const Title4 = styled.h4`
 	${title};
@@ -51,7 +51,7 @@ export const Title4 = styled.h4`
 	@media (min-width: ${variable.md}) {
 		${({ fontSize }) => fontSize === undefined && 'font-size: 24px'};
 	}
-`;
+`
 
 export const Title5 = styled.h5`
 	${title};
@@ -60,4 +60,4 @@ export const Title5 = styled.h5`
 	@media (min-width: ${variable.md}) {
 		${({ fontSize }) => fontSize === undefined && 'font-size: 18px'};
 	}
-`;
+`
