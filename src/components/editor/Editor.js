@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import Classes from './editor.module.css';
-require('codemirror/lib/codemirror.css');
-require('codemirror/theme/material.css');
-require('codemirror/theme/neat.css');
-require('codemirror/mode/xml/xml.js');
-require('codemirror/mode/javascript/javascript.js');
+import React, { useState, useEffect } from 'react'
+import { Controlled as CodeMirror } from 'react-codemirror2'
+import Classes from './editor.module.css'
+require('codemirror/lib/codemirror.css')
+require('codemirror/theme/material.css')
+require('codemirror/theme/neat.css')
+require('codemirror/mode/xml/xml.js')
+require('codemirror/mode/javascript/javascript.js')
 
 const Editor = () => {
 	const [data, updateData] = useState(`const [data, updateData] = useState("");
@@ -18,22 +18,22 @@ const Editor = () => {
 		editor.removeLineClass(num, 'background', Classes.activeLine);
 	};
 	const higlightedLine = [];
-`);
+`)
 	// const [functions, updateFunctions] = {};
 
-	const [editor, setEditor] = useState(null);
+	const [editor, setEditor] = useState(null)
 	// const [collapsableLines, setCollapsableLines] = useState({});
-	let collapsableLines = {};
-	const setCollapsableLines = arg => {
-		collapsableLines = arg;
-	};
+	let collapsableLines = {}
+	const setCollapsableLines = (arg) => {
+		collapsableLines = arg
+	}
 	const higlightLine = (editor, num) => {
-		editor.addLineClass(num, 'background', Classes.activeLine);
-	};
+		editor.addLineClass(num, 'background', Classes.activeLine)
+	}
 	const unHiglightLine = (editor, num) => {
-		editor.removeLineClass(num, 'background', Classes.activeLine);
-	};
-	const higlightedLine = [];
+		editor.removeLineClass(num, 'background', Classes.activeLine)
+	}
+	const higlightedLine = []
 
 	const findCharacter = (
 		editor,
@@ -44,24 +44,24 @@ const Editor = () => {
 		multiLine = false
 	) => {
 		// console.log(editor, lineNumber, character, constraint, multiLine);
-		let check = { open: 0, lastOpenTokenIndex: null, close: 0 };
-		const tokens = editor.getLineTokens(lineNumber);
-		let fistOpenIndex;
-		let lastCloseIndex;
-		let found = false;
-		let isOpen = false;
-		let lineFound = null;
+		let check = { open: 0, lastOpenTokenIndex: null, close: 0 }
+		const tokens = editor.getLineTokens(lineNumber)
+		let fistOpenIndex
+		let lastCloseIndex
+		let found = false
+		let isOpen = false
+		let lineFound = null
 		const loopThroughLine = (tokens, lineNo) => {
 			for (let i = 0; i < tokens.length; i++) {
 				if (tokens[i].string === character) {
-					found = true;
+					found = true
 					if (check.open === 0) {
-						fistOpenIndex = { lineNo: lineNo, tokenIndex: i };
+						fistOpenIndex = { lineNo: lineNo, tokenIndex: i }
 					}
 
 					if (constraint) {
-						check.open += 1;
-						check.lastOpenTokenIndex = i;
+						check.open += 1
+						check.lastOpenTokenIndex = i
 					}
 					if (!constraint) {
 						return {
@@ -69,15 +69,15 @@ const Editor = () => {
 							tokenIndex: i,
 							line: lineNo,
 							tokens: tokens,
-						};
+						}
 					}
 				}
 				if (tokens[i].string === constraint) {
-					check.close += 1;
-					lastCloseIndex = { lineNo: lineNo, tokenIndex: i };
+					check.close += 1
+					lastCloseIndex = { lineNo: lineNo, tokenIndex: i }
 				}
 				if (check.open + check.close !== 0 && check.open === check.close) {
-					isOpen = false;
+					isOpen = false
 					return {
 						isOpen,
 						tokenIndex: i,
@@ -85,28 +85,28 @@ const Editor = () => {
 						tokens: tokens,
 						fistOpenIndex,
 						lastCloseIndex,
-					};
+					}
 				}
 			}
-		};
-		const val = loopThroughLine(tokens, lineNumber);
+		}
+		const val = loopThroughLine(tokens, lineNumber)
 
-		if (!multiLine) return val;
-		let j = lineNumber + 1;
+		if (!multiLine) return val
+		let j = lineNumber + 1
 		if (multiLine && !found) {
 			while (!found) {
-				loopThroughLine(editor.getLineTokens(j), j);
-				j++;
+				loopThroughLine(editor.getLineTokens(j), j)
+				j++
 			}
-			lineFound = j - 1;
+			lineFound = j - 1
 		}
 		if (multiLine && found && check.open + check.close !== 0 && check.open !== check.close) {
-			let result;
+			let result
 			while (check.open !== check.close) {
-				result = loopThroughLine(editor.getLineTokens(j), j);
-				j++;
+				result = loopThroughLine(editor.getLineTokens(j), j)
+				j++
 			}
-			return result;
+			return result
 		}
 		// if (multiLine) {
 		// 	return {
@@ -117,7 +117,7 @@ const Editor = () => {
 		// 		line: lineFound,
 		// 	};
 		// }
-	};
+	}
 
 	// const openingCurlyBrace = (editor, lineNumber) =>
 	// 	findCharacter(editor, lineNumber, '{', '}', true);
@@ -126,8 +126,8 @@ const Editor = () => {
 	// 	findCharacter(editor, lineNumber, '}', false, false, true);
 
 	const findOPeningAndClosing = (editor, lineNumber) => {
-		return findCharacter(editor, lineNumber, '{', '}', true);
-	};
+		return findCharacter(editor, lineNumber, '{', '}', true)
+	}
 
 	const updateCollapsableLines = (i, lastOpenToken, tokens, lastOpenIndex) => {
 		setCollapsableLines({
@@ -137,8 +137,8 @@ const Editor = () => {
 				tokens,
 				lastOpenIndex,
 			},
-		});
-	};
+		})
+	}
 
 	// Handle Paste into editor
 
@@ -150,11 +150,11 @@ const Editor = () => {
 		// 		updateCollapsableLines(i, lastOpenToken, tokens, lastOpenIndex);
 		// 	}
 		// }
-	};
+	}
 
 	const handlePaste = (editor, data, value) => {
-		loadStateWithCollapsable(editor, data.from.line);
-	};
+		loadStateWithCollapsable(editor, data.from.line)
+	}
 
 	const handleChange = (editor, data, value) => {
 		// if (data.origin === 'paste') {
@@ -174,56 +174,56 @@ const Editor = () => {
 		// 		}
 		// 	}
 		// }
-	};
+	}
 
 	const handleCursor = (editor, data) => {
-		higlightedLine.push(data.line);
+		higlightedLine.push(data.line)
 		if (higlightedLine.length > 1) {
-			const first = higlightedLine.shift();
-			unHiglightLine(editor, first);
+			const first = higlightedLine.shift()
+			unHiglightLine(editor, first)
 		}
-		higlightLine(editor, data.line);
-	};
+		higlightLine(editor, data.line)
+	}
 
 	// Add style to line(s) during execution simulation
 
 	const higlightCharacters = (editor, from, to) => {
 		if (to !== undefined) {
 			for (var i = from; i <= to; i++) {
-				editor.addLineClass(i, 'background', Classes.runningLine);
+				editor.addLineClass(i, 'background', Classes.runningLine)
 			}
 		} else {
-			editor.addLineClass(from, 'background', Classes.runningLine);
+			editor.addLineClass(from, 'background', Classes.runningLine)
 		}
-	};
+	}
 
 	// Remove style to line(s) during execution simulation
 
 	const removeHiglightFromCharacters = (editor, from, to) => {
 		if (to !== undefined) {
 			for (var i = from; i <= to; i++) {
-				editor.removeLineClass(i, 'background', Classes.runningLine);
+				editor.removeLineClass(i, 'background', Classes.runningLine)
 			}
 		} else {
-			editor.removeLineClass(i, 'background', Classes.runningLine);
+			editor.removeLineClass(i, 'background', Classes.runningLine)
 		}
-	};
+	}
 
-	const editorMount = editor => {
-		setEditor(editor);
+	const editorMount = (editor) => {
+		setEditor(editor)
 		if (editor.doc.size > 1) {
-			loadStateWithCollapsable(editor, 0);
+			loadStateWithCollapsable(editor, 0)
 		}
 		// higlightCharacters(editor, 3, 4);
-	};
+	}
 
 	const getStringValue = (editor, startLine, endLine, startIndex, endIndex) => {
-		const firstLineTokens = editor.getLineTokens(startLine);
-	};
+		const firstLineTokens = editor.getLineTokens(startLine)
+	}
 
-	const findFunctions = editor => {
+	const findFunctions = (editor) => {
 		// const data = parenthesis
-	};
+	}
 	// editorMount
 	return (
 		<div className={Classes.container}>
@@ -241,12 +241,12 @@ const Editor = () => {
 				onBeforeChange={(editor, data, value) => updateData(value)}
 				onChange={handleChange}
 				onGutterClick={(editor, number, gutter, str) => {
-					console.log(findOPeningAndClosing(editor, 3));
+					console.log(findOPeningAndClosing(editor, 3))
 					// console.log(closingCurlyBrace(editor, number + 1));
 				}}
 			/>
 		</div>
-	);
-};
+	)
+}
 
-export default Editor;
+export default Editor
