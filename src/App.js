@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Callstack from './components/Callstack/Callstack';
-import WebApi from './components/WebApi/WebApi';
-import Console from './components/Console/Console';
+
+import Container from './components/Container/Container';
 
 class App extends Component {
 	render() {
-		return (
-			<React.Fragment>
-				<Callstack />
-				<WebApi />
-				<Console />
-			</React.Fragment>
-		);
+		return <Container />;
 	}
 }
 
