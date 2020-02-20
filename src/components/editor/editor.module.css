@@ -2,6 +2,9 @@
 	text-align: left;
 	height: auto;
 }
+.codeMirror span {
+	transition: 0.3s;
+}
 .activeLine {
 	background-color: rgba(128, 128, 128, 0.4);
 }
@@ -10,4 +13,16 @@
 }
 .gutter {
 	background-color: red;
+}
+.container span {
+	border: none;
+}
+.runningLine ~ pre span {
+	background-color: rgb(25, 95, 112);
+}
+
+.collapsableLine + div :nth-child(1)::before {
+	content: '\27A9';
+	display: inline-block;
+	transform: rotate(90deg);
 }
