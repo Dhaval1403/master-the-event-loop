@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { ListBox, ListTitle } from '../../styles/box'
+import { ConsoleBox, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { P } from '../../styles/text'
 
@@ -9,7 +9,7 @@ class Console extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			message: ['hello'],
+			message: ['Hello'],
 		}
 	}
 
@@ -22,9 +22,9 @@ class Console extends Component {
 
 	render() {
 		return (
-			<ListBox>
-				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-					<ListTitle>Console</ListTitle>
+			<ConsoleBox>
+				<Box textAlign="center">
+					<ConsoleTitle>Console</ConsoleTitle>
 				</Box>
 
 				<Box borderTop={3} borderStyle="solid" color="colorBlue" justifySelf="center" mt={2} />
@@ -33,10 +33,11 @@ class Console extends Component {
 					{this.state.message.map((message) => (
 						<P>{message}</P>
 					))}
+
 					{/*temporary functionality for depiction*/}
 					<button onClick={() => this.addToConsole('Hello')}>Click me</button>
 				</Box>
-			</ListBox>
+			</ConsoleBox>
 		)
 	}
 }
