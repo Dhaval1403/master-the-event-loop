@@ -45,13 +45,13 @@ const Help = ({ isHelp, toggleHelp }) => {
 								button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
 								Let's get started
 							</p>
+							
+							<p>
+								Below are the some really cool animations which will show you how the event loop works in 5
+								steps.
+							</p>
 
 							<div className="resources">
-								<p>
-									Below are the some really cool animations which will show you how the event loop works in 5
-									steps.
-								</p>
-
 								<span className="resource-title">Animations</span>
 								<img className="resource-item" src={gif_1} alt="animations" />
 								<img className="resource-item" src={gif_2} alt="animations" />
@@ -61,21 +61,22 @@ const Help = ({ isHelp, toggleHelp }) => {
 
 								<p>
 									(Source of animations: &nbsp;
-									<a
-										style={{ color: 'blue' }}
-										href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
-									>
-										this awesome article)
-									</a>
+										<a
+											style={{ color: 'blue' }}
+											href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+										>
+											this awesome article
+										</a>
+									)
 								</p>
 							</div>
+							
+							<p>
+								Below attached are some extra resources for you if you want to dive deep into the topic. It
+								includes some images, articles and youtube videos.
+							</p>
 
 							<div className="resources">
-								<p>
-									Below attached are some extra resources for you if you want to dive deep into the topic. It
-									includes some images, articles and youtube videos.
-								</p>
-
 								<span className="resource-title">Images</span>
 								<img className="resource-item" src={helpImage} alt="master the event loop" />
 
