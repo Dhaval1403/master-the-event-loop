@@ -7,6 +7,7 @@ import EventLoop from '../EventLoop/EventLoop'
 import Header from '../Header/Header'
 import queue from '../CallbackQueue/queue'
 import WebApi from '../WebApi/WebApi'
+import Editor from '../Editor/Editor'
 
 import { Cell, Grid } from '../../styles/grid'
 import { Normalize } from '../../styles/normalize'
@@ -23,9 +24,11 @@ const Container = () => {
 
 			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
 				<Cell>
+					<Editor />
+				</Cell>
+				<Cell>
 					<Callstack />
 				</Cell>
-
 				<Cell>
 					<WebApi />
 				</Cell>

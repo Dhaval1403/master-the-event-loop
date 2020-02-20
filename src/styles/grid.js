@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
-import { border, flexbox, grid, layout, space, typography } from 'styled-system';
+import styled, { css } from 'styled-components'
+import { border, flexbox, grid, layout, space, typography } from 'styled-system'
 
-import { variable } from './variable';
+import { variable } from './variable'
 
 export const Cell = styled.div`
 	${border};
@@ -19,7 +19,7 @@ export const Cell = styled.div`
 				box-shadow: 0 1px 10px 1px ${variable.colorGrayLight4};
 			}
 		`};
-`;
+`
 
 export const Grid = styled.div`
 	${border};
@@ -27,4 +27,4 @@ export const Grid = styled.div`
 	${grid};
 	${layout};
 	${space};
-`;
+`

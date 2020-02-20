@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import { HeaderStyled } from './HeaderStyled';
-import { Box, Flex } from '../../styles/flex';
-import { Container } from '../../styles/layout';
-import { Title4, Title5 } from '../../styles/text';
-import { variable } from '../../styles/variable';
-import { connect } from 'react-redux';
-import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions';
+import { HeaderStyled } from './HeaderStyled'
+import { Box, Flex } from '../../styles/flex'
+import { Container } from '../../styles/layout'
+import { Title4, Title5 } from '../../styles/text'
+import { variable } from '../../styles/variable'
+import { connect } from 'react-redux'
+import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions'
 
 const Header = ({ toggleHelp }) => {
 	return (
@@ -33,11 +33,11 @@ const Header = ({ toggleHelp }) => {
 				</Container>
 			</HeaderStyled>
 		</>
-	);
-};
+	)
+}
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
 	toggleHelp: () => dispatch(toggleHelp()),
-});
+})
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header)
