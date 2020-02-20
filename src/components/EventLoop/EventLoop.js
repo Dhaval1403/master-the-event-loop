@@ -1,29 +1,32 @@
-import React, {Component} from 'react';
-import './EventLoop.styles.css';
+import React, { Component } from 'react'
+import './EventLoop.styles.css'
 
 class EventLoop extends Component {
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
-			spin: false
-		};
+			spin: false,
+		}
 	}
 
 	render() {
-
 		setTimeout(() => {
 			this.setState({
-				spin: true
-			});
-		}, 1000);
+				spin: true,
+			})
+		}, 1000)
 
 		return (
-			<div className={'arrow ' + (this.state.spin ? 'spin' : '')}>
-				<div className="circle"/>
-				<div className="triangle"/>
+			<div
+				style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+			>
+				<div className={'spinner-container' + (this.state.spin ? ' spin' : '')}>
+					<div className="circle" />
+					<div className="triangle" />
+				</div>
 			</div>
 		)
 	}
 }
 
-export default EventLoop;
+export default EventLoop
