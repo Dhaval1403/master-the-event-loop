@@ -2,14 +2,16 @@ import React from 'react'
 
 import CallbackQueue from '../CallbackQueue/CallbackQueue'
 import Callstack from '../Callstack/Callstack'
-import WebApi from '../WebApi/WebApi'
 import Console from '../Console/Console'
+import EventLoop from '../EventLoop/EventLoop'
 import Header from '../Header/Header'
-import { Main } from '../../styles/layout'
+import queue from '../CallbackQueue/queue'
+import WebApi from '../WebApi/WebApi'
+import Editor from '../Editor/Editor'
+
+import { Cell, Grid } from '../../styles/grid'
 import { Normalize } from '../../styles/normalize'
 import Help from '../Help/Help'
-import Editor from '../Editor/Editor'
-import queue from '../CallbackQueue/queue'
 
 const Container = () => {
 	return (
@@ -17,17 +19,32 @@ const Container = () => {
 			<Normalize />
 
 			<Header />
+
 			<Help />
-			<Main>
-				<Editor />
-				<Callstack />
 
-				<WebApi />
+			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
+				<Cell>
+					<Editor />
+				</Cell>
+				<Cell>
+					<Callstack />
+				</Cell>
+				<Cell>
+					<WebApi />
+				</Cell>
 
-				<Console />
+				<Cell>
+					<Console />
+				</Cell>
 
-				<CallbackQueue queue={queue.head} />
-			</Main>
+				<Cell>
+					<EventLoop />
+				</Cell>
+
+				<Cell gridColumn="span">
+					<CallbackQueue queue={queue.head} />
+				</Cell>
+			</Grid>
 		</>
 	)
 }

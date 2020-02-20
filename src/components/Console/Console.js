@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-// import './Console.styles.css';
 
-import { ListBox, ListTitle } from '../../styles/box'
+import { Button } from '../Button/Button'
+
+import { ConsoleBox, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { P } from '../../styles/text'
 
@@ -10,7 +11,7 @@ class Console extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			message: ['hello'],
+			message: ['Hello'],
 		}
 	}
 
@@ -23,19 +24,22 @@ class Console extends Component {
 
 	render() {
 		return (
-			<ListBox>
-				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-					<ListTitle>Console</ListTitle>
+			<ConsoleBox>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Console</ConsoleTitle>
 				</Box>
 
-				<Box height="200px" mt="20px" textAlign="center">
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+
+				<Box height="350px" mt="20px" textAlign="center">
 					{this.state.message.map((message) => (
 						<P>{message}</P>
 					))}
+
 					{/*temporary functionality for depiction*/}
-					<button onClick={() => this.addToConsole('Hello')}>Click me</button>
+					<Button onClick={() => this.addToConsole('Hello')}>Click me</Button>
 				</Box>
-			</ListBox>
+			</ConsoleBox>
 		)
 	}
 }
