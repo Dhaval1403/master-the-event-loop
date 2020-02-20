@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 
-import CallbackQueue from '../CallbackQueue/CallbackQueue';
-import Callstack from '../Callstack/Callstack';
-import Console from '../Console/Console';
-import EventLoop from '../EventLoop/EventLoop';
-import Header from '../Header/Header';
-import queue from '../CallbackQueue/queue';
-import WebApi from '../WebApi/WebApi';
+import CallbackQueue from '../CallbackQueue/CallbackQueue'
+import Callstack from '../Callstack/Callstack'
+import Console from '../Console/Console'
+import EventLoop from '../EventLoop/EventLoop'
+import Header from '../Header/Header'
+import queue from '../CallbackQueue/queue'
+import WebApi from '../WebApi/WebApi'
 
-import { Cell, Grid } from '../../styles/grid';
-import { Normalize } from '../../styles/normalize';
-import Help from '../Help/Help';
+import { Cell, Grid } from '../../styles/grid'
+import { Normalize } from '../../styles/normalize'
+import Help from '../Help/Help'
 
 const Container = () => {
 	return (
@@ -38,12 +38,12 @@ const Container = () => {
 					<CallbackQueue queue={queue.head} />
 				</Cell>
 
-				<Cell>
+				<Cell gridColumn="span 2">
 					<EventLoop />
 				</Cell>
 			</Grid>
 		</>
-	);
-};
+	)
+}
 
-export default Container;
+export default Container
