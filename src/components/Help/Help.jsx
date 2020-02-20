@@ -45,7 +45,7 @@ const Help = ({ isHelp, toggleHelp }) => {
 								button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
 								Let's get started
 							</p>
-							
+
 							<p>
 								Below are the some really cool animations which will show you how the event loop works in 5
 								steps.
@@ -61,16 +61,16 @@ const Help = ({ isHelp, toggleHelp }) => {
 
 								<p>
 									(Source of animations: &nbsp;
-										<a
-											style={{ color: 'blue' }}
-											href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
-										>
-											this awesome article
-										</a>
+									<a
+										style={{ color: 'blue' }}
+										href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+									>
+										this awesome article
+									</a>
 									)
 								</p>
 							</div>
-							
+
 							<p>
 								Below attached are some extra resources for you if you want to dive deep into the topic. It
 								includes some images, articles and youtube videos.

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import './CallbackQueue.styles.css';
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console';
+import { Box } from '../../styles/flex';
 
 class CallbackQueue extends Component {
 	constructor(props) {
@@ -16,12 +17,19 @@ class CallbackQueue extends Component {
 		}
 
 		return (
-			<div className="callback-queue">
-				<div className="title">Callback Queue</div>
-				<div className="body">
-					<ul>{values}</ul>
-				</div>
-			</div>
+			<ConsoleBox>
+				<Box textAlign="center">
+					<ConsoleTitle>Callback Queue</ConsoleTitle>
+				</Box>
+
+				<Box borderTop={3} borderStyle="solid" color="colorBlue" justifySelf="center" mt={2} />
+
+				<Box display="flex" height="350px" justifyContent="center" mt="20px">
+					<List>
+						<ListItem>{values}</ListItem>
+					</List>
+				</Box>
+			</ConsoleBox>
 		);
 	}
 }

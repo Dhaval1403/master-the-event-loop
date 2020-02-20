@@ -2,25 +2,17 @@ import React from 'react';
 
 // import './WebApi.styles.css';
 
-import { ListBox, ListTitle, List, ListItem } from '../../styles/box';
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console';
 import { Box } from '../../styles/flex';
 
 const WebApi = input => {
 	return (
-		// <div className="web-api">
-		// 	<div className="title">Web Apis</div>
-		// 	<div className="body">
-		// 		<ul>
-		// 			<li>$.on('button', 'click', ...)</li>
-		// 			<li>timeout()</li>
-		// 		</ul>
-		// 	</div>
-		// </div>
-
-		<ListBox>
-			<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-				<ListTitle>WebApi</ListTitle>
+		<ConsoleBox>
+			<Box textAlign="center">
+				<ConsoleTitle>WebApi</ConsoleTitle>
 			</Box>
+
+			<Box borderTop={3} borderStyle="solid" color="colorBlue" justifySelf="center" mt={2} />
 
 			<Box display="flex" height="350px" justifyContent="center" mt="20px">
 				<List>
@@ -29,7 +21,7 @@ const WebApi = input => {
 					<ListItem>timeout()</ListItem>
 				</List>
 			</Box>
-		</ListBox>
+		</ConsoleBox>
 	);
 };
 

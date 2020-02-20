@@ -1,35 +1,49 @@
-import React from 'react';
+import React from 'react'
 
-import CallbackQueue from '../CallbackQueue/CallbackQueue';
-import Callstack from '../Callstack/Callstack';
-import WebApi from '../WebApi/WebApi';
-import Console from '../Console/Console';
-import Header from '../Header/Header';
-import { Main } from '../../styles/layout';
-import { Normalize } from '../../styles/normalize';
-import Help from '../Help/Help';
+import CallbackQueue from '../CallbackQueue/CallbackQueue'
+import Callstack from '../Callstack/Callstack'
+import Console from '../Console/Console'
+import EventLoop from '../EventLoop/EventLoop'
+import Header from '../Header/Header'
+import queue from '../CallbackQueue/queue'
+import WebApi from '../WebApi/WebApi'
 
-import queue from '../CallbackQueue/queue';
+import { Cell, Grid } from '../../styles/grid'
+import { Normalize } from '../../styles/normalize'
+import Help from '../Help/Help'
 
 const Container = () => {
-
 	return (
 		<>
 			<Normalize />
 
 			<Header />
+
 			<Help />
-			<Main>
-				<Callstack />
 
-				<WebApi />
+			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
+				<Cell>
+					<Callstack />
+				</Cell>
 
-				<Console />
+				<Cell>
+					<WebApi />
+				</Cell>
 
-				<CallbackQueue queue={queue.head} />
-			</Main>
+				<Cell>
+					<Console />
+				</Cell>
+
+				<Cell>
+					<EventLoop />
+				</Cell>
+
+				<Cell gridColumn="span">
+					<CallbackQueue queue={queue.head} />
+				</Cell>
+			</Grid>
 		</>
-	);
-};
+	)
+}
 
-export default Container;
+export default Container
