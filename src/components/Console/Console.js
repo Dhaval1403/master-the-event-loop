@@ -29,7 +29,7 @@ class Console extends Component {
 
 				<Box borderTop={3} borderStyle="solid" color="colorBlue" justifySelf="center" mt={2} />
 
-				<Box height="200px" mt="20px" textAlign="center">
+				<Box height="350px" mt="20px" textAlign="center">
 					{this.state.message.map((message) => (
 						<P>{message}</P>
 					))}
