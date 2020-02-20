@@ -9,16 +9,16 @@
 	box-sizing: border-box;
 	height: 100px;
 	width: 100px;
-	border: 10px solid #37363d;
+	border: 7px solid #00a1de;
 	border-radius: 50%;
 	clip-path: inset(0 0 0 50%);
 }
 
 .triangle {
 	position: absolute;
-	width: 40px;
+	width: 30px;
 	height: 20px;
-	background: #37363d;
+	background: #00a1de;
 	margin-top: -5px;
 	margin-left: 28px;
 	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
