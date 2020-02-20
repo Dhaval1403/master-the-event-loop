@@ -25,11 +25,11 @@ class Console extends Component {
 	render() {
 		return (
 			<ConsoleBox>
-				<Box textAlign="center">
-					<ConsoleTitle>Console</ConsoleTitle>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Console</ConsoleTitle>
 				</Box>
 
-				<Box borderTop={3} borderStyle="solid" color="colorBlue" justifySelf="center" mt={2} />
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
 				<Box height="350px" mt="20px" textAlign="center">
 					{this.state.message.map((message) => (

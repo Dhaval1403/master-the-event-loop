@@ -5,8 +5,8 @@ import { variable } from './variable'
 
 export const ConsoleBox = styled.div`
 	background-color: ${variable.colorWhite};
-	border: 1px solid grey;
-	border-radius: 10px;
+	border: 1px solid ${variable.colorBlue};
+	border-radius: 15px;
 	box-shadow: 0 2px 0 2px ${variable.colorBlackTransparent1};
 	font-weight: 400;
 	font-size: 14px;

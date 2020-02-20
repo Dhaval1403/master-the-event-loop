@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import { ConsoleBox, ConsoleTitle } from '../../styles/console';
-import { Box, Flex } from '../../styles/flex';
-import { Span } from '../../styles/text';
+import { ConsoleBox, ConsoleTitle } from '../../styles/console'
+import { Box, Flex } from '../../styles/flex'
+import { Span } from '../../styles/text'
 
 class Callstack extends Component {
 	render() {
 		// const { callstack } = this.props;
 		return (
 			<ConsoleBox>
-				<Box textAlign="center">
-					<ConsoleTitle>Callstack</ConsoleTitle>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Callstack</ConsoleTitle>
 				</Box>
 
-				<Box borderTop={3} borderStyle="solid" color="colorBlue" justifySelf="center" mt={2} />
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
 				<Box display="flex" height="350px" justifyContent="center" mt="20px">
 					<Flex alignSelf="flex-end">
@@ -21,8 +21,8 @@ class Callstack extends Component {
 					</Flex>
 				</Box>
 			</ConsoleBox>
-		);
+		)
 	}
 }
 
-export default Callstack;
+export default Callstack
