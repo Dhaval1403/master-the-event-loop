@@ -1,34 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react'
 // import './Console.styles.css';
 
-import { ListBox, ListTitle } from '../../styles/box';
-import { Box } from '../../styles/flex';
-import { P } from '../../styles/text';
+import { ListBox, ListTitle } from '../../styles/box'
+import { Box } from '../../styles/flex'
+import { P } from '../../styles/text'
 
-const Console = input => {
-	return (
-		// <div className="console">
-		// 	<div className="console-title">
-		// 		<div className="menu">
-		// 			<span>Callback Queue</span>
-		// 			<span>Console</span>
-		// 		</div>
-		// 	</div>
-		// 	<div className="console-body">
-		// 		<p>Hello World</p>
-		// 	</div>
-		// </div>
+//storing message in the state for now
+class Console extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			message: ['hello'],
+		}
+	}
 
-		<ListBox>
-			<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-				<ListTitle>Callback Queue | Console |</ListTitle>
-			</Box>
+	//pushes data to the message array
+	addToConsole = (data) => {
+		this.setState((prevState) => ({
+			message: [...prevState.message, data],
+		}))
+	}
 
-			<Box height="200px" mt="20px" textAlign="center">
-				<P>Hello World</P>
-			</Box>
-		</ListBox>
-	);
-};
+	render() {
+		return (
+			<ListBox>
+				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
+					<ListTitle>Console</ListTitle>
+				</Box>
 
-export default Console;
+				<Box height="200px" mt="20px" textAlign="center">
+					{this.state.message.map((message) => (
+						<P>{message}</P>
+					))}
+					{/*temporary functionality for depiction*/}
+					<button onClick={() => this.addToConsole('Hello')}>Click me</button>
+				</Box>
+			</ListBox>
+		)
+	}
+}
+
+export default Console

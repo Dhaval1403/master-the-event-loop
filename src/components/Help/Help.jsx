@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+
+import React from 'react'
+
 import './Help.styles.css'
 import { connect } from 'react-redux'
 import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions'
@@ -52,64 +54,72 @@ const Help = ({ isHelp, toggleHelp }) => {
 								button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
 								Let's get started
 							</p>
+
 						</div>
 
 						<div className="resources">
+
 							<p>
 								Below are the some really cool animations which will show you how the event loop works in 5
 								steps.
 							</p>
 
-							<span className="resource-title">Animations</span>
-							<img className="resource-item" src={gif_1} alt="animations" />
-							<img className="resource-item" src={gif_2} alt="animations" />
-							<img className="resource-item" src={gif_3} alt="animations" />
-							<img className="resource-item" src={gif_4} alt="animations" />
-							<img className="resource-item" src={gif_5} alt="animations" />
+							<div className="resources">
+								<span className="resource-title">Animations</span>
+								<img className="resource-item" src={gif_1} alt="animations" />
+								<img className="resource-item" src={gif_2} alt="animations" />
+								<img className="resource-item" src={gif_3} alt="animations" />
+								<img className="resource-item" src={gif_4} alt="animations" />
+								<img className="resource-item" src={gif_5} alt="animations" />
 
-							<p>
-								(Source of animations: &nbsp;
-								<a
-									style={{ color: 'blue' }}
-									href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
-								>
-									this awesome article)
-								</a>
-							</p>
-						</div>
+								<p>
+									(Source of animations: &nbsp;
+										<a
+											style={{ color: 'blue' }}
+											href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+										>
+											this awesome article
+										</a>
+									)
+								</p>
+							</div>
+							
 
-						<div className="resources">
 							<p>
 								Below attached are some extra resources for you if you want to dive deep into the topic. It
 								includes some images, articles and youtube videos.
 							</p>
 
-							<span className="resource-title">Images</span>
-							<img className="resource-item" src={helpImage} alt="master the event loop" />
 
-							<span className="resource-title">Videos</span>
-							<iframe className="resource-item" src="https://www.youtube.com/embed/hGSHfObcVf4"></iframe>
+							<div className="resources">
+								<span className="resource-title">Images</span>
+								<img className="resource-item" src={helpImage} alt="master the event loop" />
 
-							<span className="resource-title">Articles</span>
-							<p>
-								Javascript Visualized Event Loop &nbsp;
-								<a
-									style={{ color: 'blue' }}
-									href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
-								>
-									here
-								</a>
-							</p>
+								<span className="resource-title">Videos</span>
+								<iframe className="resource-item" src="https://www.youtube.com/embed/hGSHfObcVf4"></iframe>
 
-							<p>
-								How Javascript Works? &nbsp;
-								<a
-									style={{ color: 'blue' }}
-									href="https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5"
-								>
-									here
-								</a>
-							</p>
+
+								<span className="resource-title">Articles</span>
+								<p>
+									Javascript Visualized Event Loop &nbsp;
+									<a
+										style={{ color: 'blue' }}
+										href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+									>
+										here
+									</a>
+								</p>
+
+								<p>
+									How Javascript Works? &nbsp;
+									<a
+										style={{ color: 'blue' }}
+										href="https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5"
+									>
+										here
+									</a>
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
