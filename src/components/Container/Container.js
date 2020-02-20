@@ -1,11 +1,12 @@
 import React from 'react';
 
 import CallbackQueue from '../CallbackQueue/CallbackQueue';
-import queue from '../CallbackQueue/queue';
 import Callstack from '../Callstack/Callstack';
-import WebApi from '../WebApi/WebApi';
 import Console from '../Console/Console';
+import EventLoop from '../EventLoop/EventLoop';
 import Header from '../Header/Header';
+import queue from '../CallbackQueue/queue';
+import WebApi from '../WebApi/WebApi';
 
 import { Cell, Grid } from '../../styles/grid';
 import { Normalize } from '../../styles/normalize';
@@ -35,6 +36,10 @@ const Container = () => {
 
 				<Cell>
 					<CallbackQueue queue={queue.head} />
+				</Cell>
+
+				<Cell>
+					<EventLoop />
 				</Cell>
 			</Grid>
 		</>
