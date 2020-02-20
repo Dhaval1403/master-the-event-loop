@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
-import { variable } from './variable';
+import { variable } from './variable'
 
 export const Normalize = createGlobalStyle`
     /* GENERAL */
@@ -266,4 +266,4 @@ export const Normalize = createGlobalStyle`
     var {
         font-style: normal;
     }
-`;
+`

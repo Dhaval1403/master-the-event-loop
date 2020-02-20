@@ -1,21 +1,22 @@
 import styled from 'styled-components'
 import { space, typography } from 'styled-system'
 
-import { variable } from '../styles/variable'
+import { variable } from './variable'
 
-export const ListBox = styled.div`
-	margin: 20px auto;
-	border: 1px solid grey;
-	width: 800px;
-	border-radius: 10px;
+export const ConsoleBox = styled.div`
 	background-color: ${variable.colorWhite};
+	border: 1px solid ${variable.colorBlue};
+	border-radius: 15px;
+	box-shadow: 0 2px 0 2px ${variable.colorBlackTransparent1};
 	font-weight: 400;
 	font-size: 14px;
 	letter-spacing: 1px;
 	line-height: 1.5;
+	margin: 20px auto;
+	width: 400px;
 `
 
-export const ListTitle = styled.h2`
+export const ConsoleTitle = styled.h2`
 	${space};
 	${typography};
 	${({ fontSize }) => fontSize === undefined && 'font-size: 20px'};

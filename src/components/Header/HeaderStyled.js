@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import { variable } from '../../styles/variable';
+import { variable } from '../../styles/variable'
 
 export const HeaderStyled = styled.header`
 	background-color: ${variable.colorWhite};
@@ -14,6 +14,6 @@ export const HeaderStyled = styled.header`
 		min-height ${variable.transition}, padding ${variable.transition};
 	width: 100%;
 	z-index: 5;
-`;
+`
 
-export const LinkTo = styled.a``;
+export const LinkTo = styled.a``
