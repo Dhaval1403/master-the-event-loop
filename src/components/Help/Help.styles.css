@@ -1,0 +1,59 @@
+.modal-container {
+	position: fixed;
+	top: 0%;
+	min-height: 100%;
+	background-color: #aaa;
+	z-index: 100000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+}
+
+.modal-body {
+	z-index: 100000;
+	width: 60%;
+	height: 75vh;
+	overflow-y: auto;
+	background-color: antiquewhite;
+	padding: 1rem;
+	border-radius: 10px;
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.8rem;
+}
+
+.modal-header button {
+	color: white;
+	background-color: rgba(0, 0, 0, 0.493);
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 0.5rem 1rem;
+}
+
+.modal-content {
+	margin-bottom: 0.8rem;
+}
+
+.play-button {
+	width: 20px;
+	height: 20px;
+	margin: 0 0.5rem;
+}
+
+.resources {
+	display: grid;
+	justify-items: center;
+	grid-template-columns: 1fr;
+	gap: 25px;
+	margin-bottom: 0.8rem;
+}
+
+.resource-item {
+	width: 75%;
+	height: 250px;
+}

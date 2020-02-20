@@ -5,17 +5,20 @@ import queue from '../CallbackQueue/queue';
 import Callstack from '../Callstack/Callstack';
 import WebApi from '../WebApi/WebApi';
 import Console from '../Console/Console';
-import { Header } from '../Header/Header';
+import Header from '../Header/Header';
 
 import { Cell, Grid } from '../../styles/grid';
 import { Normalize } from '../../styles/normalize';
+import Help from '../Help/Help';
 
-export const Container = () => {
+const Container = () => {
 	return (
 		<>
 			<Normalize />
 
 			<Header />
+
+			<Help />
 
 			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
 				<Cell>
@@ -24,10 +27,6 @@ export const Container = () => {
 
 				<Cell>
 					<WebApi />
-				</Cell>
-
-				<Cell>
-					<Callstack />
 				</Cell>
 
 				<Cell>
@@ -41,3 +40,5 @@ export const Container = () => {
 		</>
 	);
 };
+
+export default Container;

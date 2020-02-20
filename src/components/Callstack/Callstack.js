@@ -18,9 +18,18 @@ class Callstack extends Component {
 			// </div>
 
 			<ConsoleBox>
-				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
+				<Box textAlign="center">
 					<ConsoleTitle>Callstack</ConsoleTitle>
 				</Box>
+
+				<Box
+					borderTop={3}
+					borderStyle="solid"
+					color="colorBlue"
+					justifySelf="center"
+					mb={4}
+					mt={4}
+				/>
 
 				<Box display="flex" height="350px" justifyContent="center" mt="20px">
 					<Flex alignSelf="flex-end">

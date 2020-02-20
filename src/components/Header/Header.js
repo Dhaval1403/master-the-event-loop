@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { HeaderStyled, LinkTo } from './HeaderStyled';
-
+import { HeaderStyled } from './HeaderStyled';
 import { Box, Flex } from '../../styles/flex';
 import { Container } from '../../styles/layout';
 import { Title4, Title5 } from '../../styles/text';
 import { variable } from '../../styles/variable';
+import { connect } from 'react-redux';
+import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions';
 
-export const Header = () => {
+const Header = ({ toggleHelp }) => {
 	return (
 		<>
 			<HeaderStyled>
@@ -24,9 +25,9 @@ export const Header = () => {
 						</Box>
 
 						<Box>
-							<LinkTo href="/">
-								<Title5 color="colorBlue">HELP</Title5>
-							</LinkTo>
+							<Title5 style={{ cursor: 'pointer' }} color="colorBlue" onClick={toggleHelp}>
+								HELP
+							</Title5>
 						</Box>
 					</Flex>
 				</Container>
@@ -34,3 +35,9 @@ export const Header = () => {
 		</>
 	);
 };
+
+const mapDispatchToProps = dispatch => ({
+	toggleHelp: () => dispatch(toggleHelp()),
+});
+
+export default connect(null, mapDispatchToProps)(Header);

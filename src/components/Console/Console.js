@@ -24,7 +24,7 @@ const Console = input => {
 				<ConsoleTitle>Callback Queue | Console |</ConsoleTitle>
 			</Box>
 
-			<Box height="200px" mt="20px" textAlign="center">
+			<Box height="350px" mt="20px" textAlign="center">
 				<P>Hello World</P>
 			</Box>
 		</ConsoleBox>

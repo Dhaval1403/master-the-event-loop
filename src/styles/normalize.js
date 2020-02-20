@@ -11,7 +11,7 @@ export const Normalize = createGlobalStyle`
         outline: none;
         padding: 0;
         vertical-align: baseline;
-        z-index: 0;
+        /* z-index: 0; */
     }
     /* Address '[hidden]' styling not present in IE 8/9. */
     /* Hide the 'template' element in IE, Safari, and Firefox < 22. */

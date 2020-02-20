@@ -45,7 +45,7 @@ export const variable = {
 
 	// Font
 	fontColor: 'rgba(30, 30, 30, 1)',
-	fontPrimary: '"Open Sans", Helvetica',
+	fontPrimary: '"Montserrat", sans-serif',
 	fontSize: '16px',
 	letterSpacing: '0',
 	lineHeight: '1.4',
