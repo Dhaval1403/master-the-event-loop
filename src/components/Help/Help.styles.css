@@ -7,16 +7,13 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 1rem;
 }
 
 .modal-body {
-	z-index: 100000;
 	width: 60%;
 	height: 75vh;
 	overflow-y: auto;
 	background-color: antiquewhite;
-	padding: 1rem;
 	border-radius: 10px;
 }
 
@@ -24,7 +21,12 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	background: #fff;
 	margin-bottom: 0.8rem;
+	padding: 0.5rem 0.8rem;
+	position: sticky;
+	top: 0;
+	z-index: 1;
 }
 
 .modal-header button {
@@ -37,6 +39,7 @@
 
 .modal-content {
 	margin-bottom: 0.8rem;
+	padding: 0.8rem;
 }
 
 .play-button {
@@ -51,6 +54,12 @@
 	grid-template-columns: 1fr;
 	gap: 25px;
 	margin-bottom: 0.8rem;
+}
+
+.resource-title {
+	font-weight: bold;
+	text-decoration: underline;
+	margin-bottom: 0.5rem;
 }
 
 .resource-item {
