@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { Button } from '../Button/Button'
+
 import { ConsoleBox, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { P } from '../../styles/text'
@@ -35,7 +37,7 @@ class Console extends Component {
 					))}
 
 					{/*temporary functionality for depiction*/}
-					<button onClick={() => this.addToConsole('Hello')}>Click me</button>
+					<Button onClick={() => this.addToConsole('Hello')}>Click me</Button>
 				</Box>
 			</ConsoleBox>
 		)

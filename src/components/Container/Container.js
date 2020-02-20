@@ -38,7 +38,7 @@ const Container = () => {
 					<EventLoop />
 				</Cell>
 
-				<Cell gridColumn="span 2">
+				<Cell gridColumn="span">
 					<CallbackQueue queue={queue.head} />
 				</Cell>
 			</Grid>
