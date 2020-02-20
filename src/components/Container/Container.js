@@ -35,11 +35,11 @@ const Container = () => {
 				</Cell>
 
 				<Cell>
-					<CallbackQueue queue={queue.head} />
+					<EventLoop />
 				</Cell>
 
 				<Cell gridColumn="span 2">
-					<EventLoop />
+					<CallbackQueue queue={queue.head} />
 				</Cell>
 			</Grid>
 		</>
