@@ -9,12 +9,7 @@ class CallbackQueue extends Component {
 	}
 
 	render() {
-		const values = []
-		let trav = this.props.queue
-		while (trav !== null) {
-			values.push(<li>{trav.value}</li>)
-			trav = trav.next
-		}
+		const values = this.props.queue.getValues().map((node) => <li>{node}</li>)
 
 		return (
 			<ConsoleBox>
