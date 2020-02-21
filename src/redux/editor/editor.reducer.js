@@ -49,11 +49,10 @@ export const editorReducer = (state = INITIAL_STATE, action) => {
 				collapsableLines: { ...state.collapsableLines, [action.payload.index]: action.payload },
 			}
 		case editorTypes.REMOVE_COLLAPSABLE_LINE:
-			const { [action.payload.index]: _, ...rest } = state.collapsableLines
-
+			const { [action.payload]: _, ...rest } = state.collapsableLines
 			return {
 				...state,
-				collapsableLines: rest,
+				collapsableLines: { ...rest },
 			}
 		case editorTypes.ADD_HIGHLIGHTED_LINE:
 			return {

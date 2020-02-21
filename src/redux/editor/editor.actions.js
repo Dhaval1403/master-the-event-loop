@@ -26,6 +26,6 @@ export const addCollapsableLine = (data) => ({
 })
 
 export const removeCollapsableLine = (lineNumber) => ({
-	type: editorTypes.SET_DATA,
+	type: editorTypes.REMOVE_COLLAPSABLE_LINE,
 	payload: lineNumber,
 })

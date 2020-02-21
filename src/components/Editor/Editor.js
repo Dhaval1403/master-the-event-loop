@@ -112,12 +112,16 @@ class Editor extends Component {
 	handlePaste = (editor, data, value) => {
 		this.loadStateWithCollapsable(editor, data.from.line)
 	}
-	// remember to handle undo and redo
 	handleChange = (editor, data, value) => {
 		if (data.origin === 'paste') {
 			this.handlePaste(editor, data, value)
 		}
-		if (data.origin === '+input' || data.origin === '+delete') {
+		if (
+			data.origin === '+input' ||
+			data.origin === '+delete' ||
+			data.origin === 'undo' ||
+			data.origin === 'redo'
+		) {
 			const result = this.openingCurlyBrace(editor, data.from.line)
 			if (result && result.isOpen) {
 				editor.addLineClass(data.from.line, 'background', Classes.collapsableLine)
@@ -137,9 +141,7 @@ class Editor extends Component {
 	}
 
 	handleCursor = (editor, data) => {
-		console.log(this.props)
 		if (this.props.highlightedLines.length > 0) {
-			console.log('y', this.props.highlightedLines[0])
 			this.unHiglightLine(editor, this.props.highlightedLines[0])
 			this.props.removeLastHighlightedLine()
 		}
