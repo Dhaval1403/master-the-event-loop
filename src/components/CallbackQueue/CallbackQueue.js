@@ -13,7 +13,9 @@ import {
 class CallbackQueue extends Component {
 	constructor(props) {
 		super(props)
-		const { callbackQueue, enqueue, dequeue } = this.props
+
+		// For demonstration and testing
+		const { enqueue, dequeue } = this.props
 		enqueue('func1')
 		enqueue('func2')
 		dequeue()
