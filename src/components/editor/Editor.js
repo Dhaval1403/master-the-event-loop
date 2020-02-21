@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
 require('codemirror/lib/codemirror.css')
@@ -7,42 +7,60 @@ require('codemirror/theme/neat.css')
 require('codemirror/mode/xml/xml.js')
 require('codemirror/mode/javascript/javascript.js')
 
-const Editor = () => {
-	const [data, updateData] = useState(`const [data, updateData] = useState("");
-	const [, setEditor] = useState(null);
-	const [collapsableLines, setCollapsableLines] = useState({});
-	const higlightLine = (editor, num) => {
-		editor.addLineClass(num, 'background', Classes.activeLine);
-	};
-	const unHiglightLine = (editor, num) => {
-		editor.removeLineClass(num, 'background', Classes.activeLine);
-	};
-	const higlightedLine = [];
-`)
+class Editor extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			data: `const loopThroughLine = (tokens, lineNo) => {
+				for (let i = 0; i < tokens.length; i++) {
+					if (tokens[i].string === character) {
+						found = true
+						if (check.open === 0) {
+							fistOpenIndex = { lineNo: lineNo, tokenIndex: i }
+						}
+	
+						if (constraint) {
+							check.open += 1
+							check.lastOpenTokenIndex = i
+						}
+						if (!constraint) {
+							return {
+								found: true,
+								tokenIndex: i,
+								line: lineNo,
+								tokens: tokens,
+							}
+						}
+					}
+					if (tokens[i].string === constraint) {
+						check.close += 1
+						lastCloseIndex = { lineNo: lineNo, tokenIndex: i }
+					}`,
+			editor: null,
+			higlightedLine: [],
+			collapsableLines: {},
+		}
+	}
 	// const [functions, updateFunctions] = {};
 
-	const [editor, setEditor] = useState(null)
-	// const [collapsableLines, setCollapsableLines] = useState({});
-	let collapsableLines = {}
-	const setCollapsableLines = (arg) => {
-		collapsableLines = arg
-	}
-	const higlightLine = (editor, num) => {
+	// const [editor, setEditor] = useState(null)
+	// const [collapsableLines, setCollapsableLines] = useState({})
+	// collapsableLines = {}
+	// setCollapsableLines = (arg) => {
+	// 	collapsableLines = arg
+	// }
+	// console.log(collapsableLines)
+	higlightLine = (editor, num) => {
 		editor.addLineClass(num, 'background', Classes.activeLine)
 	}
-	const unHiglightLine = (editor, num) => {
+	updateData = (val) => {
+		this.setState({ ...this.state, data: val })
+	}
+	unHiglightLine = (editor, num) => {
 		editor.removeLineClass(num, 'background', Classes.activeLine)
 	}
-	const higlightedLine = []
-
-	const findCharacter = (
-		editor,
-		lineNumber,
-		character,
-		constraint = false,
-		// lastOccurence = false,
-		multiLine = false
-	) => {
+	// const higlightedLine = []
+	findCharacter = (editor, lineNumber, character, constraint = false, multiLine = false) => {
 		// console.log(editor, lineNumber, character, constraint, multiLine);
 		let check = { open: 0, lastOpenTokenIndex: null, close: 0 }
 		const tokens = editor.getLineTokens(lineNumber)
@@ -76,8 +94,9 @@ const Editor = () => {
 					check.close += 1
 					lastCloseIndex = { lineNo: lineNo, tokenIndex: i }
 				}
-				if (check.open + check.close !== 0 && check.open === check.close) {
-					isOpen = false
+				if (check.open + check.close !== 0 && i === tokens.length - 1) {
+					if (check.open === check.close) isOpen = false
+					if (check.open > check.close) isOpen = true
 					return {
 						isOpen,
 						tokenIndex: i,
@@ -108,15 +127,6 @@ const Editor = () => {
 			}
 			return result
 		}
-		// if (multiLine) {
-		// 	return {
-		// 		isOpen,
-		// 		lastOpenIndex: check.lastOpenTokenIndex,
-		// 		tokens: tokens,
-		// 		lastOpenToken: tokens[check.lastOpenTokenIndex],
-		// 		line: lineFound,
-		// 	};
-		// }
 	}
 
 	// const openingCurlyBrace = (editor, lineNumber) =>
@@ -124,70 +134,97 @@ const Editor = () => {
 	// const parenthesis = (editor, lineNumber) => findCharacter(editor, lineNumber, '(', ')', true);
 	// const closingCurlyBrace = (editor, lineNumber) =>
 	// 	findCharacter(editor, lineNumber, '}', false, false, true);
+	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
 
-	const findOPeningAndClosing = (editor, lineNumber) => {
-		return findCharacter(editor, lineNumber, '{', '}', true)
+	findOPeningAndClosing = (editor, lineNumber) => {
+		return this.findCharacter(editor, lineNumber, '{', '}', true)
 	}
 
-	const updateCollapsableLines = (i, lastOpenToken, tokens, lastOpenIndex) => {
-		setCollapsableLines({
-			...collapsableLines,
-			[i]: {
-				lastOpenToken,
-				tokens,
-				lastOpenIndex,
+	updateCollapsableLines = (i, lastOpenToken, tokens, lastOpenIndex) => {
+		// console.log({
+		// 	...this.state,
+		// 	collapsableLines: {
+		// 		...this.state.collapsableLines,
+		// 		[i]: {
+		// 			lastOpenToken,
+		// 			tokens,
+		// 			lastOpenIndex,
+		// 		},
+		// 	},
+		// })
+		this.setState({
+			...this.state,
+			collapsableLines: {
+				...this.state.collapsableLines,
+				[i]: {
+					lastOpenToken,
+					tokens,
+					lastOpenIndex,
+				},
 			},
 		})
+	}
+	openingCurlyBrace = (editor, lineNumber) => {
+		return this.findCharacter(editor, lineNumber, '{', '}')
 	}
 
 	// Handle Paste into editor
 
-	const loadStateWithCollapsable = (editor, startNumber) => {
-		// for (var i = startNumber; i < editor.doc.size; i++) {
-		// 	const { isCollapsable, lastOpenToken, tokens, lastOpenIndex } = openingCurlyBrace(editor, i);
-		// 	if (isCollapsable) {
-		// 		editor.addLineClass(i, 'background', Classes.collapsableLine);
-		// 		updateCollapsableLines(i, lastOpenToken, tokens, lastOpenIndex);
-		// 	}
-		// }
-	}
-
-	const handlePaste = (editor, data, value) => {
-		loadStateWithCollapsable(editor, data.from.line)
-	}
-
-	const handleChange = (editor, data, value) => {
-		// if (data.origin === 'paste') {
-		// 	handlePaste(editor, data, value);
-		// }
-		// if (data.origin === '+input') {
-		// 	const { isCollapsable, lastOpenToken, tokens, lastOpenIndex } = openingCurlyBrace(
-		// 		editor,
-		// 		data.from.line
-		// 	);
-		// 	if (isCollapsable) {
-		// 		updateCollapsableLines(lastOpenToken, tokens, lastOpenIndex);
-		// 	} else {
-		// 		if (collapsableLines[data.from.line]) {
-		// 			const { [data.from.line]: _, ...rest } = collapsableLines;
-		// 			setCollapsableLines(rest);
-		// 		}
-		// 	}
-		// }
-	}
-
-	const handleCursor = (editor, data) => {
-		higlightedLine.push(data.line)
-		if (higlightedLine.length > 1) {
-			const first = higlightedLine.shift()
-			unHiglightLine(editor, first)
+	loadStateWithCollapsable = (editor, startNumber) => {
+		for (var i = startNumber; i < editor.doc.size; i++) {
+			const result = this.openingCurlyBrace(editor, i)
+			if (result && result.isOpen) {
+				editor.addLineClass(i, 'background', Classes.collapsableLine)
+				console.log(this.state.collapsableLines, result)
+				this.updateCollapsableLines(i, result.lastOpenToken, result.tokens, result.lastOpenIndex)
+			}
 		}
-		higlightLine(editor, data.line)
+	}
+
+	handlePaste = (editor, data, value) => {
+		this.loadStateWithCollapsable(editor, data.from.line)
+	}
+
+	removeFromObject = (key, obj) => {
+		const { [key]: _, ...rest } = this.state.collapsableLines
+		return rest
+	}
+
+	handleChange = (editor, data, value) => {
+		if (data.origin === 'paste') {
+			this.handlePaste(editor, data, value)
+		}
+		if (data.origin === '+input' || data.origin === '+delete') {
+			const result = this.openingCurlyBrace(editor, data.from.line)
+			if (result && result.isOpen) {
+				editor.addLineClass(data.from.line, 'background', Classes.collapsableLine)
+				this.updateCollapsableLines(result.lastOpenToken, result.tokens, result.lastOpenIndex)
+			} else {
+				if (this.state.collapsableLines[data.from.line]) {
+					editor.removeLineClass(data.from.line, 'background', Classes.collapsableLine)
+					this.setState({
+						...this.state,
+						collapsableLines: this.removeFromObject(data.from.line, this.collapsableLines),
+					})
+				}
+			}
+		}
+	}
+
+	handleCursor = (editor, data) => {
+		this.setState({ ...this.state, higlightedLine: [...this.state.higlightedLine, data.line] })
+		if (this.state.higlightedLine.length > 1) {
+			const newHiglightedLine = [...this.state.higlightedLine]
+			const first = newHiglightedLine.shift()
+			this.setState({ ...this.state, higlightedLine: newHiglightedLine })
+			this.unHiglightLine(editor, first)
+		}
+		this.higlightLine(editor, data.line)
 	}
 
 	// Add style to line(s) during execution simulation
 
-	const higlightCharacters = (editor, from, to) => {
+	higlightCharacters = (editor, from, to) => {
 		if (to !== undefined) {
 			for (var i = from; i <= to; i++) {
 				editor.addLineClass(i, 'background', Classes.runningLine)
@@ -199,7 +236,7 @@ const Editor = () => {
 
 	// Remove style to line(s) during execution simulation
 
-	const removeHiglightFromCharacters = (editor, from, to) => {
+	removeHiglightFromCharacters = (editor, from, to) => {
 		if (to !== undefined) {
 			for (var i = from; i <= to; i++) {
 				editor.removeLineClass(i, 'background', Classes.runningLine)
@@ -209,44 +246,54 @@ const Editor = () => {
 		}
 	}
 
-	const editorMount = (editor) => {
-		setEditor(editor)
+	editorMount = (editor) => {
+		this.setState({
+			...this.state,
+			editor,
+		})
 		if (editor.doc.size > 1) {
-			loadStateWithCollapsable(editor, 0)
+			this.loadStateWithCollapsable(editor, 0)
 		}
-		// higlightCharacters(editor, 3, 4);
 	}
 
-	const getStringValue = (editor, startLine, endLine, startIndex, endIndex) => {
+	getStringValue = (editor, startLine, endLine, startIndex, endIndex) => {
 		const firstLineTokens = editor.getLineTokens(startLine)
 	}
 
-	const findFunctions = (editor) => {
+	findFunctions = (editor) => {
 		// const data = parenthesis
 	}
 	// editorMount
-	return (
-		<div className={Classes.container}>
-			<CodeMirror
-				className={Classes.codeMirror}
-				value={data}
-				editorDidMount={() => {}}
-				options={{
-					mode: 'javascript',
-					theme: 'material',
-					tabSize: 2,
-					lineNumbers: true,
-				}}
-				onCursor={handleCursor}
-				onBeforeChange={(editor, data, value) => updateData(value)}
-				onChange={handleChange}
-				onGutterClick={(editor, number, gutter, str) => {
-					console.log(findOPeningAndClosing(editor, 3))
-					// console.log(closingCurlyBrace(editor, number + 1));
-				}}
-			/>
-		</div>
-	)
+
+	render() {
+		console.log(this.state)
+		return (
+			<div className={Classes.container}>
+				<CodeMirror
+					className={Classes.codeMirror}
+					value={this.state.data}
+					editorDidMount={(editor) => {
+						this.loadStateWithCollapsable(editor, 0)
+					}}
+					options={{
+						mode: 'javascript',
+						theme: 'material',
+						tabSize: 2,
+						lineNumbers: true,
+					}}
+					onCursor={this.handleCursor}
+					onBeforeChange={(editor, data, value) => this.updateData(value)}
+					onChange={this.handleChange}
+					onGutterClick={(editor, number, gutter, str) => {
+						// console.log(findOPeningAndClosing(editor, 3))
+						console.log(this.findFatArrow(editor, number))
+						// console.log(closingCurlyBrace(editor, number + 1));
+					}}
+					state={this.state}
+				/>
+			</div>
+		)
+	}
 }
 
 export default Editor
