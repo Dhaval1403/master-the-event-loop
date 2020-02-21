@@ -5,7 +5,7 @@ import Callstack from '../Callstack/Callstack'
 import Console from '../Console/Console'
 import EventLoop from '../EventLoop/EventLoop'
 import Header from '../Header/Header'
-import queue from '../CallbackQueue/queue'
+import Queue from '../../utils/customDataStructures/Queue'
 import WebApi from '../WebApi/WebApi'
 import Editor from '../Editor/Editor'
 
@@ -14,6 +14,8 @@ import { Normalize } from '../../styles/normalize'
 import Help from '../Help/Help'
 
 const Container = () => {
+	const queue = new Queue()
+
 	return (
 		<>
 			<Normalize />
@@ -42,7 +44,7 @@ const Container = () => {
 				</Cell>
 
 				<Cell gridColumn="span">
-					<CallbackQueue queue={queue.head} />
+					<CallbackQueue queue={queue} />
 				</Cell>
 			</Grid>
 		</>
