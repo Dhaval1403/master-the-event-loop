@@ -24,13 +24,15 @@ const Container = () => {
 
 			<Help />
 
-			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
+			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="50px">
 				<Cell>
 					<Editor />
 				</Cell>
+
 				<Cell>
 					<Callstack />
 				</Cell>
+
 				<Cell>
 					<WebApi />
 				</Cell>

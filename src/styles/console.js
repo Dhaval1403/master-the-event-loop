@@ -14,6 +14,7 @@ export const ConsoleBox = styled.div`
 	line-height: 1.5;
 	margin: 20px auto;
 	width: 400px;
+	height: 250px;
 	overflow-y: auto;
 `
 
