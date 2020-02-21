@@ -1,27 +1,14 @@
 import React, { Component } from 'react'
 
-import { Button } from '../Button/Button'
+import { connect } from 'react-redux'
+import { pushToConsole } from '../../redux/Console/Console.actions'
 
+import { Button } from '../Button/Button'
 import { ConsoleBox, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { P } from '../../styles/text'
 
-//storing message in the state for now
 class Console extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			message: ['Hello'],
-		}
-	}
-
-	//pushes data to the message array
-	addToConsole = (data) => {
-		this.setState((prevState) => ({
-			message: [...prevState.message, data],
-		}))
-	}
-
 	render() {
 		return (
 			<ConsoleBox>
@@ -32,16 +19,25 @@ class Console extends Component {
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
 				<Box height="350px" mt="20px" textAlign="center">
-					{this.state.message.map((message) => (
-						<P>{message}</P>
+					{this.props.messages.map((message) => (
+						<P key={this.props.messages.indexOf(message)}>{message}</P>
 					))}
 
-					{/*temporary functionality for depiction*/}
-					<Button onClick={() => this.addToConsole('Hello')}>Click me</Button>
+					{/* temporary button for functionality depiction, will be removed */}
+					<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
 				</Box>
 			</ConsoleBox>
 		)
 	}
 }
 
-export default Console
+const mapStateToProps = (state) => ({
+	messages: state.consoleReducer.messages,
+})
+
+//temporary dispatch for functionality depiction
+const mapDispatchToProps = (dispatch) => ({
+	pushToConsole: (message) => dispatch(pushToConsole(message)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Console)
