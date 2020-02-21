@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/editor/editor.actions'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
 require('codemirror/lib/codemirror.css')
@@ -8,60 +10,13 @@ require('codemirror/mode/xml/xml.js')
 require('codemirror/mode/javascript/javascript.js')
 
 class Editor extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			data: `const loopThroughLine = (tokens, lineNo) => {
-				for (let i = 0; i < tokens.length; i++) {
-					if (tokens[i].string === character) {
-						found = true
-						if (check.open === 0) {
-							fistOpenIndex = { lineNo: lineNo, tokenIndex: i }
-						}
-	
-						if (constraint) {
-							check.open += 1
-							check.lastOpenTokenIndex = i
-						}
-						if (!constraint) {
-							return {
-								found: true,
-								tokenIndex: i,
-								line: lineNo,
-								tokens: tokens,
-							}
-						}
-					}
-					if (tokens[i].string === constraint) {
-						check.close += 1
-						lastCloseIndex = { lineNo: lineNo, tokenIndex: i }
-					}`,
-			editor: null,
-			higlightedLine: [],
-			collapsableLines: {},
-		}
-	}
-	// const [functions, updateFunctions] = {};
-
-	// const [editor, setEditor] = useState(null)
-	// const [collapsableLines, setCollapsableLines] = useState({})
-	// collapsableLines = {}
-	// setCollapsableLines = (arg) => {
-	// 	collapsableLines = arg
-	// }
-	// console.log(collapsableLines)
 	higlightLine = (editor, num) => {
 		editor.addLineClass(num, 'background', Classes.activeLine)
-	}
-	updateData = (val) => {
-		this.setState({ ...this.state, data: val })
 	}
 	unHiglightLine = (editor, num) => {
 		editor.removeLineClass(num, 'background', Classes.activeLine)
 	}
-	// const higlightedLine = []
 	findCharacter = (editor, lineNumber, character, constraint = false, multiLine = false) => {
-		// console.log(editor, lineNumber, character, constraint, multiLine);
 		let check = { open: 0, lastOpenTokenIndex: null, close: 0 }
 		const tokens = editor.getLineTokens(lineNumber)
 		let fistOpenIndex
@@ -128,41 +83,10 @@ class Editor extends Component {
 			return result
 		}
 	}
-
-	// const openingCurlyBrace = (editor, lineNumber) =>
-	// 	findCharacter(editor, lineNumber, '{', '}', true);
-	// const parenthesis = (editor, lineNumber) => findCharacter(editor, lineNumber, '(', ')', true);
-	// const closingCurlyBrace = (editor, lineNumber) =>
-	// 	findCharacter(editor, lineNumber, '}', false, false, true);
 	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
 
 	findOPeningAndClosing = (editor, lineNumber) => {
 		return this.findCharacter(editor, lineNumber, '{', '}', true)
-	}
-
-	updateCollapsableLines = (i, lastOpenToken, tokens, lastOpenIndex) => {
-		// console.log({
-		// 	...this.state,
-		// 	collapsableLines: {
-		// 		...this.state.collapsableLines,
-		// 		[i]: {
-		// 			lastOpenToken,
-		// 			tokens,
-		// 			lastOpenIndex,
-		// 		},
-		// 	},
-		// })
-		this.setState({
-			...this.state,
-			collapsableLines: {
-				...this.state.collapsableLines,
-				[i]: {
-					lastOpenToken,
-					tokens,
-					lastOpenIndex,
-				},
-			},
-		})
 	}
 	openingCurlyBrace = (editor, lineNumber) => {
 		return this.findCharacter(editor, lineNumber, '{', '}')
@@ -175,8 +99,12 @@ class Editor extends Component {
 			const result = this.openingCurlyBrace(editor, i)
 			if (result && result.isOpen) {
 				editor.addLineClass(i, 'background', Classes.collapsableLine)
-				console.log(this.state.collapsableLines, result)
-				this.updateCollapsableLines(i, result.lastOpenToken, result.tokens, result.lastOpenIndex)
+				this.props.addCollapsableLine({
+					index: i,
+					lastOpenToken: result.lastOpenToken,
+					tokens: result.tokens,
+					lastOpenIndex: result.lastOpenIndex,
+				})
 			}
 		}
 	}
@@ -184,12 +112,7 @@ class Editor extends Component {
 	handlePaste = (editor, data, value) => {
 		this.loadStateWithCollapsable(editor, data.from.line)
 	}
-
-	removeFromObject = (key, obj) => {
-		const { [key]: _, ...rest } = this.state.collapsableLines
-		return rest
-	}
-
+	// remember to handle undo and redo
 	handleChange = (editor, data, value) => {
 		if (data.origin === 'paste') {
 			this.handlePaste(editor, data, value)
@@ -198,28 +121,30 @@ class Editor extends Component {
 			const result = this.openingCurlyBrace(editor, data.from.line)
 			if (result && result.isOpen) {
 				editor.addLineClass(data.from.line, 'background', Classes.collapsableLine)
-				this.updateCollapsableLines(result.lastOpenToken, result.tokens, result.lastOpenIndex)
+				this.props.addCollapsableLine({
+					index: data.from.line,
+					lastOpenToken: result.lastOpenToken,
+					tokens: result.tokens,
+					lastOpenIndex: result.lastOpenIndex,
+				})
 			} else {
-				if (this.state.collapsableLines[data.from.line]) {
+				if (this.props.collapsableLines[data.from.line]) {
 					editor.removeLineClass(data.from.line, 'background', Classes.collapsableLine)
-					this.setState({
-						...this.state,
-						collapsableLines: this.removeFromObject(data.from.line, this.collapsableLines),
-					})
+					this.props.removeCollapsableLine(data.from.line)
 				}
 			}
 		}
 	}
 
 	handleCursor = (editor, data) => {
-		this.setState({ ...this.state, higlightedLine: [...this.state.higlightedLine, data.line] })
-		if (this.state.higlightedLine.length > 1) {
-			const newHiglightedLine = [...this.state.higlightedLine]
-			const first = newHiglightedLine.shift()
-			this.setState({ ...this.state, higlightedLine: newHiglightedLine })
-			this.unHiglightLine(editor, first)
+		console.log(this.props)
+		if (this.props.highlightedLines.length > 0) {
+			console.log('y', this.props.highlightedLines[0])
+			this.unHiglightLine(editor, this.props.highlightedLines[0])
+			this.props.removeLastHighlightedLine()
 		}
 		this.higlightLine(editor, data.line)
+		this.props.highlightLine(data.line)
 	}
 
 	// Add style to line(s) during execution simulation
@@ -245,17 +170,6 @@ class Editor extends Component {
 			editor.removeLineClass(i, 'background', Classes.runningLine)
 		}
 	}
-
-	editorMount = (editor) => {
-		this.setState({
-			...this.state,
-			editor,
-		})
-		if (editor.doc.size > 1) {
-			this.loadStateWithCollapsable(editor, 0)
-		}
-	}
-
 	getStringValue = (editor, startLine, endLine, startIndex, endIndex) => {
 		const firstLineTokens = editor.getLineTokens(startLine)
 	}
@@ -263,15 +177,13 @@ class Editor extends Component {
 	findFunctions = (editor) => {
 		// const data = parenthesis
 	}
-	// editorMount
 
 	render() {
-		console.log(this.state)
 		return (
 			<div className={Classes.container}>
 				<CodeMirror
 					className={Classes.codeMirror}
-					value={this.state.data}
+					value={this.props.data}
 					editorDidMount={(editor) => {
 						this.loadStateWithCollapsable(editor, 0)
 					}}
@@ -282,18 +194,35 @@ class Editor extends Component {
 						lineNumbers: true,
 					}}
 					onCursor={this.handleCursor}
-					onBeforeChange={(editor, data, value) => this.updateData(value)}
+					onBeforeChange={(editor, data, value) => this.props.setData(value)}
 					onChange={this.handleChange}
-					onGutterClick={(editor, number, gutter, str) => {
-						// console.log(findOPeningAndClosing(editor, 3))
-						console.log(this.findFatArrow(editor, number))
-						// console.log(closingCurlyBrace(editor, number + 1));
-					}}
-					state={this.state}
+					onGutterClick={(editor, number, gutter, str) => {}}
 				/>
 			</div>
 		)
 	}
 }
 
-export default Editor
+const mapStateToProps = (state) => {
+	const {
+		editor: { editor, highlightedLines, collapsableLines, data },
+	} = state
+	return {
+		data,
+		editor,
+		highlightedLines,
+		collapsableLines,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		highlightLine: (lineNumber) => dispatch(actions.highlightLine(lineNumber)),
+		removeLastHighlightedLine: () => dispatch(actions.removeLastHighlightedLine()),
+		setData: (data) => dispatch(actions.setData(data)),
+		addCollapsableLine: (data) => dispatch(actions.addCollapsableLine(data)),
+		removeCollapsableLine: (lineNumber) => dispatch(actions.removeCollapsableLine(lineNumber)),
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor)
