@@ -11,6 +11,19 @@ const initalState = {
 			name: 'Main',
 			delay: 0,
 			webApi: false,
+			message: undefined,
+		},
+		{
+			name: 'console.log',
+			delay: 0,
+			webApi: false,
+			message: 'Test Console log',
+		},
+		{
+			name: 'console.warn',
+			delay: 0,
+			webApi: false,
+			message: 'Test Console warn',
 		},
 	],
 	isOccupied: false,
@@ -20,12 +33,17 @@ export const callstackReducer = (state = initalState, action) => {
 	switch (action.type) {
 		case CHECK_CALLSTACK:
 			return state.isOccupied
-		case CHECK_FUNCTION:
+
+		// IS ACTUALLY PART OF THE CODE EDITOR REDUCER
+		/* 	case CHECK_FUNCTION:
+			
 			const stackObject = {
 				name: undefined,
 				delay: undefined,
 				webApi: undefined,
+				message: undefined
 			}
+
 			if (typeof window[action.payload] === 'function') {
 				stackObject.name = action.payload
 				stackObject.delay = 1000
@@ -35,7 +53,7 @@ export const callstackReducer = (state = initalState, action) => {
 				stackObject.delay = 500
 				stackObject.webApi = false
 			}
-			return { ...state, stack: [...state.stack, stackObject] }
+			return { ...state, stack: [...state.stack, stackObject] } */
 
 		case ADD_TO_CALLSTACK:
 			return { ...state, stack: [...state.stack, action.payload], isOccupied: true }
