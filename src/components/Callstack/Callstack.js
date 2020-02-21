@@ -43,7 +43,7 @@ class Callstack extends Component {
 
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" height="350px" justifyContent="center" mt="20px">
+				<Box display="flex" justifyContent="center" mt="20px">
 					<List>{this.renderCallstack(this.props)}</List>
 				</Box>
 			</ConsoleBox>

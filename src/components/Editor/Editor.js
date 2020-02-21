@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
+import { ConsoleBox, ConsoleTitle } from '../../styles/console'
+import { Box } from '../../styles/flex'
+
 require('codemirror/lib/codemirror.css')
 require('codemirror/theme/material.css')
 require('codemirror/theme/neat.css')
@@ -226,26 +229,36 @@ const Editor = () => {
 	}
 	// editorMount
 	return (
-		<div className={Classes.container}>
-			<CodeMirror
-				className={Classes.codeMirror}
-				value={data}
-				editorDidMount={() => {}}
-				options={{
-					mode: 'javascript',
-					theme: 'material',
-					tabSize: 2,
-					lineNumbers: true,
-				}}
-				onCursor={handleCursor}
-				onBeforeChange={(editor, data, value) => updateData(value)}
-				onChange={handleChange}
-				onGutterClick={(editor, number, gutter, str) => {
-					console.log(findOPeningAndClosing(editor, 3))
-					// console.log(closingCurlyBrace(editor, number + 1));
-				}}
-			/>
-		</div>
+		<ConsoleBox>
+			<Box display="flex" justifyContent="center" alignItems="center">
+				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+			</Box>
+
+			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+
+			<Box>
+				<div className={Classes.container}>
+					<CodeMirror
+						className={Classes.codeMirror}
+						value={data}
+						editorDidMount={() => {}}
+						options={{
+							mode: 'javascript',
+							theme: 'material',
+							tabSize: 2,
+							lineNumbers: true,
+						}}
+						onCursor={handleCursor}
+						onBeforeChange={(editor, data, value) => updateData(value)}
+						onChange={handleChange}
+						onGutterClick={(editor, number, gutter, str) => {
+							console.log(findOPeningAndClosing(editor, 3))
+							// console.log(closingCurlyBrace(editor, number + 1));
+						}}
+					/>
+				</div>
+			</Box>
+		</ConsoleBox>
 	)
 }
 
