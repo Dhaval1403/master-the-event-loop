@@ -3,6 +3,7 @@ import { helpReducer } from './helpToggle/helpToggle.reducer'
 import { consoleReducer } from './Console/Console.reducer'
 import { callstackReducer } from './callstack/callstack.reducer'
 import { editorReducer } from './editor/editor.reducer'
+import { callbackQueueReducer } from './callbackQueue/callbackQueue.reducer'
 
 // import all reducers in this file and add them with a flag to the combineReducer method by adding it to the object
 // reducerName : reducer;
@@ -12,4 +13,5 @@ export default combineReducers({
 	consoleReducer: consoleReducer,
 	callstack: callstackReducer,
 	editor: editorReducer,
+	callbackQueue: callbackQueueReducer,
 })

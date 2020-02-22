@@ -1,14 +1,14 @@
 .spinner-container {
 	position: relative;
-	width: 200px;
-	height: 200px;
+	width: 125px;
+	height: 125px;
 }
 
 .circle {
 	position: absolute;
 	box-sizing: border-box;
-	height: 200px;
-	width: 200px;
+	height: 125px;
+	width: 125px;
 	border: 7px solid #00a1de;
 	border-radius: 50%;
 	clip-path: inset(0 0 0 50%);
@@ -16,11 +16,11 @@
 
 .triangle {
 	position: absolute;
-	width: 40px;
-	height: 30px;
+	width: 30px;
+	height: 20px;
 	background: #00a1de;
-	margin-top: -10px;
-	margin-left: 70px;
+	margin-top: -7px;
+	margin-left: 38px;
 	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
 	-moz-transform: rotate(-90deg);
 	-webkit-transform: rotate(-90deg);

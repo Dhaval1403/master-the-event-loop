@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.actions'
 import { pushToConsole } from './../../redux/Console/Console.actions'
 
-import { ConsoleBox, ConsoleTitle } from '../../styles/console'
-import { List, ListItem } from '../../styles/callstack'
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 class Callstack extends Component {
@@ -43,7 +42,7 @@ class Callstack extends Component {
 
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" height="350px" justifyContent="center" mt="20px">
+				<Box display="flex" justifyContent="center" m="20px 0">
 					<List>{this.renderCallstack(this.props)}</List>
 				</Box>
 			</ConsoleBox>

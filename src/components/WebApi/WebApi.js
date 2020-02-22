@@ -14,7 +14,7 @@ const WebApi = (input) => {
 
 			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-			<Box display="flex" height="350px" justifyContent="center" mt="20px">
+			<Box display="flex" justifyContent="center" m="20px 0">
 				<List>
 					<ListItem>$.on('button', 'click', ...)</ListItem>
 

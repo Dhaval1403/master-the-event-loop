@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { pushToConsole } from '../../redux/Console/Console.actions'
 
 import { Button } from '../Button/Button'
-import { ConsoleBox, ConsoleTitle } from '../../styles/console'
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { P } from '../../styles/text'
 
@@ -18,13 +18,16 @@ class Console extends Component {
 
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box height="350px" mt="20px" textAlign="center">
-					{this.props.messages.map((message) => (
-						<P key={this.props.messages.indexOf(message)}>{message}</P>
-					))}
+				<Box display="flex" justifyContent="center" m="20px 0">
+					<List>
+						{this.props.messages.map((message) => (
+							<ListItem>
+								<P key={this.props.messages.indexOf(message)}>{message}</P>
+							</ListItem>
+						))}
 
-					{/* temporary button for functionality depiction, will be removed */}
-					<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
+						<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
+					</List>
 				</Box>
 			</ConsoleBox>
 		)

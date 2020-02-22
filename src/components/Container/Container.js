@@ -24,13 +24,21 @@ const Container = () => {
 
 			<Help />
 
-			<Grid display="grid" gridTemplateColumns="1fr 1fr 1fr" mt="100px">
+			<Grid
+				display="grid"
+				gridTemplateColumns="2fr 1fr 1fr"
+				gridTemplateRows="300px 200px"
+				gridGap="25px"
+				m="25px"
+			>
 				<Cell>
 					<Editor />
 				</Cell>
+
 				<Cell>
 					<Callstack />
 				</Cell>
+
 				<Cell>
 					<WebApi />
 				</Cell>
@@ -39,12 +47,12 @@ const Container = () => {
 					<Console />
 				</Cell>
 
-				<Cell>
+				<Cell alignSelf="center" justifySelf="center">
 					<EventLoop />
 				</Cell>
 
-				<Cell gridColumn="span">
-					<CallbackQueue queue={queue} />
+				<Cell>
+					<CallbackQueue />
 				</Cell>
 			</Grid>
 		</>

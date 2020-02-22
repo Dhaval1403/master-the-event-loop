@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/editor/editor.actions'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
+import { ConsoleBox, ConsoleTitle } from '../../styles/console'
+import { Box } from '../../styles/flex'
+
 require('codemirror/lib/codemirror.css')
 require('codemirror/theme/material.css')
 require('codemirror/theme/neat.css')
@@ -255,28 +258,38 @@ class Editor extends Component {
 
 	render() {
 		return (
-			<div className={Classes.container}>
-				<CodeMirror
-					className={Classes.codeMirror}
-					value={this.props.data}
-					editorDidMount={(editor) => {
-						this.loadStateWithCollapsable(editor, 0)
-						this.loadStateWithFunctions(editor, 0)
-					}}
-					options={{
-						mode: 'javascript',
-						theme: 'material',
-						tabSize: 2,
-						lineNumbers: true,
-					}}
-					onCursor={this.handleCursor}
-					onBeforeChange={(editor, data, value) => this.props.setData(value)}
-					onChange={this.handleChange}
-					onGutterClick={(editor, number, gutter, str) => {
-						this.findFunctions(editor, number)
-					}}
-				/>
-			</div>
+			<ConsoleBox>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+				</Box>
+
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+
+				<Box>
+					<div className={Classes.container}>
+						<CodeMirror
+							className={Classes.codeMirror}
+							value={this.props.data}
+							editorDidMount={(editor) => {
+								this.loadStateWithCollapsable(editor, 0)
+								this.loadStateWithFunctions(editor, 0)
+							}}
+							options={{
+								mode: 'javascript',
+								theme: 'material',
+								tabSize: 2,
+								lineNumbers: true,
+							}}
+							onCursor={this.handleCursor}
+							onBeforeChange={(editor, data, value) => this.props.setData(value)}
+							onChange={this.handleChange}
+							onGutterClick={(editor, number, gutter, str) => {
+								this.findFunctions(editor, number)
+							}}
+						/>
+					</div>
+				</Box>
+			</ConsoleBox>
 		)
 	}
 }
