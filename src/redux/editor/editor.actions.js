@@ -29,3 +29,8 @@ export const removeCollapsableLine = (lineNumber) => ({
 	type: editorTypes.REMOVE_COLLAPSABLE_LINE,
 	payload: lineNumber,
 })
+
+export const addFunction = (fun) => ({
+	type: editorTypes.ADD_FUNCTION,
+	payload: fun,
+})

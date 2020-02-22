@@ -1,34 +1,12 @@
 import { editorTypes } from './editor.types'
+import { str } from './testString'
 
 const INITIAL_STATE = {
-	data: `const loopThroughLine = (tokens, lineNo) => {
-        for (let i = 0; i < tokens.length; i++) {
-            if (tokens[i].string === character) {
-                found = true
-                if (check.open === 0) {
-                    fistOpenIndex = { lineNo: lineNo, tokenIndex: i }
-                }
-
-                if (constraint) {
-                    check.open += 1
-                    check.lastOpenTokenIndex = i
-                }
-                if (!constraint) {
-                    return {
-                        found: true,
-                        tokenIndex: i,
-                        line: lineNo,
-                        tokens: tokens,
-                    }
-                }
-            }
-            if (tokens[i].string === constraint) {
-                check.close += 1
-                lastCloseIndex = { lineNo: lineNo, tokenIndex: i }
-            }`,
+	data: str,
 	editor: null,
 	highlightedLines: [],
 	collapsableLines: {},
+	functions: { named: {}, anonymous: [] },
 }
 
 export const editorReducer = (state = INITIAL_STATE, action) => {
@@ -66,6 +44,25 @@ export const editorReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				highlightedLines: newArr,
 			}
+		case editorTypes.ADD_FUNCTION:
+			if (action.payload.name) {
+				return {
+					...state,
+					functions: {
+						...state.functions,
+						named: {
+							...state.functions.named,
+							[action.payload.name]: action.payload,
+						},
+					},
+				}
+			} else {
+				return {
+					...state,
+					functions: { ...state.functions, anonymous: [...state.functions.anonymous, action.payload] },
+				}
+			}
+
 		default:
 			return state
 	}

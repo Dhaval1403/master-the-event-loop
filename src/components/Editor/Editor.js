@@ -83,7 +83,6 @@ class Editor extends Component {
 			return result
 		}
 	}
-	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
 
 	findOPeningAndClosing = (editor, lineNumber) => {
 		return this.findCharacter(editor, lineNumber, '{', '}', true)
@@ -91,9 +90,86 @@ class Editor extends Component {
 	openingCurlyBrace = (editor, lineNumber) => {
 		return this.findCharacter(editor, lineNumber, '{', '}')
 	}
+	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
+	findFunctionKeyword = (editor, lineNumber) => this.findCharacter(editor, lineNumber, 'function')
 
+	findFunctionName = (tokens, limit, line, es5 = false) => {
+		const foundTokens = { ')': false, '(': false }
+		if (es5) {
+			for (let i = limit + 1; i < tokens.length; i++) {
+				if (tokens[i].string === '(' && !foundTokens['(']) {
+					foundTokens[tokens[i].string] = true
+					continue
+				}
+				if (tokens[i].string === ')' && !foundTokens[')']) {
+					return {
+						type: 'anonymous',
+						tokenIndex: i,
+						line,
+					}
+				}
+				if (tokens[i].string === ' ') {
+					continue
+				}
+				if (tokens[i].string && !foundTokens['(']) {
+					return {
+						type: 'named',
+						name: tokens[i].string,
+						tokenIndex: i,
+						line,
+					}
+				}
+			}
+		} else {
+			for (let i = limit - 1; i >= 0; i--) {
+				if (
+					(tokens[i].string === '(' && !foundTokens['(']) ||
+					(tokens[i].string === ')' && !foundTokens[')'])
+				) {
+					foundTokens[tokens[i].string] = true
+					continue
+				}
+				if (foundTokens[')'] && foundTokens['(']) {
+					if (tokens[i].string === ' ' || tokens[i].string === '=' || tokens[i].string === ':') {
+						continue
+					} else if (tokens[i].string === '(' || tokens[i].string === '{') {
+						return {
+							type: 'anonymous',
+							tokenIndex: i,
+							line,
+						}
+					} else {
+						return {
+							type: 'named',
+							name: tokens[i].string,
+							tokenIndex: i,
+							line,
+						}
+					}
+				}
+			}
+		}
+	}
+
+	findFunctions = (editor, line) => {
+		const es6Function = this.findFatArrow(editor, line)
+		const es5Function = this.findFunctionKeyword(editor, line)
+		if (es6Function && es6Function.found) {
+			const res = this.findFunctionName(es6Function.tokens, es6Function.tokenIndex, line)
+			this.props.addFunction(res)
+		}
+		if (es5Function && es5Function.found) {
+			const res = this.findFunctionName(es5Function.tokens, es5Function.tokenIndex, line, true)
+			this.props.addFunction(res)
+		}
+	}
+
+	loadStateWithFunctions = (editor, startNumber) => {
+		for (var i = startNumber; i < editor.doc.size; i++) {
+			this.findFunctions(editor, i)
+		}
+	}
 	// Handle Paste into editor
-
 	loadStateWithCollapsable = (editor, startNumber) => {
 		for (var i = startNumber; i < editor.doc.size; i++) {
 			const result = this.openingCurlyBrace(editor, i)
@@ -123,6 +199,7 @@ class Editor extends Component {
 			data.origin === 'redo'
 		) {
 			const result = this.openingCurlyBrace(editor, data.from.line)
+
 			if (result && result.isOpen) {
 				editor.addLineClass(data.from.line, 'background', Classes.collapsableLine)
 				this.props.addCollapsableLine({
@@ -176,10 +253,6 @@ class Editor extends Component {
 		const firstLineTokens = editor.getLineTokens(startLine)
 	}
 
-	findFunctions = (editor) => {
-		// const data = parenthesis
-	}
-
 	render() {
 		return (
 			<div className={Classes.container}>
@@ -188,6 +261,7 @@ class Editor extends Component {
 					value={this.props.data}
 					editorDidMount={(editor) => {
 						this.loadStateWithCollapsable(editor, 0)
+						this.loadStateWithFunctions(editor, 0)
 					}}
 					options={{
 						mode: 'javascript',
@@ -198,7 +272,9 @@ class Editor extends Component {
 					onCursor={this.handleCursor}
 					onBeforeChange={(editor, data, value) => this.props.setData(value)}
 					onChange={this.handleChange}
-					onGutterClick={(editor, number, gutter, str) => {}}
+					onGutterClick={(editor, number, gutter, str) => {
+						this.findFunctions(editor, number)
+					}}
 				/>
 			</div>
 		)
@@ -224,6 +300,7 @@ const mapDispatchToProps = (dispatch) => {
 		setData: (data) => dispatch(actions.setData(data)),
 		addCollapsableLine: (data) => dispatch(actions.addCollapsableLine(data)),
 		removeCollapsableLine: (lineNumber) => dispatch(actions.removeCollapsableLine(lineNumber)),
+		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 	}
 }
 
