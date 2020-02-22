@@ -52,7 +52,7 @@ const Container = () => {
 				</Cell>
 
 				<Cell>
-					<CallbackQueue queue={queue} />
+					<CallbackQueue />			
 				</Cell>
 			</Grid>
 		</>
