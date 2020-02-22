@@ -12,9 +12,7 @@ export const ConsoleBox = styled.div`
 	font-size: 14px;
 	letter-spacing: 1px;
 	line-height: 1.5;
-	margin: 20px auto;
-	width: 400px;
-	height: 250px;
+	height: 100%;
 	overflow-y: auto;
 `
 
