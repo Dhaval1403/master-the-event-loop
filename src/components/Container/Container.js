@@ -46,7 +46,7 @@ const Container = () => {
 				</Cell>
 
 				<Cell gridColumn="span">
-					<CallbackQueue queue={queue} />
+					<CallbackQueue />
 				</Cell>
 			</Grid>
 		</>
