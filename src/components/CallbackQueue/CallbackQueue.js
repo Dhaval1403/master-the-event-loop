@@ -19,7 +19,7 @@ class CallbackQueue extends Component {
 
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" justifyContent="center" mt="20px">
+				<Box display="flex" justifyContent="center" m="20px 0">
 					<List>
 						<ListItem>{values}</ListItem>
 					</List>

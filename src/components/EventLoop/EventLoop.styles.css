@@ -1,14 +1,14 @@
 .spinner-container {
 	position: relative;
-	width: 100px;
-	height: 100px;
+	width: 125px;
+	height: 125px;
 }
 
 .circle {
 	position: absolute;
 	box-sizing: border-box;
-	height: 100px;
-	width: 100px;
+	height: 125px;
+	width: 125px;
 	border: 7px solid #00a1de;
 	border-radius: 50%;
 	clip-path: inset(0 0 0 50%);
@@ -19,8 +19,8 @@
 	width: 30px;
 	height: 20px;
 	background: #00a1de;
-	margin-top: -6px;
-	margin-left: 25px;
+	margin-top: -7px;
+	margin-left: 38px;
 	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
 	-moz-transform: rotate(-90deg);
 	-webkit-transform: rotate(-90deg);

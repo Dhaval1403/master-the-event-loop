@@ -8,6 +8,7 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .modal-content-container {
 	margin: 0 auto;
 	width: 60%;
@@ -15,6 +16,7 @@
 	padding-bottom: 15px;
 	border-radius: 4px;
 }
+
 .modal-header {
 	display: flex;
 	justify-content: space-between;
@@ -46,25 +48,6 @@
 	display: block;
 	margin: 0 auto;
 }
-.modal-body::-webkit-scrollbar {
-	background-color: transparent;
-	width: 10px;
-	cursor: pointer;
-}
-.modal-body::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-	background-color: #4b4b4b;
-}
-
-.modal-body::-webkit-scrollbar-track {
-	/* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
- */
-	border-radius: 10px;
-	background-color: #ffffff;
-}
 
 .modal-content {
 	margin-bottom: 0.8rem;
@@ -95,11 +78,34 @@
 	margin-bottom: 0.5rem;
 	font-size: 2em;
 }
+
 .resource-item {
 	width: 75%;
 	height: auto;
 }
+
 .resource-video {
 	width: 75%;
 	height: 250px;
+}
+
+.modal-body::-webkit-scrollbar {
+	background-color: transparent;
+	width: 10px;
+	cursor: pointer;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #4b4b4b;
+}
+
+.modal-body::-webkit-scrollbar-track {
+	/* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ */
+	border-radius: 10px;
+	background-color: #ffffff;
 }
