@@ -1,0 +1,37 @@
+.spinner-container {
+	position: relative;
+	width: 200px;
+	height: 200px;
+}
+
+.circle {
+	position: absolute;
+	box-sizing: border-box;
+	height: 200px;
+	width: 200px;
+	border: 7px solid #00a1de;
+	border-radius: 50%;
+	clip-path: inset(0 0 0 50%);
+}
+
+.triangle {
+	position: absolute;
+	width: 40px;
+	height: 30px;
+	background: #00a1de;
+	margin-top: -10px;
+	margin-left: 70px;
+	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+	-moz-transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+}
+
+.spin {
+	-webkit-transform: rotate(-720deg);
+	-ms-transform: rotate(-720deg);
+	transform: rotate(-720deg);
+	transition: all 1s ease-in-out;
+}
