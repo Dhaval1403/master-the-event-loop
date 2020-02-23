@@ -4,6 +4,7 @@ import React from 'react'
 
 import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
+import { connect } from 'react-redux'
 
 const WebApi = (input) => {
 	return (
@@ -24,5 +25,8 @@ const WebApi = (input) => {
 		</ConsoleBox>
 	)
 }
+const mapStateToProps = (state) => ({})
 
-export default WebApi
+const mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WebApi)
