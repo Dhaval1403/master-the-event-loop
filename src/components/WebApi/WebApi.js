@@ -1,32 +1,40 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 // import './WebApi.styles.css';
 
 import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { connect } from 'react-redux'
+import { addToCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
 
-const WebApi = (input) => {
-	return (
-		<ConsoleBox>
-			<Box display="flex" justifyContent="center" alignItems="center">
-				<ConsoleTitle p="10px">WebApi</ConsoleTitle>
-			</Box>
+class WebApi extends Component {
+	render() {
+		return (
+			<ConsoleBox>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">WebApi</ConsoleTitle>
+				</Box>
 
-			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-			<Box display="flex" justifyContent="center" m="20px 0">
-				<List>
-					<ListItem>$.on('button', 'click', ...)</ListItem>
+				<Box display="flex" justifyContent="center" m="20px 0">
+					<List>
+						<ListItem>$.on('button', 'click', ...)</ListItem>
 
-					<ListItem>timeout()</ListItem>
-				</List>
-			</Box>
-		</ConsoleBox>
-	)
+						<ListItem>timeout()</ListItem>
+					</List>
+				</Box>
+			</ConsoleBox>
+		)
+	}
 }
-const mapStateToProps = (state) => ({})
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapStateToProps = ({ webApiReducer: { webApiStack } }) => ({
+	webApiStack,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	addToCallBackQueue: (value) => dispatch(addToCallbackQueue(value)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(WebApi)
