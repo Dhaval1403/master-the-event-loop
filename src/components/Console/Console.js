@@ -18,17 +18,16 @@ class Console extends Component {
 
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" flexDirection="column" justifyContent="center" mt="20px">
+				<Box display="flex" justifyContent="center" m="20px 0">
 					<List>
 						{this.props.messages.map((message) => (
 							<ListItem>
 								<P key={this.props.messages.indexOf(message)}>{message}</P>
 							</ListItem>
 						))}
-					</List>
 
-					{/* temporary button for functionality depiction, will be removed */}
-					<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
+						<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
+					</List>
 				</Box>
 			</ConsoleBox>
 		)
