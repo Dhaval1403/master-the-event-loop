@@ -18,6 +18,9 @@ class CallbackQueue extends Component {
 		const { enqueue, dequeue } = this.props
 		enqueue('func1')
 		enqueue('func2')
+		enqueue('func3')
+		enqueue('func4')
+		enqueue('func5')
 		dequeue()
 	}
 
