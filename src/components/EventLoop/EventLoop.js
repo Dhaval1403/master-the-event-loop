@@ -20,7 +20,12 @@ class EventLoop extends Component {
 		})
 
 		this.runLoop = () => {
+			// if callstack is empty and callbackqueue is not empty
 			if (this.props.callstack.length === 0 && this.props.callbackQueue.length !== 0) {
+				// add the callbackqueue[0] to callstack
+				// but callbackqueue has func as strings whereas
+				// callstack accepts func as obj (see callstack reducer)
+				// hence wrap the string in makeFuncObj
 				this.props.addFunctionToCallstack(
 					this.makeFuncObj(this.props.callbackQueue[0] + 'added by event loop')
 				)
@@ -30,7 +35,7 @@ class EventLoop extends Component {
 
 		this.timerId = setInterval(() => {
 			this.runLoop()
-			console.log('hi')
+			console.log('ran loop')
 		}, 1000)
 	}
 
@@ -53,7 +58,6 @@ class EventLoop extends Component {
 const mapStateToProps = (state) => ({
 	callstack: state.callstack.stack,
 	callbackQueue: state.callbackQueue,
-	eventLoop: state.eventLoop,
 })
 
 const mapDispatchToProps = (dispatch) => ({
