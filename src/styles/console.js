@@ -35,7 +35,7 @@ export const ListItem = styled.li`
 	border: 1px solid ${variable.colorBlue};
 	border-radius: 4px;
 	padding: 10px;
-	background-color: ${variable.colorBlue};
-	color: ${variable.colorWhite};
+	background-color: ${variable.colorWhite};
+	color: ${variable.colorBlue};
 	width: 100%;
 `
