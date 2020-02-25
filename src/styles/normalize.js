@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
+import { scrollbar } from './scroll'
 import { variable } from './variable'
 
 export const Normalize = createGlobalStyle`
@@ -61,6 +62,7 @@ export const Normalize = createGlobalStyle`
     }
     html {
         > body {
+            ${scrollbar()};
             background-color: ${variable.colorWhite};
             color: ${variable.fontColor};
             font-family: ${variable.fontPrimary};

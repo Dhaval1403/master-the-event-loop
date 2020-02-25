@@ -69,4 +69,8 @@ export const variable = {
 	// Size
 	headerHeight: '50px',
 	headerHeightMobile: '70px',
+
+	// Button
+	buttonHeight: '30px',
+	buttonPadding: '2vw',
 }

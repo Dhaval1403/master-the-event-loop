@@ -1,4 +1,5 @@
 import React from 'react'
+import { ThemeProvider } from 'styled-components'
 
 import CallbackQueue from '../CallbackQueue/CallbackQueue'
 import Callstack from '../Callstack/Callstack'
@@ -11,6 +12,7 @@ import Editor from '../Editor/Editor'
 
 import { Cell, Grid } from '../../styles/grid'
 import { Normalize } from '../../styles/normalize'
+import { theme } from '../../styles/theme'
 import Help from '../Help/Help'
 
 const Container = () => {
@@ -18,43 +20,47 @@ const Container = () => {
 
 	return (
 		<>
-			<Normalize />
+			<ThemeProvider theme={theme}>
+				<Normalize />
 
-			<Header />
+				<Header />
 
-			<Help />
+				<Help />
 
-			<Grid
-				display="grid"
-				gridTemplateColumns="2fr 1fr 1fr"
-				gridTemplateRows="300px 200px"
-				gridGap="25px"
-				m="25px"
-			>
-				<Cell>
-					<Editor />
-				</Cell>
+				<Grid
+					display="grid"
+					gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
+					gridTemplateRows="300px 200px"
+					gridGap="25px"
+					ml="25px"
+					mr="25px"
+					mt="100px"
+				>
+					<Cell>
+						<Editor />
+					</Cell>
 
-				<Cell>
-					<Callstack />
-				</Cell>
+					<Cell>
+						<Callstack />
+					</Cell>
 
-				<Cell>
-					<WebApi />
-				</Cell>
+					<Cell>
+						<WebApi />
+					</Cell>
 
-				<Cell>
-					<Console />
-				</Cell>
+					<Cell>
+						<Console />
+					</Cell>
 
-				<Cell alignSelf="center" justifySelf="center">
-					<EventLoop />
-				</Cell>
+					<Cell alignSelf="center" justifySelf="center">
+						<EventLoop />
+					</Cell>
 
-				<Cell>
-					<CallbackQueue />
-				</Cell>
-			</Grid>
+					<Cell>
+						<CallbackQueue />
+					</Cell>
+				</Grid>
+			</ThemeProvider>
 		</>
 	)
 }
