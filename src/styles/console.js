@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import { space, typography } from 'styled-system'
 
+import { scrollbar } from './scroll'
 import { variable } from './variable'
 
 export const ConsoleBox = styled.div`
+	${scrollbar()};
 	background-color: ${variable.colorWhite};
 	border: 1px solid ${variable.colorBlue};
 	border-radius: 15px;
