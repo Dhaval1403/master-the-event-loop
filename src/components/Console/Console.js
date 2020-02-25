@@ -6,7 +6,6 @@ import { pushToConsole } from '../../redux/Console/Console.actions'
 import { Button } from '../Button/Button'
 import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
-import { P } from '../../styles/text'
 
 class Console extends Component {
 	render() {
@@ -21,13 +20,13 @@ class Console extends Component {
 				<Box display="flex" justifyContent="center" m="20px 0">
 					<List>
 						{this.props.messages.map((message) => (
-							<ListItem>
-								<P key={this.props.messages.indexOf(message)}>{message}</P>
-							</ListItem>
+							<ListItem>{message}</ListItem>
 						))}
-
-						<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
 					</List>
+				</Box>
+
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
 				</Box>
 			</ConsoleBox>
 		)

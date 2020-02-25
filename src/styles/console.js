@@ -25,9 +25,17 @@ export const ConsoleTitle = styled.h2`
 	line-height: 1.2;
 `
 
-export const List = styled.ul``
+export const List = styled.ul`
+	width: 100%;
+	padding: 0 10px;
+`
 
 export const ListItem = styled.li`
 	margin-bottom: 10px;
-	border: 1px solid rgb(207, 206, 206);
+	border: 1px solid ${variable.colorBlue};
+	border-radius: 4px;
+	padding: 10px;
+	background-color: ${variable.colorBlue};
+	color: ${variable.colorWhite};
+	width: 100%;
 `

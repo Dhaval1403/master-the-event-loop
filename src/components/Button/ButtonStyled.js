@@ -10,7 +10,7 @@ export const ButtonStyled = styled.button`
 	${typography};
 	background-color: ${variable.colorBlue};
 	${({ borderRadius }) => borderRadius === undefined && `border-radius: ${variable.borderRadius}`};
-	color: ${variable.colorBlueDark};
+	color: ${variable.colorWhite};
 	cursor: pointer;
 	${({ fontWeight }) => fontWeight === undefined && 'font-weight: 700'};
 	${({ textAlign }) => textAlign === undefined && 'text-align: center'};
@@ -19,7 +19,6 @@ export const ButtonStyled = styled.button`
 		color ${variable.transition};
 	vertical-align: middle;
 	white-space: nowrap;
-	width: 100%;
 	&:hover {
 		background-color: ${({ hoverColor }) =>
 			hoverColor ? variable[hoverColor] : variable.colorBlueDark};
