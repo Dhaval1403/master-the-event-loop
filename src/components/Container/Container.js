@@ -32,9 +32,7 @@ const Container = () => {
 					gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
 					gridTemplateRows="300px 200px"
 					gridGap="25px"
-					ml="25px"
-					mr="25px"
-					mt="100px"
+					m="25px"
 				>
 					<Cell>
 						<Editor />
