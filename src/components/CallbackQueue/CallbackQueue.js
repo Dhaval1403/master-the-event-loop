@@ -18,6 +18,9 @@ class CallbackQueue extends Component {
 		const { enqueue, dequeue } = this.props
 		enqueue('func1')
 		enqueue('func2')
+		enqueue('func3')
+		enqueue('func4')
+		enqueue('func5')
 		dequeue()
 	}
 
@@ -33,9 +36,7 @@ class CallbackQueue extends Component {
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
 				<Box display="flex" justifyContent="center" m="20px 0">
-					<List>
-						<ListItem>{values}</ListItem>
-					</List>
+					<List>{values}</List>
 				</Box>
 			</ConsoleBox>
 		)
