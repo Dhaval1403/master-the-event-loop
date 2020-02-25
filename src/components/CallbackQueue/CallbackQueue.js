@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 // For testing actions
@@ -36,7 +36,7 @@ class CallbackQueue extends Component {
 				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
 				<Box display="flex" justifyContent="center" m="20px 0">
-					<List>{values}</List>
+					<QueueList>{values}</QueueList>
 				</Box>
 			</ConsoleBox>
 		)

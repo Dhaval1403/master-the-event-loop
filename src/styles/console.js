@@ -28,6 +28,10 @@ export const ConsoleTitle = styled.h2`
 export const List = styled.ul`
 	width: 100%;
 	padding: 0 10px;
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: center;
+	align-items: center;
 `
 
 export const ListItem = styled.li`
@@ -38,4 +42,12 @@ export const ListItem = styled.li`
 	background-color: ${variable.colorWhite};
 	color: ${variable.colorBlue};
 	width: 100%;
+`
+
+export const QueueList = styled.ul`
+	width: 100%;
+	padding: 0 10px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 10px;
 `
