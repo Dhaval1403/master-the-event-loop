@@ -18,6 +18,7 @@ import { connect } from 'react-redux'
 
 import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
 import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
+import { spin, spinBack } from '../../redux/eventLoop/eventLoop.actions'
 
 class Container extends Component {
 	componentDidMount() {
@@ -39,14 +40,16 @@ class Container extends Component {
 				this.props.addFunctionToCallstack(
 					this.makeFuncObj(this.props.callbackQueue[0] + 'added by event loop')
 				)
+				this.props.spin()
 				this.props.removeFromCallbackQueue()
+				setTimeout(() => this.props.spinBack(), 500)
 			}
 		}
 
 		this.timerId = setInterval(() => {
 			this.runLoop()
 			console.log('ran loop')
-		}, 1000)
+		}, 4000)
 	}
 
 	render() {
@@ -104,6 +107,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	removeFromCallbackQueue: () => dispatch(removeFromCallbackQueue()),
 	addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
+	spin: () => dispatch(spin()),
+	spinBack: () => dispatch(spinBack()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container)
