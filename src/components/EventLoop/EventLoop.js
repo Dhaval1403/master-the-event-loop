@@ -1,23 +1,11 @@
 import React, { Component } from 'react'
 import './EventLoop.styles.css'
+import { connect } from 'react-redux'
 
 class EventLoop extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			spin: false,
-		}
-	}
-
 	render() {
-		setTimeout(() => {
-			this.setState({
-				spin: true,
-			})
-		}, 1000)
-
 		return (
-			<div className={'spinner-container' + (this.state.spin ? ' spin' : '')}>
+			<div className={this.props.spin ? this.props.spin : 'spinner-container'}>
 				<div className="circle" />
 				<div className="triangle" />
 			</div>
@@ -25,4 +13,8 @@ class EventLoop extends Component {
 	}
 }
 
-export default EventLoop
+const mapStateToProps = (state) => ({
+	spin: state.spin,
+})
+
+export default connect(mapStateToProps)(EventLoop)
