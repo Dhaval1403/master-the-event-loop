@@ -30,7 +30,7 @@ const Container = () => {
 				<Grid
 					display="grid"
 					gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
-					gridTemplateRows="50vh 30vh"
+					gridTemplateRows="45vh 35vh"
 					gridGap="25px"
 					m="25px"
 				>
