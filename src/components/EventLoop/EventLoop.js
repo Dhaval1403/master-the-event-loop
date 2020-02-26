@@ -26,10 +26,10 @@ class EventLoop extends Component {
 				// but callbackqueue has func as strings whereas
 				// callstack accepts func as obj (see callstack reducer)
 				// hence wrap the string in makeFuncObj
-				this.props.addFunctionToCallstack(
-					this.makeFuncObj(this.props.callbackQueue[0] + 'added by event loop')
-				)
 				this.props.removeFromCallbackQueue()
+				this.props.addFunctionToCallstack(
+					this.makeFuncObj(this.props.callbackQueue.shift() + 'added by event loop')
+				)
 			}
 		}
 
