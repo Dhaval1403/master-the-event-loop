@@ -31,8 +31,10 @@
 }
 
 .modal-header button {
-	color: #fff;
-	background-color: #00a1de;
+	width: 100px;
+	color: #00a1de;
+	background-color: #fff;
+	border: 1px solid #00a1de;
 	border-radius: 4px;
 	cursor: pointer;
 	padding: 0.5rem 1rem;
