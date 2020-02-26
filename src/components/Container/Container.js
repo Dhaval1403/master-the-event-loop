@@ -1,35 +1,66 @@
-import React from 'react';
+import React from 'react'
+import { ThemeProvider } from 'styled-components'
 
-import CallbackQueue from '../CallbackQueue/CallbackQueue';
-import Callstack from '../Callstack/Callstack';
-import WebApi from '../WebApi/WebApi';
-import Console from '../Console/Console';
-import Header from '../Header/Header';
-import { Main } from '../../styles/layout';
-import { Normalize } from '../../styles/normalize';
-import Help from '../Help/Help';
+import CallbackQueue from '../CallbackQueue/CallbackQueue'
+import Callstack from '../Callstack/Callstack'
+import Console from '../Console/Console'
+import EventLoop from '../EventLoop/EventLoop'
+import Header from '../Header/Header'
+import Queue from '../../utils/customDataStructures/Queue'
+import WebApi from '../WebApi/WebApi'
+import Editor from '../Editor/Editor'
 
-import queue from '../CallbackQueue/queue';
+import { Cell, Grid } from '../../styles/grid'
+import { Normalize } from '../../styles/normalize'
+import { theme } from '../../styles/theme'
+import Help from '../Help/Help'
 
 const Container = () => {
+	const queue = new Queue()
 
 	return (
 		<>
-			<Normalize />
+			<ThemeProvider theme={theme}>
+				<Normalize />
 
-			<Header />
-			<Help />
-			<Main>
-				<Callstack />
+				<Header />
 
-				<WebApi />
+				<Help />
 
-				<Console />
+				<Grid
+					display="grid"
+					gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
+					gridTemplateRows="45vh 35vh"
+					gridGap="25px"
+					m="25px"
+				>
+					<Cell>
+						<Editor />
+					</Cell>
 
-				<CallbackQueue queue={queue.head} />
-			</Main>
+					<Cell>
+						<Callstack />
+					</Cell>
+
+					<Cell>
+						<WebApi />
+					</Cell>
+
+					<Cell>
+						<Console />
+					</Cell>
+
+					<Cell alignSelf="center" justifySelf="center">
+						<EventLoop />
+					</Cell>
+
+					<Cell>
+						<CallbackQueue />
+					</Cell>
+				</Grid>
+			</ThemeProvider>
 		</>
-	);
-};
+	)
+}
 
-export default Container;
+export default Container

@@ -1,35 +1,62 @@
-import React, { Component } from 'react';
-// import './Callstack.styles.css';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import { ListBox, ListTitle } from '../../styles/box';
-import { Box, Flex } from '../../styles/flex';
-import { Span } from '../../styles/text';
+import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.actions'
+import { pushToConsole } from './../../redux/Console/Console.actions'
+
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import { Box } from '../../styles/flex'
 
 class Callstack extends Component {
+	consoleVariations = [
+		'console',
+		'console.log',
+		'console.trace',
+		'console.time',
+		'console.info',
+		'console.error',
+		'console.warn',
+	]
+
+	mountCallStack = () => {
+		console.log(this.props.callstack)
+	}
+
+	checkForConsoleLogs = (currLine) => {
+		if (this.consoleVariations.includes(currLine.name)) {
+			this.props.consoleApi(currLine.message)
+		}
+
+		return currLine.name
+	}
+
+	renderCallstack = ({ callstack }) =>
+		callstack.map((currLine) => <ListItem>{this.checkForConsoleLogs(currLine)}</ListItem>)
+
 	render() {
-		const { callstack } = this.props;
 		return (
-			// <div className="call-stack">
-			// 	<div className="title">Callstack</div>
-			// 	<div className="body">
-			// 		<div className="top"></div>
-			// 		<div className="down">Start()</div>
-			// 	</div>
-			// </div>
-
-			<ListBox>
-				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-					<ListTitle>Callstack</ListTitle>
+			<ConsoleBox>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Callstack</ConsoleTitle>
 				</Box>
 
-				<Box display="flex" height="350px" justifyContent="center" mt="20px">
-					<Flex alignSelf="flex-end">
-						<Span>Start()</Span>
-					</Flex>
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+
+				<Box display="flex" justifyContent="center" m="20px 0">
+					<List>{this.renderCallstack(this.props)}</List>
 				</Box>
-			</ListBox>
-		);
+			</ConsoleBox>
+		)
 	}
 }
 
-export default Callstack;
+const mapStateToProps = (state) => ({
+	callstack: state.callstack.stack,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	removeFunctionFromCallstack: () => dispatch(removeFunctionFromCallstack()),
+	consoleApi: (message) => dispatch(pushToConsole(message)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Callstack)

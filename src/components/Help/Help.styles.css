@@ -2,31 +2,33 @@
 	position: fixed;
 	top: 0%;
 	min-height: 100%;
-	background-color: #aaa;
+	background-color: #1c1d2e;
 	z-index: 100000;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.modal-body {
+.modal-content-container {
+	margin: 0 auto;
 	width: 60%;
-	height: 75vh;
-	overflow-y: auto;
-	background-color: antiquewhite;
-	border-radius: 10px;
+	background-color: #fff;
+	padding-bottom: 15px;
+	border-radius: 4px;
 }
 
 .modal-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: #fff;
+	background: #01416b;
 	margin-bottom: 0.8rem;
 	padding: 0.5rem 0.8rem;
 	position: sticky;
 	top: 0;
 	z-index: 1;
+	border-radius: 4px 4px 0 0px;
+	color: #fff;
 }
 
 .modal-header button {
@@ -37,9 +39,24 @@
 	padding: 0.5rem 1rem;
 }
 
+.modal-body {
+	height: 75vh;
+	overflow-y: auto;
+	padding: 1rem;
+	border-radius: 4px;
+	width: 95%;
+	display: block;
+	margin: 0 auto;
+}
+
 .modal-content {
 	margin-bottom: 0.8rem;
 	padding: 0.8rem;
+}
+
+.modal-content p {
+	line-height: 30px;
+	text-align: justify;
 }
 
 .play-button {
@@ -58,11 +75,37 @@
 
 .resource-title {
 	font-weight: bold;
-	text-decoration: underline;
 	margin-bottom: 0.5rem;
+	font-size: 2em;
 }
 
 .resource-item {
 	width: 75%;
+	height: auto;
+}
+
+.resource-video {
+	width: 75%;
 	height: 250px;
+}
+
+.modal-body::-webkit-scrollbar {
+	background-color: transparent;
+	width: 10px;
+	cursor: pointer;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #4b4b4b;
+}
+
+.modal-body::-webkit-scrollbar-track {
+	/* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ */
+	border-radius: 10px;
+	background-color: #ffffff;
 }

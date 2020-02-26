@@ -1,43 +1,45 @@
 import React, { Component } from 'react'
-// import './Console.styles.css';
 
-import { ListBox, ListTitle } from '../../styles/box'
+import { connect } from 'react-redux'
+import { pushToConsole } from '../../redux/Console/Console.actions'
+
+import { Button } from '../Button/Button'
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
-import { P } from '../../styles/text'
 
-//storing message in the state for now
 class Console extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			message: ['hello'],
-		}
-	}
-
-	//pushes data to the message array
-	addToConsole = (data) => {
-		this.setState((prevState) => ({
-			message: [...prevState.message, data],
-		}))
-	}
-
 	render() {
 		return (
-			<ListBox>
-				<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-					<ListTitle>Console</ListTitle>
+			<ConsoleBox>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Console</ConsoleTitle>
 				</Box>
 
-				<Box height="200px" mt="20px" textAlign="center">
-					{this.state.message.map((message) => (
-						<P>{message}</P>
-					))}
-					{/*temporary functionality for depiction*/}
-					<button onClick={() => this.addToConsole('Hello')}>Click me</button>
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+
+				<Box display="flex" justifyContent="center" m="20px 0">
+					<List>
+						{this.props.messages.map((message) => (
+							<ListItem>{message}</ListItem>
+						))}
+					</List>
 				</Box>
-			</ListBox>
+
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
+				</Box>
+			</ConsoleBox>
 		)
 	}
 }
 
-export default Console
+const mapStateToProps = (state) => ({
+	messages: state.consoleReducer.messages,
+})
+
+//temporary dispatch for functionality depiction
+const mapDispatchToProps = (dispatch) => ({
+	pushToConsole: (message) => dispatch(pushToConsole(message)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Console)

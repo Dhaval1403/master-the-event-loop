@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
-import { border, boxShadow, flexbox, layout, space, typography } from 'styled-system';
+import styled, { css } from 'styled-components'
+import { border, boxShadow, flexbox, layout, space, typography } from 'styled-system'
 
-import { variable } from './variable';
+import { variable } from './variable'
 
 export const Box = styled.div`
 	${border};
@@ -30,7 +30,7 @@ export const Box = styled.div`
 				box-shadow: 0 1px 10px 1px ${variable.colorGrayLight4};
 			}
 		`};
-`;
+`
 
 export const Flex = styled.div`
 	${border};
@@ -38,4 +38,4 @@ export const Flex = styled.div`
 	${layout};
 	${space};
 	${typography};
-`;
+`

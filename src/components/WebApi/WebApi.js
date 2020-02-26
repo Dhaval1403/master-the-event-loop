@@ -1,36 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react'
 
 // import './WebApi.styles.css';
 
-import { ListBox, ListTitle, List, ListItem } from '../../styles/box';
-import { Box } from '../../styles/flex';
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import { Box } from '../../styles/flex'
+import { connect } from 'react-redux'
+import { addToCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
 
-const WebApi = input => {
-	return (
-		// <div className="web-api">
-		// 	<div className="title">Web Apis</div>
-		// 	<div className="body">
-		// 		<ul>
-		// 			<li>$.on('button', 'click', ...)</li>
-		// 			<li>timeout()</li>
-		// 		</ul>
-		// 	</div>
-		// </div>
+class WebApi extends Component {
+	render() {
+		return (
+			<ConsoleBox>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">WebApi</ConsoleTitle>
+				</Box>
 
-		<ListBox>
-			<Box borderBottom="1px solid rgba(201, 201, 201, 0.685)" textAlign="center">
-				<ListTitle>WebApi</ListTitle>
-			</Box>
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-			<Box display="flex" height="350px" justifyContent="center" mt="20px">
-				<List>
-					<ListItem>$.on('button', 'click', ...)</ListItem>
+				<Box display="flex" justifyContent="center" m="20px 0">
+					<List>
+						<ListItem>$.on('button', 'click', ...)</ListItem>
 
-					<ListItem>timeout()</ListItem>
-				</List>
-			</Box>
-		</ListBox>
-	);
-};
+						<ListItem>timeout()</ListItem>
+					</List>
+				</Box>
+			</ConsoleBox>
+		)
+	}
+}
 
-export default WebApi;
+const mapStateToProps = ({ webApiReducer: { webApiStack } }) => ({
+	webApiStack,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	addToCallBackQueue: (value) => dispatch(addToCallbackQueue(value)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WebApi)
