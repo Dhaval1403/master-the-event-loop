@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ConsoleBox, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 // For testing actions
@@ -28,17 +28,21 @@ class CallbackQueue extends Component {
 		const values = this.props.callbackQueue.map((value, i) => <ListItem key={i}>{value}</ListItem>)
 
 		return (
-			<ConsoleBox>
-				<Box display="flex" justifyContent="center" alignItems="center">
-					<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
-				</Box>
+			<>
+				<ConsoleHeader>
+					<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
+					</Box>
+				</ConsoleHeader>
 
-				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+				<ConsoleBox>
+					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" justifyContent="center" m="20px 0">
-					<QueueList>{values}</QueueList>
-				</Box>
-			</ConsoleBox>
+					<Box display="flex" justifyContent="center" m="20px 0">
+						<QueueList>{values}</QueueList>
+					</Box>
+				</ConsoleBox>
+			</>
 		)
 	}
 }

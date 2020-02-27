@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
-import { ConsoleBox, ConsoleTitle } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 require('codemirror/lib/codemirror.css')
@@ -229,36 +229,40 @@ const Editor = () => {
 	}
 	// editorMount
 	return (
-		<ConsoleBox>
-			<Box display="flex" justifyContent="center" alignItems="center">
-				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
-			</Box>
+		<>
+			<ConsoleHeader>
+				<Box display="flex" justifyContent="center" alignItems="center">
+					<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+				</Box>
+			</ConsoleHeader>
 
-			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+			<ConsoleBox>
+				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-			<Box>
-				<div className={Classes.container}>
-					<CodeMirror
-						className={Classes.codeMirror}
-						value={data}
-						editorDidMount={() => {}}
-						options={{
-							mode: 'javascript',
-							theme: 'material',
-							tabSize: 2,
-							lineNumbers: true,
-						}}
-						onCursor={handleCursor}
-						onBeforeChange={(editor, data, value) => updateData(value)}
-						onChange={handleChange}
-						onGutterClick={(editor, number, gutter, str) => {
-							console.log(findOPeningAndClosing(editor, 3))
-							// console.log(closingCurlyBrace(editor, number + 1));
-						}}
-					/>
-				</div>
-			</Box>
-		</ConsoleBox>
+				<Box>
+					<div className={Classes.container}>
+						<CodeMirror
+							className={Classes.codeMirror}
+							value={data}
+							editorDidMount={() => {}}
+							options={{
+								mode: 'javascript',
+								theme: 'material',
+								tabSize: 2,
+								lineNumbers: true,
+							}}
+							onCursor={handleCursor}
+							onBeforeChange={(editor, data, value) => updateData(value)}
+							onChange={handleChange}
+							onGutterClick={(editor, number, gutter, str) => {
+								console.log(findOPeningAndClosing(editor, 3))
+								// console.log(closingCurlyBrace(editor, number + 1));
+							}}
+						/>
+					</div>
+				</Box>
+			</ConsoleBox>
+		</>
 	)
 }
 

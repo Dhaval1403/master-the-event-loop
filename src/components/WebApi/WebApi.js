@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 // import './WebApi.styles.css';
 
-import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { connect } from 'react-redux'
 import { addToCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
@@ -10,21 +10,25 @@ import { addToCallbackQueue } from '../../redux/callbackQueue/callbackQueue.acti
 class WebApi extends Component {
 	render() {
 		return (
-			<ConsoleBox>
-				<Box display="flex" justifyContent="center" alignItems="center">
-					<ConsoleTitle p="10px">WebApi</ConsoleTitle>
-				</Box>
+			<>
+				<ConsoleHeader>
+					<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">WebApi</ConsoleTitle>
+					</Box>
+				</ConsoleHeader>
 
-				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+				<ConsoleBox>
+					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" justifyContent="center" m="20px 0">
-					<List>
-						<ListItem>$.on('button', 'click', ...)</ListItem>
+					<Box display="flex" justifyContent="center" m="20px 0">
+						<List>
+							<ListItem>$.on('button', 'click', ...)</ListItem>
 
-						<ListItem>timeout()</ListItem>
-					</List>
-				</Box>
-			</ConsoleBox>
+							<ListItem>timeout()</ListItem>
+						</List>
+					</Box>
+				</ConsoleBox>
+			</>
 		)
 	}
 }
