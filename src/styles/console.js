@@ -39,7 +39,7 @@ export const ListItem = styled.li`
 	border: 1px solid ${variable.colorBlue};
 	border-radius: 4px;
 	padding: 10px;
-	background-color: ${variable.colorWhite};
+	background-color: ${(props) => variable[props.type]};
 	color: ${variable.colorBlue};
 	width: 100%;
 `
