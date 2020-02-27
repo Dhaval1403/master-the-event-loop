@@ -25,7 +25,6 @@ class Callstack extends Component {
 	checkForConsoleLogs = (currLine) => {
 		if (this.consoleVariations.includes(currLine.name)) {
 			this.props.consoleApi({ name: currLine.name, message: currLine.message })
-			console.log('currline', currLine)
 		}
 
 		return currLine.name
