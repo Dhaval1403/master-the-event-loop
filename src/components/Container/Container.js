@@ -1,62 +1,114 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { ThemeProvider } from 'styled-components'
 
 import CallbackQueue from '../CallbackQueue/CallbackQueue'
 import Callstack from '../Callstack/Callstack'
 import Console from '../Console/Console'
 import EventLoop from '../EventLoop/EventLoop'
 import Header from '../Header/Header'
-import Queue from '../../utils/customDataStructures/Queue'
 import WebApi from '../WebApi/WebApi'
 import Editor from '../Editor/Editor'
 
 import { Cell, Grid } from '../../styles/grid'
 import { Normalize } from '../../styles/normalize'
+import { theme } from '../../styles/theme'
 import Help from '../Help/Help'
 
-const Container = () => {
-	const queue = new Queue()
+import { connect } from 'react-redux'
 
-	return (
-		<>
-			<Normalize />
+import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
+import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
+import { spin, spinBack } from '../../redux/eventLoop/eventLoop.actions'
 
-			<Header />
+class Container extends Component {
+	componentDidMount() {
+		// After the component has mounted, start the loop
+		this.makeFuncObj = (str) => ({
+			name: str,
+			delay: 0,
+			webApi: false,
+			message: 'Test Console log',
+		})
 
-			<Help />
+		this.runLoop = () => {
+			// if callstack is empty and callbackqueue is not empty
+			if (this.props.callstack.length === 0 && this.props.callbackQueue.length !== 0) {
+				// add the callbackqueue[0] to callstack
+				// but callbackqueue has func as strings whereas
+				// callstack accepts func as obj (see callstack reducer)
+				// hence wrap the string in makeFuncObj
+				this.props.addFunctionToCallstack(
+					this.makeFuncObj(this.props.callbackQueue[0] + 'added by event loop')
+				)
+				this.props.spin()
+				this.props.removeFromCallbackQueue()
+				setTimeout(() => this.props.spinBack(), 500)
+			}
+		}
 
-			<Grid
-				display="grid"
-				gridTemplateColumns="2fr 1fr 1fr"
-				gridTemplateRows="300px 200px"
-				gridGap="25px"
-				m="25px"
-			>
-				<Cell>
-					<Editor />
-				</Cell>
+		// this.timerId = setInterval(() => {
+		// 	this.runLoop()
+		// 	console.log('ran loop')
+		// }, 4000)
+	}
 
-				<Cell>
-					<Callstack />
-				</Cell>
+	render() {
+		return (
+			<>
+				<ThemeProvider theme={theme}>
+					<Normalize />
 
-				<Cell>
-					<WebApi />
-				</Cell>
+					<Header />
 
-				<Cell>
-					<Console />
-				</Cell>
+					<Help />
 
-				<Cell alignSelf="center" justifySelf="center">
-					<EventLoop />
-				</Cell>
+					<Grid
+						display="grid"
+						gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
+						gridTemplateRows="45vh 35vh"
+						gridGap="25px"
+						m="25px"
+					>
+						<Cell>
+							<Editor />
+						</Cell>
 
-				<Cell>
-					<CallbackQueue />
-				</Cell>
-			</Grid>
-		</>
-	)
+						<Cell>
+							<Callstack />
+						</Cell>
+
+						<Cell>
+							<WebApi />
+						</Cell>
+
+						<Cell>
+							<Console />
+						</Cell>
+
+						<Cell alignSelf="center" justifySelf="center">
+							<EventLoop />
+						</Cell>
+
+						<Cell>
+							<CallbackQueue />
+						</Cell>
+					</Grid>
+				</ThemeProvider>
+			</>
+		)
+	}
 }
 
-export default Container
+const mapStateToProps = (state) => ({
+	callstack: state.callstack.stack,
+	callbackQueue: state.callbackQueue,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	removeFromCallbackQueue: () => dispatch(removeFromCallbackQueue()),
+	addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
+	spin: () => dispatch(spin()),
+	spinBack: () => dispatch(spinBack()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Container)

@@ -6,26 +6,45 @@ import {
 } from './callstack.types'
 
 const initalState = {
-	stack: [
-		{
-			name: 'Main',
-			delay: 0,
-			webApi: false,
-			message: undefined,
-		},
-		{
-			name: 'console.log',
-			delay: 0,
-			webApi: false,
-			message: 'Test Console log',
-		},
-		{
-			name: 'console.warn',
-			delay: 0,
-			webApi: false,
-			message: 'Test Console warn',
-		},
-	],
+	//stack: [
+	//	{
+	//		name: 'Main',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: undefined,
+	//	},
+	//	{
+	//		name: 'console.log',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console log',
+	//	},
+	//	{
+	//		name: 'console.warn',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console warn',
+	//	},
+	//	{
+	//		name: 'console.info',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console info',
+	//	},
+	//	{
+	//		name: 'console.time',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console time',
+	//	},
+	//	{
+	//		name: 'console.error',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console error',
+	//	},
+	//],
+	stack: [],
 	isOccupied: false,
 }
 
@@ -56,7 +75,8 @@ export const callstackReducer = (state = initalState, action) => {
 			return { ...state, stack: [...state.stack, stackObject] } */
 
 		case ADD_TO_CALLSTACK:
-			return { ...state, stack: [...state.stack, action.payload], isOccupied: true }
+			// return { ...state, stack: [...state.stack, action.payload], isOccupied: true }
+			return { stack: [action.payload, ...state.stack], isOccupied: true }
 
 		case REMOVE_FROM_CALLSTACK:
 			state.stack.splice(0, 1)

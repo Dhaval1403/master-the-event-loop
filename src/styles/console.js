@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import { space, typography } from 'styled-system'
 
+import { scrollbar } from './scroll'
 import { variable } from './variable'
 
 export const ConsoleBox = styled.div`
+	${scrollbar()};
 	background-color: ${variable.colorWhite};
 	border: 1px solid ${variable.colorBlue};
 	border-radius: 15px;
@@ -23,9 +25,29 @@ export const ConsoleTitle = styled.h2`
 	line-height: 1.2;
 `
 
-export const List = styled.ul``
+export const List = styled.ul`
+	width: 100%;
+	padding: 0 10px;
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: center;
+	align-items: center;
+`
 
 export const ListItem = styled.li`
 	margin-bottom: 10px;
-	border: 1px solid rgb(207, 206, 206);
+	border: 1px solid ${variable.colorBlue};
+	border-radius: 4px;
+	padding: 10px;
+	background-color: ${(props) => variable[props.type]};
+	color: ${variable.colorBlue};
+	width: 100%;
+`
+
+export const QueueList = styled.ul`
+	width: 100%;
+	padding: 0 10px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 10px;
 `

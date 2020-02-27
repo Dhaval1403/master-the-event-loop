@@ -5,6 +5,7 @@ import { callstackReducer } from './callstack/callstack.reducer'
 import { editorReducer } from './editor/editor.reducer'
 import { callbackQueueReducer } from './callbackQueue/callbackQueue.reducer'
 import { webApiReducer } from './WebApiRedux/webApi.reducer'
+import { eventLoopReducer } from './eventLoop/eventLoop.reducer'
 
 // import all reducers in this file and add them with a flag to the combineReducer method by adding it to the object
 // reducerName : reducer;
@@ -16,4 +17,5 @@ export default combineReducers({
 	editor: editorReducer,
 	callbackQueue: callbackQueueReducer,
 	webApiReducer: webApiReducer,
+	spin: eventLoopReducer,
 })

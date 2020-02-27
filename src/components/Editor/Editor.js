@@ -19,7 +19,17 @@ class Editor extends Component {
 	unHiglightLine = (editor, num) => {
 		editor.removeLineClass(num, 'background', Classes.activeLine)
 	}
-	findCharacter = (editor, lineNumber, character, constraint = false, multiLine = false) => {
+
+	// need to reduce argument length. By passing in an object of configurations
+
+	findCharacter = (
+		editor,
+		lineNumber,
+		character,
+		constraint = false,
+		multiLine = false,
+		startToken = null
+	) => {
 		let check = { open: 0, lastOpenTokenIndex: null, close: 0 }
 		const tokens = editor.getLineTokens(lineNumber)
 		let fistOpenIndex
@@ -27,8 +37,8 @@ class Editor extends Component {
 		let found = false
 		let isOpen = false
 		let lineFound = null
-		const loopThroughLine = (tokens, lineNo) => {
-			for (let i = 0; i < tokens.length; i++) {
+		const loopThroughLine = (tokens, lineNo, startingToken) => {
+			for (let i = startingToken !== null ? startingToken : 0; i < tokens.length; i++) {
 				if (tokens[i].string === character) {
 					found = true
 					if (check.open === 0) {
@@ -66,7 +76,7 @@ class Editor extends Component {
 				}
 			}
 		}
-		const val = loopThroughLine(tokens, lineNumber)
+		const val = loopThroughLine(tokens, lineNumber, startToken)
 
 		if (!multiLine) return val
 		let j = lineNumber + 1
@@ -80,21 +90,101 @@ class Editor extends Component {
 		if (multiLine && found && check.open + check.close !== 0 && check.open !== check.close) {
 			let result
 			while (check.open !== check.close) {
-				result = loopThroughLine(editor.getLineTokens(j), j)
+				result = loopThroughLine(editor.getLineTokens(j), j, 0)
 				j++
 			}
 			return result
 		}
 	}
 
-	findOPeningAndClosing = (editor, lineNumber) => {
-		return this.findCharacter(editor, lineNumber, '{', '}', true)
+	findOPeningAndClosing = (editor, lineNumber, startToken = null) => {
+		return this.findCharacter(editor, lineNumber, '{', '}', true, 0)
 	}
 	openingCurlyBrace = (editor, lineNumber) => {
 		return this.findCharacter(editor, lineNumber, '{', '}')
 	}
 	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
+
 	findFunctionKeyword = (editor, lineNumber) => this.findCharacter(editor, lineNumber, 'function')
+
+	getStringValue = (editor, startLineAndIndex, endLineAndIndex) => {
+		let tokens = editor.getLineTokens(startLineAndIndex[0])
+		let stringValue = ''
+		;(function() {
+			let foundInitialiser = false
+			let i = startLineAndIndex[1] - 1
+			while (!foundInitialiser) {
+				if (tokens[i].string !== ' ') {
+					foundInitialiser = true
+				}
+				stringValue += tokens[i].string + ' '
+				i--
+			}
+		})()
+		if (startLineAndIndex[1] !== 0) {
+			for (let i = startLineAndIndex[1]; i < tokens.length; i++) {
+				stringValue += tokens[i].string
+				console.log('omar', startLineAndIndex[0], endLineAndIndex[0])
+			}
+		} else {
+			stringValue += '\n' + editor.getLine(startLineAndIndex[0])
+		}
+		if (endLineAndIndex[0] !== startLineAndIndex[0] + 1) {
+			for (let i = startLineAndIndex[0] + 1; i <= endLineAndIndex[0]; i++) {
+				stringValue += '\n' + editor.getLine(i)
+			}
+		}
+		if (endLineAndIndex[1] !== 0) {
+			let tokens = editor.getLineTokens(endLineAndIndex[0])
+			for (let i = endLineAndIndex[1]; i < tokens.length; i++) {
+				stringValue += tokens[i].string
+			}
+		} else {
+			stringValue += '\n' + editor.getLine(endLineAndIndex[0])
+		}
+		return stringValue
+	}
+
+	getFunctionStringValue = (editor, startLineAndIndex) => {
+		const firstLineTokens = editor.getLineTokens(startLineAndIndex[0])
+
+		// console.log('flem', startLineAndIndex[0], startLineAndIndex[1])
+		if (firstLineTokens) {
+			console.log(
+				'flem',
+				this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
+			)
+			const result = this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
+			console.log(
+				'omar',
+				this.getStringValue(
+					editor,
+					[startLineAndIndex[0], startLineAndIndex[1]],
+					Object.values(result.lastCloseIndex)
+				)
+			)
+		}
+		// const [startLine, startIndex] = startLineAndIndex
+		// const [stopLine, stopIndex] = endLineAndIndex
+		// let str = ''
+		// // let shouldLoop = false;
+		// // let currentTokens = [];
+		// // const firstLineTokens = editor.getLineTokens(startLine);
+		// // let string = '';
+		// // while(shouldLoop) {
+		// // }
+		// for (let i = startLine; i <= stopLine; i++) {
+		// 	const tokens = editor.getLineTokens(i)
+		// 	for (
+		// 		let j = i === stopLine ? startIndex : 0;
+		// 		j <= (i === stopLine ? stopIndex : tokens.length);
+		// 		j++
+		// 	) {
+		// 		str += tokens.string
+		// 	}
+		// }
+		// return str
+	}
 
 	findFunctionName = (tokens, limit, line, es5 = false) => {
 		const foundTokens = { ')': false, '(': false }
@@ -159,10 +249,12 @@ class Editor extends Component {
 		const es5Function = this.findFunctionKeyword(editor, line)
 		if (es6Function && es6Function.found) {
 			const res = this.findFunctionName(es6Function.tokens, es6Function.tokenIndex, line)
+
 			this.props.addFunction(res)
 		}
 		if (es5Function && es5Function.found) {
 			const res = this.findFunctionName(es5Function.tokens, es5Function.tokenIndex, line, true)
+			this.getFunctionStringValue(editor, [res.line, res.tokenIndex])
 			this.props.addFunction(res)
 		}
 	}
@@ -252,9 +344,6 @@ class Editor extends Component {
 			editor.removeLineClass(i, 'background', Classes.runningLine)
 		}
 	}
-	getStringValue = (editor, startLine, endLine, startIndex, endIndex) => {
-		const firstLineTokens = editor.getLineTokens(startLine)
-	}
 
 	render() {
 		return (
@@ -284,6 +373,7 @@ class Editor extends Component {
 							onBeforeChange={(editor, data, value) => this.props.setData(value)}
 							onChange={this.handleChange}
 							onGutterClick={(editor, number, gutter, str) => {
+								console.log('omar', editor.getLine(number))
 								this.findFunctions(editor, number)
 							}}
 						/>

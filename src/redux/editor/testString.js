@@ -18,6 +18,13 @@ class Editor extends Component {
     }
     function IDENTIFY_ME (params) {
         console.log("I AM HERE")
+        editor.addLineClass(data.from.line, 'background', Classes.collapsableLine)
+        this.props.addCollapsableLine({
+            index: data.from.line,
+            lastOpenToken: result.lastOpenToken,
+            tokens: result.tokens,
+            lastOpenIndex: result.lastOpenIndex,
+        })
     }
     findCharacter = (editor, lineNumber, character, constraint = false, multiLine = false) => {
         let check = { open: 0, lastOpenTokenIndex: null, close: 0 }

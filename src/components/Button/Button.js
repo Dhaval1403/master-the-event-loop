@@ -13,7 +13,14 @@ export const Button = ({
 	const content = children || text
 
 	return (
-		<ButtonStyled aria-label={acessibility} type={typeButton} {...otherProps}>
+		<ButtonStyled
+			aria-label={acessibility}
+			type={typeButton}
+			{...otherProps}
+			padding="8px 25px"
+			borderRadius="4px"
+			color="white"
+		>
 			{content}
 		</ButtonStyled>
 	)
