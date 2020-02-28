@@ -1,6 +1,44 @@
 import { CHECK_CALLSTACK, ADD_TO_CALLSTACK, REMOVE_FROM_CALLSTACK } from './callstack.types'
 
 const initalState = {
+	//stack: [
+	//	{
+	//		name: 'Main',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: undefined,
+	//	},
+	//	{
+	//		name: 'console.log',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console log',
+	//	},
+	//	{
+	//		name: 'console.warn',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console warn',
+	//	},
+	//	{
+	//		name: 'console.info',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console info',
+	//	},
+	//	{
+	//		name: 'console.time',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console time',
+	//	},
+	//	{
+	//		name: 'console.error',
+	//		delay: 0,
+	//		webApi: false,
+	//		message: 'Test Console error',
+	//	},
+	//],
 	stack: [],
 	isOccupied: false,
 }
