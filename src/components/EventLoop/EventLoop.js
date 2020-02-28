@@ -3,7 +3,7 @@ import './EventLoop.styles.css'
 import { connect } from 'react-redux'
 
 import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
-import { addFunctionToCallstack, checkCallstack } from '../../redux/callstack/callstack.actions'
+import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
 import { toggleSpin } from '../../redux/eventLoop/eventLoop.actions'
 
 class EventLoop extends Component {
@@ -84,7 +84,6 @@ const mapDispatchToProps = (dispatch) => ({
 	removeFromCallbackQueue: () => dispatch(removeFromCallbackQueue()),
 	addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
 	toggleSpin: () => dispatch(toggleSpin()),
-	checkCallstack: () => dispatch(checkCallstack()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventLoop)

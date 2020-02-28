@@ -17,17 +17,20 @@ class CallbackQueue extends Component {
 		))
 
 		return (
-			<ConsoleBox>
-				<Box display="flex" justifyContent="center" alignItems="center">
-					<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
-				</Box>
+			<>
+				<ConsoleHeader>
+					<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
+					</Box>
+				</ConsoleHeader>
+				<ConsoleBox>
+					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-				<Box display="flex" justifyContent="center" m="20px 0">
-					<QueueList>{stack}</QueueList>
-				</Box>
-			</ConsoleBox>
+					<Box display="flex" justifyContent="center" m="20px 0">
+						<QueueList>{stack}</QueueList>
+					</Box>
+				</ConsoleBox>
+			</>
 		)
 	}
 }

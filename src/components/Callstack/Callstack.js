@@ -5,7 +5,9 @@ import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.a
 import { pushToConsole } from './../../redux/Console/Console.actions'
 import { addToWebApi } from './../../redux/WebApiRedux/wepApi.actions'
 
-import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/callstack'
+import { List, ListItem } from '../../styles/callstack'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
+
 import { Box } from '../../styles/flex'
 
 class Callstack extends Component {
@@ -19,25 +21,8 @@ class Callstack extends Component {
 		'console.warn',
 	]
 
-	checkForConsoleLogs = (currLine) => {
-		/* 	if (this.consoleVariations.includes(currLine.name)) {
-				this.props.consoleApi({ name: currLine.name, message: currLine.message })
-			//this.props.removeFunctionFromCallstack()
-		}
-		if (currLine.webApi) {
-			this.props.addToWebApi(currLine)
-			//this.props.removeFunctionFromCallstack()
-		} */
-
-		//this.props.removeFunctionFromCallstack()
-
-		return currLine.name
-	}
-
 	renderCallstack = ({ callstack }) =>
-		callstack.map((currLine, i) => (
-			<ListItem key={`callstack_item_${i}`}>{this.checkForConsoleLogs(currLine)}</ListItem>
-		))
+		callstack.map((currLine, i) => <ListItem key={`callstack_item_${i}`}>{currLine.name}</ListItem>)
 
 	render() {
 		return (
@@ -49,6 +34,9 @@ class Callstack extends Component {
 				</ConsoleHeader>
 
 				<ConsoleBox>
+					{/* 	<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">Callstack</ConsoleTitle>
+					</Box> */}
 					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
 					<Box display="flex" justifyContent="center" m="20px 0">

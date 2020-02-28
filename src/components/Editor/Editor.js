@@ -447,7 +447,7 @@ const mapDispatchToProps = (dispatch) => {
 		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 	}
 	// editorMount
-	return (
+	/* 	return (
 		<ConsoleBox>
 			<Box display="flex" justifyContent="center" alignItems="center">
 				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
@@ -480,6 +480,7 @@ const mapDispatchToProps = (dispatch) => {
 			</Box>
 		</ConsoleBox>
 	)
+ */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

@@ -1,4 +1,4 @@
-import { CHECK_CALLSTACK, ADD_TO_CALLSTACK, REMOVE_FROM_CALLSTACK } from './callstack.types'
+import { CHANGE_CALLSTACK_STATE, ADD_TO_CALLSTACK, REMOVE_FROM_CALLSTACK } from './callstack.types'
 
 const initalState = {
 	//stack: [
@@ -65,15 +65,15 @@ export const callstackReducer = (state = initalState, action) => {
 				stackObject.webApi = false
 			}
 			return { ...state, stack: [...state.stack, stackObject] } */
-		case CHECK_CALLSTACK:
-			return { ...state }
+		case CHANGE_CALLSTACK_STATE:
+			return { ...state, isOccupied: action.payload }
 		case ADD_TO_CALLSTACK:
 			// return { ...state, stack: [...state.stack, action.payload], isOccupied: true }
-			return { stack: [...state.stack, action.payload], isOccupied: true }
+			return { ...state, stack: [action.payload, ...state.stack] }
 		case REMOVE_FROM_CALLSTACK:
 			const changeStack = [...state.stack]
 			changeStack.shift()
-			return { stack: [...changeStack], isOccupied: changeStack.length === 0 ? false : true }
+			return { ...state, stack: [...changeStack] }
 		default:
 			return state
 	}
