@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 
-import { Button } from '../Button/Button'
+// import { Button } from '../Button/Button'
 import { ConsoleBox, ConsoleHeader, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
@@ -35,10 +35,6 @@ class Console extends Component {
 								<ListItem type={messageTypes[message.name]}>{message}</ListItem>
 							))}
 						</List>
-					</Box>
-
-					<Box display="flex" justifyContent="center" alignItems="center">
-						<Button onClick={() => this.props.pushToConsole('hello')}>Click Me</Button>
 					</Box>
 				</ConsoleBox>
 			</>

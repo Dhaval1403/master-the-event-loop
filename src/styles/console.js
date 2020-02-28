@@ -24,6 +24,7 @@ export const ConsoleHeader = styled.div`
 	border-left: 1px solid ${variable.colorBlue};
 	border-right: 1px solid ${variable.colorBlue};
 	border-radius: 15px 15px 0 0;
+	box-shadow: 0 1px 3px ${variable.colorBlue};
 `
 
 export const ConsoleTitle = styled.h2`
