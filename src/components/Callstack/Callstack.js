@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 
 import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.actions'
 import { pushToConsole } from './../../redux/Console/Console.actions'
+import { addToWebApi } from './../../redux/WebApiRedux/wepApi.actions'
 
-import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/callstack'
 import { Box } from '../../styles/flex'
 
 class Callstack extends Component {
@@ -18,20 +19,25 @@ class Callstack extends Component {
 		'console.warn',
 	]
 
-	mountCallStack = () => {
-		console.log(this.props.callstack)
-	}
-
 	checkForConsoleLogs = (currLine) => {
-		if (this.consoleVariations.includes(currLine.name)) {
+		/* 	if (this.consoleVariations.includes(currLine.name)) {
 			this.props.consoleApi(currLine.message)
+			//this.props.removeFunctionFromCallstack()
 		}
+		if (currLine.webApi) {
+			this.props.addToWebApi(currLine)
+			//this.props.removeFunctionFromCallstack()
+		} */
+
+		//this.props.removeFunctionFromCallstack()
 
 		return currLine.name
 	}
 
 	renderCallstack = ({ callstack }) =>
-		callstack.map((currLine) => <ListItem>{this.checkForConsoleLogs(currLine)}</ListItem>)
+		callstack.map((currLine, i) => (
+			<ListItem key={`callstack_item_${i}`}>{this.checkForConsoleLogs(currLine)}</ListItem>
+		))
 
 	render() {
 		return (
@@ -52,11 +58,13 @@ class Callstack extends Component {
 
 const mapStateToProps = (state) => ({
 	callstack: state.callstack.stack,
+	isOccupied: state.callstack.isOccupied,
 })
 
 const mapDispatchToProps = (dispatch) => ({
 	removeFunctionFromCallstack: () => dispatch(removeFunctionFromCallstack()),
 	consoleApi: (message) => dispatch(pushToConsole(message)),
+	addToWebApi: (funcData) => dispatch(addToWebApi(funcData)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Callstack)

@@ -19,8 +19,55 @@ import { connect } from 'react-redux'
 import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
 import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
 
+const testdata = [
+	{
+		name: 'console.log',
+		delay: 0,
+		webApi: false,
+		message: 'Test Console log',
+	},
+	{
+		name: 'console.warn',
+		delay: 0,
+		webApi: false,
+		message: 'Test Console warn',
+	},
+	{
+		name: 'fetch',
+		delay: 0,
+		webApi: true,
+		message: undefined,
+	},
+	{
+		name: 'setTimout',
+		delay: 0,
+		webApi: true,
+		message: undefined,
+	},
+	{
+		name: 'customFunc',
+		delay: 0,
+		webApi: false,
+		message: undefined,
+	},
+]
+
 class Container extends Component {
 	componentDidMount() {
+		this.timerId = setInterval(() => this.pipeIntoCallStack(), 1000)
+	}
+
+	pipeIntoCallStack = () => {
+		//for (let i = 0; i < testdata.length; i++) {
+		if (testdata.length > 0) {
+			this.props.addFunctionToCallstack(testdata.pop())
+		} else {
+			clearInterval(this.timerId)
+		}
+		//}
+	}
+
+	/* componentDidMount() {
 		// After the component has mounted, start the loop
 		this.makeFuncObj = (str) => ({
 			name: str,
@@ -47,7 +94,7 @@ class Container extends Component {
 			this.runLoop()
 			console.log('ran loop')
 		}, 1000)
-	}
+	} */
 
 	render() {
 		return (

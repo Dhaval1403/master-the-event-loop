@@ -19,8 +19,8 @@ class Console extends Component {
 
 				<Box display="flex" justifyContent="center" m="20px 0">
 					<List>
-						{this.props.messages.map((message) => (
-							<ListItem>{message}</ListItem>
+						{this.props.messages.map((message, i) => (
+							<ListItem key={`console_item_${i}`}>{message}</ListItem>
 						))}
 					</List>
 				</Box>
