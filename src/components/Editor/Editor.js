@@ -200,6 +200,12 @@ class Editor extends Component {
 
 		if (firstLineTokens) {
 			const result = this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
+
+			return this.getStringValue(
+				editor,
+				[startLineAndIndex[0], startLineAndIndex[1]],
+				Object.values(result.lastCloseIndex)
+			)
 		}
 	}
 
@@ -278,7 +284,8 @@ class Editor extends Component {
 		}
 		if (es5Function && es5Function.found) {
 			const res = this.findFunctionName(es5Function.tokens, es5Function.tokenIndex, line, true)
-			this.getFunctionStringValue(editor, [res.line, res.tokenIndex])
+			res.functionString = this.getFunctionStringValue(editor, [res.line, res.tokenIndex])
+			res.es5 = true
 			this.props.addFunction(res)
 		}
 	}
