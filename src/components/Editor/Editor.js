@@ -170,7 +170,6 @@ class Editor extends Component {
 		if (startLineAndIndex[1] !== 0) {
 			for (let i = startLineAndIndex[1]; i < tokens.length; i++) {
 				stringValue += tokens[i].string
-				console.log('omar', startLineAndIndex[0], endLineAndIndex[0])
 			}
 		} else {
 			stringValue += '\n' + editor.getLine(startLineAndIndex[0])
@@ -199,21 +198,8 @@ class Editor extends Component {
 	getFunctionStringValue = (editor, startLineAndIndex) => {
 		const firstLineTokens = editor.getLineTokens(startLineAndIndex[0])
 
-		// console.log('flem', startLineAndIndex[0], startLineAndIndex[1])
 		if (firstLineTokens) {
-			console.log(
-				'flem',
-				this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
-			)
 			const result = this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
-			console.log(
-				'omar',
-				this.getStringValue(
-					editor,
-					[startLineAndIndex[0], startLineAndIndex[1]],
-					Object.values(result.lastCloseIndex)
-				)
-			)
 		}
 	}
 
@@ -417,7 +403,6 @@ class Editor extends Component {
 							onBeforeChange={(editor, data, value) => this.props.setData(value)}
 							onChange={this.handleChange}
 							onGutterClick={(editor, number, gutter, str) => {
-								console.log('omar', editor.getLine(number))
 								this.findFunctions(editor, number)
 							}}
 						/>
