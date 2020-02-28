@@ -12,7 +12,23 @@ require('codemirror/theme/neat.css')
 require('codemirror/mode/xml/xml.js')
 require('codemirror/mode/javascript/javascript.js')
 
+/**
+ * @typedef {Object} findCharacterResult
+ * @property {?boolean} found
+ * @property {number} tokenIndex
+ * @property {number} line
+ * @property {array} tokens
+ * @property {?boolean} isOpen
+ * @property {?number} firstOpenIndex
+ * @property {?number} lastOpenIndex
+ * @property {?number} lineNo
+ */
+
 class Editor extends Component {
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} num
+	 */
 	higlightLine = (editor, num) => {
 		editor.addLineClass(num, 'background', Classes.activeLine)
 	}
@@ -22,11 +38,21 @@ class Editor extends Component {
 
 	// need to reduce argument length. By passing in an object of configurations
 
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} lineNumber
+	 * @param {string} character
+	 * @param {?string} constraint
+	 * @param {boolean} multiLine
+	 * @param {?number} startToken
+	 * @return {findCharacterResult}
+	 */
+
 	findCharacter = (
 		editor,
 		lineNumber,
 		character,
-		constraint = false,
+		constraint = null,
 		multiLine = false,
 		startToken = null
 	) => {
@@ -37,6 +63,14 @@ class Editor extends Component {
 		let found = false
 		let isOpen = false
 		let lineFound = null
+
+		/**
+		 *
+		 * @param {array} tokens
+		 * @param {number} lineNo
+		 * @param {number} startingToken
+		 */
+
 		const loopThroughLine = (tokens, lineNo, startingToken) => {
 			for (let i = startingToken !== null ? startingToken : 0; i < tokens.length; i++) {
 				if (tokens[i].string === character) {
@@ -97,6 +131,12 @@ class Editor extends Component {
 		}
 	}
 
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} lineNumber
+	 * @param {?number}
+	 */
+
 	findOPeningAndClosing = (editor, lineNumber, startToken = null) => {
 		return this.findCharacter(editor, lineNumber, '{', '}', true, 0)
 	}
@@ -106,6 +146,12 @@ class Editor extends Component {
 	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
 
 	findFunctionKeyword = (editor, lineNumber) => this.findCharacter(editor, lineNumber, 'function')
+
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {[number, number]} startLineAndIndex
+	 * @param {[number, number]} endLineAndIndex
+	 */
 
 	getStringValue = (editor, startLineAndIndex, endLineAndIndex) => {
 		let tokens = editor.getLineTokens(startLineAndIndex[0])
@@ -145,6 +191,11 @@ class Editor extends Component {
 		return stringValue
 	}
 
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {[number, number]} startLineAndIndex
+	 */
+
 	getFunctionStringValue = (editor, startLineAndIndex) => {
 		const firstLineTokens = editor.getLineTokens(startLineAndIndex[0])
 
@@ -164,27 +215,14 @@ class Editor extends Component {
 				)
 			)
 		}
-		// const [startLine, startIndex] = startLineAndIndex
-		// const [stopLine, stopIndex] = endLineAndIndex
-		// let str = ''
-		// // let shouldLoop = false;
-		// // let currentTokens = [];
-		// // const firstLineTokens = editor.getLineTokens(startLine);
-		// // let string = '';
-		// // while(shouldLoop) {
-		// // }
-		// for (let i = startLine; i <= stopLine; i++) {
-		// 	const tokens = editor.getLineTokens(i)
-		// 	for (
-		// 		let j = i === stopLine ? startIndex : 0;
-		// 		j <= (i === stopLine ? stopIndex : tokens.length);
-		// 		j++
-		// 	) {
-		// 		str += tokens.string
-		// 	}
-		// }
-		// return str
 	}
+
+	/**
+	 * @param {array} tokens
+	 * @param {number} limit
+	 * @param {number} line
+	 * @param {boolean} es5
+	 */
 
 	findFunctionName = (tokens, limit, line, es5 = false) => {
 		const foundTokens = { ')': false, '(': false }
@@ -322,6 +360,12 @@ class Editor extends Component {
 	}
 
 	// Add style to line(s) during execution simulation
+
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} from
+	 * @param {number} to
+	 */
 
 	higlightCharacters = (editor, from, to) => {
 		if (to !== undefined) {
