@@ -3,6 +3,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
 import { ConsoleBox, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
+import Controls from '../Controls/Controls'
 
 require('codemirror/lib/codemirror.css')
 require('codemirror/theme/material.css')
@@ -232,6 +233,7 @@ const Editor = () => {
 		<ConsoleBox>
 			<Box display="flex" justifyContent="center" alignItems="center">
 				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+				<Controls />
 			</Box>
 
 			<Box borderTop={1} borderStyle="solid" color="colorBlue" />

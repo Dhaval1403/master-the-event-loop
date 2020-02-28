@@ -17,8 +17,10 @@ import Help from '../Help/Help'
 import { connect } from 'react-redux'
 
 import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
-import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
-import { spin, spinBack } from '../../redux/eventLoop/eventLoop.actions'
+import {
+	addFunctionToCallstack,
+	changeCallstackState,
+} from '../../redux/callstack/callstack.actions'
 
 const testdata = [
 	{
@@ -35,13 +37,13 @@ const testdata = [
 	},
 	{
 		name: 'fetch',
-		delay: 0,
+		delay: 2000,
 		webApi: true,
 		message: undefined,
 	},
 	{
 		name: 'setTimout',
-		delay: 0,
+		delay: 1000,
 		webApi: true,
 		message: undefined,
 	},
@@ -55,7 +57,8 @@ const testdata = [
 
 class Container extends Component {
 	componentDidMount() {
-		this.timerId = setInterval(() => this.pipeIntoCallStack(), 1000)
+		this.timerId = setInterval(() => this.pipeIntoCallStack(), 2000)
+		this.props.changeCallstackState(true)
 	}
 
 	pipeIntoCallStack = () => {
@@ -64,6 +67,7 @@ class Container extends Component {
 			this.props.addFunctionToCallstack(testdata.pop())
 		} else {
 			clearInterval(this.timerId)
+			this.props.changeCallstackState(false)
 		}
 		//}
 	}
@@ -154,8 +158,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	removeFromCallbackQueue: () => dispatch(removeFromCallbackQueue()),
 	addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
-	spin: () => dispatch(spin()),
-	spinBack: () => dispatch(spinBack()),
+	changeCallstackState: (toState) => dispatch(changeCallstackState(toState)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container)
