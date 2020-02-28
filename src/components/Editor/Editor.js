@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/editor/editor.actions'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
-import { ConsoleBox, ConsoleTitle } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import Controls from '../Controls/Controls'
 
@@ -11,43 +13,50 @@ require('codemirror/theme/neat.css')
 require('codemirror/mode/xml/xml.js')
 require('codemirror/mode/javascript/javascript.js')
 
-const Editor = () => {
-	const [data, updateData] = useState(`const [data, updateData] = useState("");
-	const [, setEditor] = useState(null);
-	const [collapsableLines, setCollapsableLines] = useState({});
-	const higlightLine = (editor, num) => {
-		editor.addLineClass(num, 'background', Classes.activeLine);
-	};
-	const unHiglightLine = (editor, num) => {
-		editor.removeLineClass(num, 'background', Classes.activeLine);
-	};
-	const higlightedLine = [];
-`)
-	// const [functions, updateFunctions] = {};
+/**
+ * @typedef {Object} findCharacterResult
+ * @property {?boolean} found
+ * @property {number} tokenIndex
+ * @property {number} line
+ * @property {array} tokens
+ * @property {?boolean} isOpen
+ * @property {?number} firstOpenIndex
+ * @property {?number} lastOpenIndex
+ * @property {?number} lineNo
+ */
 
-	const [editor, setEditor] = useState(null)
-	// const [collapsableLines, setCollapsableLines] = useState({});
-	let collapsableLines = {}
-	const setCollapsableLines = (arg) => {
-		collapsableLines = arg
-	}
-	const higlightLine = (editor, num) => {
+class Editor extends Component {
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} num
+	 */
+	higlightLine = (editor, num) => {
 		editor.addLineClass(num, 'background', Classes.activeLine)
 	}
-	const unHiglightLine = (editor, num) => {
+	unHiglightLine = (editor, num) => {
 		editor.removeLineClass(num, 'background', Classes.activeLine)
 	}
-	const higlightedLine = []
 
-	const findCharacter = (
+	// need to reduce argument length. By passing in an object of configurations
+
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} lineNumber
+	 * @param {string} character
+	 * @param {?string} constraint
+	 * @param {boolean} multiLine
+	 * @param {?number} startToken
+	 * @return {findCharacterResult}
+	 */
+
+	findCharacter = (
 		editor,
 		lineNumber,
 		character,
-		constraint = false,
-		// lastOccurence = false,
-		multiLine = false
+		constraint = null,
+		multiLine = false,
+		startToken = null
 	) => {
-		// console.log(editor, lineNumber, character, constraint, multiLine);
 		let check = { open: 0, lastOpenTokenIndex: null, close: 0 }
 		const tokens = editor.getLineTokens(lineNumber)
 		let fistOpenIndex
@@ -55,8 +64,16 @@ const Editor = () => {
 		let found = false
 		let isOpen = false
 		let lineFound = null
-		const loopThroughLine = (tokens, lineNo) => {
-			for (let i = 0; i < tokens.length; i++) {
+
+		/**
+		 *
+		 * @param {array} tokens
+		 * @param {number} lineNo
+		 * @param {number} startingToken
+		 */
+
+		const loopThroughLine = (tokens, lineNo, startingToken) => {
+			for (let i = startingToken !== null ? startingToken : 0; i < tokens.length; i++) {
 				if (tokens[i].string === character) {
 					found = true
 					if (check.open === 0) {
@@ -80,8 +97,9 @@ const Editor = () => {
 					check.close += 1
 					lastCloseIndex = { lineNo: lineNo, tokenIndex: i }
 				}
-				if (check.open + check.close !== 0 && check.open === check.close) {
-					isOpen = false
+				if (check.open + check.close !== 0 && i === tokens.length - 1) {
+					if (check.open === check.close) isOpen = false
+					if (check.open > check.close) isOpen = true
 					return {
 						isOpen,
 						tokenIndex: i,
@@ -93,7 +111,7 @@ const Editor = () => {
 				}
 			}
 		}
-		const val = loopThroughLine(tokens, lineNumber)
+		const val = loopThroughLine(tokens, lineNumber, startToken)
 
 		if (!multiLine) return val
 		let j = lineNumber + 1
@@ -107,91 +125,243 @@ const Editor = () => {
 		if (multiLine && found && check.open + check.close !== 0 && check.open !== check.close) {
 			let result
 			while (check.open !== check.close) {
-				result = loopThroughLine(editor.getLineTokens(j), j)
+				result = loopThroughLine(editor.getLineTokens(j), j, 0)
 				j++
 			}
 			return result
 		}
-		// if (multiLine) {
-		// 	return {
-		// 		isOpen,
-		// 		lastOpenIndex: check.lastOpenTokenIndex,
-		// 		tokens: tokens,
-		// 		lastOpenToken: tokens[check.lastOpenTokenIndex],
-		// 		line: lineFound,
-		// 	};
-		// }
 	}
 
-	// const openingCurlyBrace = (editor, lineNumber) =>
-	// 	findCharacter(editor, lineNumber, '{', '}', true);
-	// const parenthesis = (editor, lineNumber) => findCharacter(editor, lineNumber, '(', ')', true);
-	// const closingCurlyBrace = (editor, lineNumber) =>
-	// 	findCharacter(editor, lineNumber, '}', false, false, true);
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} lineNumber
+	 * @param {?number}
+	 */
 
-	const findOPeningAndClosing = (editor, lineNumber) => {
-		return findCharacter(editor, lineNumber, '{', '}', true)
+	findOPeningAndClosing = (editor, lineNumber, startToken = null) => {
+		return this.findCharacter(editor, lineNumber, '{', '}', true, 0)
 	}
-
-	const updateCollapsableLines = (i, lastOpenToken, tokens, lastOpenIndex) => {
-		setCollapsableLines({
-			...collapsableLines,
-			[i]: {
-				lastOpenToken,
-				tokens,
-				lastOpenIndex,
-			},
-		})
+	openingCurlyBrace = (editor, lineNumber) => {
+		return this.findCharacter(editor, lineNumber, '{', '}')
 	}
+	findFatArrow = (editor, lineNumber) => this.findCharacter(editor, lineNumber, '=>')
 
-	// Handle Paste into editor
+	findFunctionKeyword = (editor, lineNumber) => this.findCharacter(editor, lineNumber, 'function')
 
-	const loadStateWithCollapsable = (editor, startNumber) => {
-		// for (var i = startNumber; i < editor.doc.size; i++) {
-		// 	const { isCollapsable, lastOpenToken, tokens, lastOpenIndex } = openingCurlyBrace(editor, i);
-		// 	if (isCollapsable) {
-		// 		editor.addLineClass(i, 'background', Classes.collapsableLine);
-		// 		updateCollapsableLines(i, lastOpenToken, tokens, lastOpenIndex);
-		// 	}
-		// }
-	}
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {[number, number]} startLineAndIndex
+	 * @param {[number, number]} endLineAndIndex
+	 */
 
-	const handlePaste = (editor, data, value) => {
-		loadStateWithCollapsable(editor, data.from.line)
-	}
-
-	const handleChange = (editor, data, value) => {
-		// if (data.origin === 'paste') {
-		// 	handlePaste(editor, data, value);
-		// }
-		// if (data.origin === '+input') {
-		// 	const { isCollapsable, lastOpenToken, tokens, lastOpenIndex } = openingCurlyBrace(
-		// 		editor,
-		// 		data.from.line
-		// 	);
-		// 	if (isCollapsable) {
-		// 		updateCollapsableLines(lastOpenToken, tokens, lastOpenIndex);
-		// 	} else {
-		// 		if (collapsableLines[data.from.line]) {
-		// 			const { [data.from.line]: _, ...rest } = collapsableLines;
-		// 			setCollapsableLines(rest);
-		// 		}
-		// 	}
-		// }
-	}
-
-	const handleCursor = (editor, data) => {
-		higlightedLine.push(data.line)
-		if (higlightedLine.length > 1) {
-			const first = higlightedLine.shift()
-			unHiglightLine(editor, first)
+	getStringValue = (editor, startLineAndIndex, endLineAndIndex) => {
+		let tokens = editor.getLineTokens(startLineAndIndex[0])
+		let stringValue = ''
+		;(function() {
+			let foundInitialiser = false
+			let i = startLineAndIndex[1] - 1
+			while (!foundInitialiser) {
+				if (tokens[i].string !== ' ') {
+					foundInitialiser = true
+				}
+				stringValue += tokens[i].string + ' '
+				i--
+			}
+		})()
+		if (startLineAndIndex[1] !== 0) {
+			for (let i = startLineAndIndex[1]; i < tokens.length; i++) {
+				stringValue += tokens[i].string
+			}
+		} else {
+			stringValue += '\n' + editor.getLine(startLineAndIndex[0])
 		}
-		higlightLine(editor, data.line)
+		if (endLineAndIndex[0] !== startLineAndIndex[0] + 1) {
+			for (let i = startLineAndIndex[0] + 1; i <= endLineAndIndex[0]; i++) {
+				stringValue += '\n' + editor.getLine(i)
+			}
+		}
+		if (endLineAndIndex[1] !== 0) {
+			let tokens = editor.getLineTokens(endLineAndIndex[0])
+			for (let i = endLineAndIndex[1]; i < tokens.length; i++) {
+				stringValue += tokens[i].string
+			}
+		} else {
+			stringValue += '\n' + editor.getLine(endLineAndIndex[0])
+		}
+		return stringValue
+	}
+
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {[number, number]} startLineAndIndex
+	 */
+
+	getFunctionStringValue = (editor, startLineAndIndex) => {
+		const firstLineTokens = editor.getLineTokens(startLineAndIndex[0])
+
+		if (firstLineTokens) {
+			const result = this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
+
+			return this.getStringValue(
+				editor,
+				[startLineAndIndex[0], startLineAndIndex[1]],
+				Object.values(result.lastCloseIndex)
+			)
+		}
+	}
+
+	/**
+	 * @param {array} tokens
+	 * @param {number} limit
+	 * @param {number} line
+	 * @param {boolean} es5
+	 */
+
+	findFunctionName = (tokens, limit, line, es5 = false) => {
+		const foundTokens = { ')': false, '(': false }
+		if (es5) {
+			for (let i = limit + 1; i < tokens.length; i++) {
+				if (tokens[i].string === '(' && !foundTokens['(']) {
+					foundTokens[tokens[i].string] = true
+					continue
+				}
+				if (tokens[i].string === ')' && !foundTokens[')']) {
+					return {
+						type: 'anonymous',
+						tokenIndex: i,
+						line,
+					}
+				}
+				if (tokens[i].string === ' ') {
+					continue
+				}
+				if (tokens[i].string && !foundTokens['(']) {
+					return {
+						type: 'named',
+						name: tokens[i].string,
+						tokenIndex: i,
+						line,
+					}
+				}
+			}
+		} else {
+			for (let i = limit - 1; i >= 0; i--) {
+				if (
+					(tokens[i].string === '(' && !foundTokens['(']) ||
+					(tokens[i].string === ')' && !foundTokens[')'])
+				) {
+					foundTokens[tokens[i].string] = true
+					continue
+				}
+				if (foundTokens[')'] && foundTokens['(']) {
+					if (tokens[i].string === ' ' || tokens[i].string === '=' || tokens[i].string === ':') {
+						continue
+					} else if (tokens[i].string === '(' || tokens[i].string === '{') {
+						return {
+							type: 'anonymous',
+							tokenIndex: i,
+							line,
+						}
+					} else {
+						return {
+							type: 'named',
+							name: tokens[i].string,
+							tokenIndex: i,
+							line,
+						}
+					}
+				}
+			}
+		}
+	}
+
+	findFunctions = (editor, line) => {
+		const es6Function = this.findFatArrow(editor, line)
+		const es5Function = this.findFunctionKeyword(editor, line)
+		if (es6Function && es6Function.found) {
+			const res = this.findFunctionName(es6Function.tokens, es6Function.tokenIndex, line)
+
+			this.props.addFunction(res)
+		}
+		if (es5Function && es5Function.found) {
+			const res = this.findFunctionName(es5Function.tokens, es5Function.tokenIndex, line, true)
+			res.functionString = this.getFunctionStringValue(editor, [res.line, res.tokenIndex])
+			res.es5 = true
+			this.props.addFunction(res)
+		}
+	}
+
+	loadStateWithFunctions = (editor, startNumber) => {
+		for (var i = startNumber; i < editor.doc.size; i++) {
+			this.findFunctions(editor, i)
+		}
+	}
+	// Handle Paste into editor
+	loadStateWithCollapsable = (editor, startNumber) => {
+		for (var i = startNumber; i < editor.doc.size; i++) {
+			const result = this.openingCurlyBrace(editor, i)
+			if (result && result.isOpen) {
+				editor.addLineClass(i, 'background', Classes.collapsableLine)
+				this.props.addCollapsableLine({
+					index: i,
+					lastOpenToken: result.lastOpenToken,
+					tokens: result.tokens,
+					lastOpenIndex: result.lastOpenIndex,
+				})
+			}
+		}
+	}
+
+	handlePaste = (editor, data, value) => {
+		this.loadStateWithCollapsable(editor, data.from.line)
+	}
+	handleChange = (editor, data, value) => {
+		if (data.origin === 'paste') {
+			this.handlePaste(editor, data, value)
+		}
+		if (
+			data.origin === '+input' ||
+			data.origin === '+delete' ||
+			data.origin === 'undo' ||
+			data.origin === 'redo'
+		) {
+			const result = this.openingCurlyBrace(editor, data.from.line)
+
+			if (result && result.isOpen) {
+				editor.addLineClass(data.from.line, 'background', Classes.collapsableLine)
+				this.props.addCollapsableLine({
+					index: data.from.line,
+					lastOpenToken: result.lastOpenToken,
+					tokens: result.tokens,
+					lastOpenIndex: result.lastOpenIndex,
+				})
+			} else {
+				if (this.props.collapsableLines[data.from.line]) {
+					editor.removeLineClass(data.from.line, 'background', Classes.collapsableLine)
+					this.props.removeCollapsableLine(data.from.line)
+				}
+			}
+		}
+	}
+
+	handleCursor = (editor, data) => {
+		if (this.props.highlightedLines.length > 0) {
+			this.unHiglightLine(editor, this.props.highlightedLines[0])
+			this.props.removeLastHighlightedLine()
+		}
+		this.higlightLine(editor, data.line)
+		this.props.highlightLine(data.line)
 	}
 
 	// Add style to line(s) during execution simulation
 
-	const higlightCharacters = (editor, from, to) => {
+	/**
+	 * @param {CodeMirror.Editor} editor
+	 * @param {number} from
+	 * @param {number} to
+	 */
+
+	higlightCharacters = (editor, from, to) => {
 		if (to !== undefined) {
 			for (var i = from; i <= to; i++) {
 				editor.addLineClass(i, 'background', Classes.runningLine)
@@ -203,7 +373,7 @@ const Editor = () => {
 
 	// Remove style to line(s) during execution simulation
 
-	const removeHiglightFromCharacters = (editor, from, to) => {
+	removeHiglightFromCharacters = (editor, from, to) => {
 		if (to !== undefined) {
 			for (var i = from; i <= to; i++) {
 				editor.removeLineClass(i, 'background', Classes.runningLine)
@@ -213,20 +383,68 @@ const Editor = () => {
 		}
 	}
 
-	const editorMount = (editor) => {
-		setEditor(editor)
-		if (editor.doc.size > 1) {
-			loadStateWithCollapsable(editor, 0)
-		}
-		// higlightCharacters(editor, 3, 4);
-	}
+	render() {
+		return (
+			<>
+				<ConsoleHeader>
+					<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+					</Box>
+				</ConsoleHeader>
 
-	const getStringValue = (editor, startLine, endLine, startIndex, endIndex) => {
-		const firstLineTokens = editor.getLineTokens(startLine)
-	}
+				<ConsoleBox>
+					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-	const findFunctions = (editor) => {
-		// const data = parenthesis
+					<Box>
+						<div className={Classes.container}>
+							<CodeMirror
+								className={Classes.codeMirror}
+								value={this.props.data}
+								editorDidMount={(editor) => {
+									this.loadStateWithCollapsable(editor, 0)
+									this.loadStateWithFunctions(editor, 0)
+								}}
+								options={{
+									mode: 'javascript',
+									theme: 'material',
+									tabSize: 2,
+									lineNumbers: true,
+								}}
+								onCursor={this.handleCursor}
+								onBeforeChange={(editor, data, value) => this.props.setData(value)}
+								onChange={this.handleChange}
+								onGutterClick={(editor, number, gutter, str) => {
+									this.findFunctions(editor, number)
+								}}
+							/>
+						</div>
+					</Box>
+				</ConsoleBox>
+			</>
+		)
+	}
+}
+
+const mapStateToProps = (state) => {
+	const {
+		editor: { editor, highlightedLines, collapsableLines, data },
+	} = state
+	return {
+		data,
+		editor,
+		highlightedLines,
+		collapsableLines,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		highlightLine: (lineNumber) => dispatch(actions.highlightLine(lineNumber)),
+		removeLastHighlightedLine: () => dispatch(actions.removeLastHighlightedLine()),
+		setData: (data) => dispatch(actions.setData(data)),
+		addCollapsableLine: (data) => dispatch(actions.addCollapsableLine(data)),
+		removeCollapsableLine: (lineNumber) => dispatch(actions.removeCollapsableLine(lineNumber)),
+		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 	}
 	// editorMount
 	return (
@@ -264,4 +482,4 @@ const Editor = () => {
 	)
 }
 
-export default Editor
+export default connect(mapStateToProps, mapDispatchToProps)(Editor)

@@ -62,46 +62,13 @@ class Container extends Component {
 	}
 
 	pipeIntoCallStack = () => {
-		//for (let i = 0; i < testdata.length; i++) {
 		if (testdata.length > 0) {
 			this.props.addFunctionToCallstack(testdata.pop())
 		} else {
 			clearInterval(this.timerId)
 			this.props.changeCallstackState(false)
 		}
-		//}
 	}
-
-	/* componentDidMount() {
-		// After the component has mounted, start the loop
-		this.makeFuncObj = (str) => ({
-			name: str,
-			delay: 0,
-			webApi: false,
-			message: 'Test Console log',
-		})
-
-		this.runLoop = () => {
-			// if callstack is empty and callbackqueue is not empty
-			if (this.props.callstack.length === 0 && this.props.callbackQueue.length !== 0) {
-				// add the callbackqueue[0] to callstack
-				// but callbackqueue has func as strings whereas
-				// callstack accepts func as obj (see callstack reducer)
-				// hence wrap the string in makeFuncObj
-				this.props.addFunctionToCallstack(
-					this.makeFuncObj(this.props.callbackQueue[0] + 'added by event loop')
-				)
-				this.props.spin()
-				this.props.removeFromCallbackQueue()
-				setTimeout(() => this.props.spinBack(), 500)
-			}
-		}
-
-		this.timerId = setInterval(() => {
-			this.runLoop()
-			console.log('ran loop')
-		}, 1000)
-	} */
 
 	render() {
 		return (

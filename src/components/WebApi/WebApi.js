@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 // import './WebApi.styles.css';
 
-import { ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle, List, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { connect } from 'react-redux'
 import { addToCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'

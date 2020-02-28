@@ -41,17 +41,21 @@ class Callstack extends Component {
 
 	render() {
 		return (
-			<ConsoleBox>
-				<Box display="flex" justifyContent="center" alignItems="center">
-					<ConsoleTitle p="10px">Callstack</ConsoleTitle>
-				</Box>
+			<>
+				<ConsoleHeader>
+					<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">Callstack</ConsoleTitle>
+					</Box>
+				</ConsoleHeader>
 
-				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+				<ConsoleBox>
+					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box display="flex" justifyContent="center" m="20px 0">
-					<List>{this.renderCallstack(this.props)}</List>
-				</Box>
-			</ConsoleBox>
+					<Box display="flex" justifyContent="center" m="20px 0">
+						<List>{this.renderCallstack(this.props)}</List>
+					</Box>
+				</ConsoleBox>
+			</>
 		)
 	}
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ConsoleBox, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 // For testing actions

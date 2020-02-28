@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { helpReducer } from './helpToggle/helpToggle.reducer'
 import { consoleReducer } from './Console/Console.reducer'
 import { callstackReducer } from './callstack/callstack.reducer'
+import { editorReducer } from './editor/editor.reducer'
 import { callbackQueueReducer } from './callbackQueue/callbackQueue.reducer'
 import { webApiReducer } from './WebApiRedux/webApi.reducer'
 import { eventLoopReducer } from './eventLoop/eventLoop.reducer'
@@ -13,6 +14,7 @@ export default combineReducers({
 	helpReducer: helpReducer,
 	consoleReducer: consoleReducer,
 	callstack: callstackReducer,
+	editor: editorReducer,
 	callbackQueue: callbackQueueReducer,
 	webApiReducer: webApiReducer,
 	eventLoop: eventLoopReducer,
