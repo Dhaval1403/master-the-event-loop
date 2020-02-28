@@ -67,19 +67,17 @@ class Container extends Component {
 						gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
 						gridTemplateRows="45vh 35vh"
 						gridGap="25px"
-						mt="100px"
-						ml="25px"
-						mr="25px"
+						m="25px"
 					>
-						<Cell mb="50px">
+						<Cell>
 							<Editor />
 						</Cell>
 
-						<Cell mb="50px">
+						<Cell>
 							<Callstack />
 						</Cell>
 
-						<Cell mb="50px">
+						<Cell>
 							<WebApi />
 						</Cell>
 

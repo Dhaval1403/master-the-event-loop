@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { variable } from '../../styles/variable'
 
 export const HeaderStyled = styled.header`
-	position: fixed;
+	position: sticky;
 	top: 0;
 	background-color: ${variable.colorWhite};
 	box-shadow: 0 1px 0 1px ${variable.colorBlackTransparent1};
