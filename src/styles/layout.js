@@ -22,5 +22,7 @@ export const Main = styled.main`
 
 export const Wrap = styled.div`
 	background-color: ${({ backgroundColor }) =>
-		backgroundColor ? variable[backgroundColor] : variable.colorGrayLight5};
+		backgroundColor ? variable[backgroundColor] : variable.colorWhite};
+	width: 60%;
+	border-radius: 4px;
 `
