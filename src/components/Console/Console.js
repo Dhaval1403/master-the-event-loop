@@ -31,7 +31,7 @@ class Console extends Component {
 					<Box display="flex" justifyContent="center" m="20px 0">
 						<List>
 							{this.props.messages.map((message) => (
-								<ListItem type={messageTypes[message.name]}>{message}</ListItem>
+								<ListItem type={messageTypes[message.name]}>{message.message}</ListItem>
 							))}
 						</List>
 					</Box>
