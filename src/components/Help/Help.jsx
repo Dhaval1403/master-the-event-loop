@@ -62,6 +62,7 @@ class Help extends Component {
 									Close
 								</Button>
 							</Box>
+
 							<div id="mdb" className="modal-body">
 								<div className="modal-content">
 									<P>

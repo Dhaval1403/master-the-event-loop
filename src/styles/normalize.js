@@ -62,7 +62,7 @@ export const Normalize = createGlobalStyle`
     }
     html {
         > body {
-            ${scrollbar()};
+            /* ${scrollbar()}; */
             background-color: ${variable.colorWhite};
             color: ${variable.fontColor};
             font-family: ${variable.fontPrimary};
