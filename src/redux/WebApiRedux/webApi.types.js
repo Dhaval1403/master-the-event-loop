@@ -1,3 +1,4 @@
 export const webApiTypes = {
 	ADD_TO_WEB_API: 'ADD_TO_WEB_API',
+	REMOVE_FROM_WEB_API: 'REMOVE_FROM_WEB_API',
 }

@@ -17,5 +17,5 @@ export default combineReducers({
 	editor: editorReducer,
 	callbackQueue: callbackQueueReducer,
 	webApiReducer: webApiReducer,
-	spin: eventLoopReducer,
+	eventLoop: eventLoopReducer,
 })

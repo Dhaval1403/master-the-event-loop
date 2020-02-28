@@ -5,6 +5,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
 import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
+import Controls from '../Controls/Controls'
 
 require('codemirror/lib/codemirror.css')
 require('codemirror/theme/material.css')
@@ -445,6 +446,41 @@ const mapDispatchToProps = (dispatch) => {
 		removeCollapsableLine: (lineNumber) => dispatch(actions.removeCollapsableLine(lineNumber)),
 		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 	}
+	// editorMount
+	/* 	return (
+		<ConsoleBox>
+			<Box display="flex" justifyContent="center" alignItems="center">
+				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+				<Controls />
+			</Box>
+
+			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+
+			<Box>
+				<div className={Classes.container}>
+					<CodeMirror
+						className={Classes.codeMirror}
+						value={data}
+						editorDidMount={() => {}}
+						options={{
+							mode: 'javascript',
+							theme: 'material',
+							tabSize: 2,
+							lineNumbers: true,
+						}}
+						onCursor={handleCursor}
+						onBeforeChange={(editor, data, value) => updateData(value)}
+						onChange={handleChange}
+						onGutterClick={(editor, number, gutter, str) => {
+							console.log(findOPeningAndClosing(editor, 3))
+							// console.log(closingCurlyBrace(editor, number + 1));
+						}}
+					/>
+				</div>
+			</Box>
+		</ConsoleBox>
+	)
+ */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

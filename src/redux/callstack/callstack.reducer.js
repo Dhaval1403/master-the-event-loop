@@ -1,9 +1,4 @@
-import {
-	CHECK_CALLSTACK,
-	CHECK_FUNCTION,
-	ADD_TO_CALLSTACK,
-	REMOVE_FROM_CALLSTACK,
-} from './callstack.types'
+import { CHANGE_CALLSTACK_STATE, ADD_TO_CALLSTACK, REMOVE_FROM_CALLSTACK } from './callstack.types'
 
 const initalState = {
 	//stack: [
@@ -50,9 +45,6 @@ const initalState = {
 
 export const callstackReducer = (state = initalState, action) => {
 	switch (action.type) {
-		case CHECK_CALLSTACK:
-			return state.isOccupied
-
 		// IS ACTUALLY PART OF THE CODE EDITOR REDUCER
 		/* 	case CHECK_FUNCTION:
 			
@@ -73,14 +65,15 @@ export const callstackReducer = (state = initalState, action) => {
 				stackObject.webApi = false
 			}
 			return { ...state, stack: [...state.stack, stackObject] } */
-
+		case CHANGE_CALLSTACK_STATE:
+			return { ...state, isOccupied: action.payload }
 		case ADD_TO_CALLSTACK:
 			// return { ...state, stack: [...state.stack, action.payload], isOccupied: true }
-			return { stack: [action.payload, ...state.stack], isOccupied: true }
-
+			return { ...state, stack: [action.payload, ...state.stack] }
 		case REMOVE_FROM_CALLSTACK:
-			state.stack.splice(0, 1)
-			return { ...state, isOccupied: state.stack.length === 0 ? false : true }
+			const changeStack = [...state.stack]
+			changeStack.shift()
+			return { ...state, stack: [...changeStack] }
 		default:
 			return state
 	}
