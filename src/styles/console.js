@@ -9,7 +9,7 @@ export const ConsoleBox = styled.div`
 	background-color: ${variable.colorWhite};
 	border: 1px solid ${variable.colorBlue};
 	border-radius: 0 0 15px 15px;
-	box-shadow: 0 2px 0 2px ${variable.colorBlackTransparent1};
+	box-shadow: 0 1px 3px ${variable.colorBlue};
 	font-weight: 400;
 	font-size: 14px;
 	letter-spacing: 1px;
@@ -47,7 +47,7 @@ export const ListItem = styled.li`
 	border: 1px solid ${variable.colorBlue};
 	border-radius: 4px;
 	padding: 10px;
-	background-color: ${variable.colorWhite};
+	background-color: ${(props) => variable[props.type]};
 	color: ${variable.colorBlue};
 	width: 100%;
 `
