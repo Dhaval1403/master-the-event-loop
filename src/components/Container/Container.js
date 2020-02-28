@@ -46,10 +46,10 @@ class Container extends Component {
 			}
 		}
 
-		this.timerId = setInterval(() => {
-			this.runLoop()
-			console.log('ran loop')
-		}, 4000)
+		// this.timerId = setInterval(() => {
+		// 	this.runLoop()
+		// 	console.log('ran loop')
+		// }, 4000)
 	}
 
 	render() {
