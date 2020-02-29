@@ -1,14 +1,12 @@
 import styled from 'styled-components'
 import { space, typography } from 'styled-system'
 
-import { scrollbar } from './scroll'
 import { variable } from './variable'
 
-export const ConsoleBox = styled.div`
-	${scrollbar()};
+export const ConsoleContainer = styled.div`
 	background-color: ${variable.colorWhite};
 	border: 1px solid ${variable.colorBlue};
-	border-radius: 0 0 15px 15px;
+	border-radius: 15px;
 	box-shadow: 0 1px 3px ${variable.colorBlue};
 	font-weight: 400;
 	font-size: 14px;
@@ -18,13 +16,10 @@ export const ConsoleBox = styled.div`
 	overflow-y: auto;
 `
 
+export const ConsoleData = styled.div``
+
 export const ConsoleHeader = styled.div`
-	background-color: ${variable.colorWhite};
-	border-top: 1px solid ${variable.colorBlue};
-	border-left: 1px solid ${variable.colorBlue};
-	border-right: 1px solid ${variable.colorBlue};
-	border-radius: 15px 15px 0 0;
-	box-shadow: 0 1px 3px ${variable.colorBlue};
+	border-bottom: 1px solid ${variable.colorBlue};
 `
 
 export const ConsoleTitle = styled.h2`

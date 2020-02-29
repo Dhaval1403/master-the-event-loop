@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 
-import { ConsoleBox, ConsoleHeader, ConsoleTitle, List, ListItem } from '../../styles/console'
+import {
+	ConsoleContainer,
+	ConsoleData,
+	ConsoleHeader,
+	ConsoleTitle,
+	List,
+	ListItem,
+} from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 const messageTypes = {
@@ -19,23 +26,23 @@ class Console extends Component {
 	render() {
 		return (
 			<>
-				<ConsoleHeader>
-					<Box display="flex" justifyContent="center" alignItems="center">
-						<ConsoleTitle p="10px">Console</ConsoleTitle>
-					</Box>
-				</ConsoleHeader>
+				<ConsoleContainer>
+					<ConsoleHeader>
+						<Box display="flex" justifyContent="center" alignItems="center">
+							<ConsoleTitle p="10px">Console</ConsoleTitle>
+						</Box>
+					</ConsoleHeader>
 
-				<ConsoleBox>
-					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-					<Box display="flex" justifyContent="center" m="20px 0">
-						<List>
-							{this.props.messages.map((message) => (
-								<ListItem type={messageTypes[message.name]}>{message.message}</ListItem>
-							))}
-						</List>
-					</Box>
-				</ConsoleBox>
+					<ConsoleData>
+						<Box display="flex" justifyContent="center" m="20px 0">
+							<List>
+								{this.props.messages.map((message) => (
+									<ListItem type={messageTypes[message.name]}>{message.message}</ListItem>
+								))}
+							</List>
+						</Box>
+					</ConsoleData>
+				</ConsoleContainer>
 			</>
 		)
 	}
