@@ -34,3 +34,8 @@ export const addFunction = (fun) => ({
 	type: editorTypes.ADD_FUNCTION,
 	payload: fun,
 })
+
+export const setEditor = (editor) => ({
+	type: editorTypes.SET_EDITOR,
+	payload: editor
+})
