@@ -8,7 +8,6 @@ const title = css`
 	${space};
 	${typography};
 	color: ${({ color }) => (color ? variable[color] : variable.colorBlack2)};
-	display: block;
 	height: auto;
 	line-height: 1.3;
 	${({ align }) =>
@@ -45,7 +44,9 @@ export const Span = styled.span`
 `
 
 export const Title4 = styled.h4`
+	${layout};
 	${title};
+	${({ color }) => color && `color: ${variable[color]}`};
 	${({ fontSize }) => fontSize === undefined && 'font-size: 18px'};
 	${({ fontWeight }) => fontWeight === undefined && 'font-weight: 400'};
 	@media (min-width: ${variable.md}) {

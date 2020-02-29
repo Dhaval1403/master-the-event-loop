@@ -17,39 +17,57 @@ import Help from '../Help/Help'
 import { connect } from 'react-redux'
 
 import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
-import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
-import { spin, spinBack } from '../../redux/eventLoop/eventLoop.actions'
+import {
+	addFunctionToCallstack,
+	changeCallstackState,
+} from '../../redux/callstack/callstack.actions'
+
+const testdata = [
+	{
+		name: 'console.log',
+		delay: 0,
+		webApi: false,
+		message: 'Test Console log',
+	},
+	{
+		name: 'console.warn',
+		delay: 0,
+		webApi: false,
+		message: 'Test Console warn',
+	},
+	{
+		name: 'fetch',
+		delay: 2000,
+		webApi: true,
+		message: undefined,
+	},
+	{
+		name: 'setTimout',
+		delay: 1000,
+		webApi: true,
+		message: undefined,
+	},
+	{
+		name: 'customFunc',
+		delay: 0,
+		webApi: false,
+		message: undefined,
+	},
+]
 
 class Container extends Component {
 	componentDidMount() {
-		// After the component has mounted, start the loop
-		this.makeFuncObj = (str) => ({
-			name: str,
-			delay: 0,
-			webApi: false,
-			message: 'Test Console log',
-		})
+		this.timerId = setInterval(() => this.pipeIntoCallStack(), 2000)
+		this.props.changeCallstackState(true)
+	}
 
-		this.runLoop = () => {
-			// if callstack is empty and callbackqueue is not empty
-			if (this.props.callstack.length === 0 && this.props.callbackQueue.length !== 0) {
-				// add the callbackqueue[0] to callstack
-				// but callbackqueue has func as strings whereas
-				// callstack accepts func as obj (see callstack reducer)
-				// hence wrap the string in makeFuncObj
-				this.props.addFunctionToCallstack(
-					this.makeFuncObj(this.props.callbackQueue[0] + 'added by event loop')
-				)
-				this.props.spin()
-				this.props.removeFromCallbackQueue()
-				setTimeout(() => this.props.spinBack(), 500)
-			}
+	pipeIntoCallStack = () => {
+		if (testdata.length > 0) {
+			this.props.addFunctionToCallstack(testdata.pop())
+		} else {
+			clearInterval(this.timerId)
+			this.props.changeCallstackState(false)
 		}
-
-		this.timerId = setInterval(() => {
-			this.runLoop()
-			console.log('ran loop')
-		}, 4000)
 	}
 
 	render() {
@@ -65,8 +83,9 @@ class Container extends Component {
 					<Grid
 						display="grid"
 						gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
-						gridTemplateRows="45vh 35vh"
+						gridTemplateRows="45vh 25vh"
 						gridGap="25px"
+						gridRowGap="10vh"
 						m="25px"
 					>
 						<Cell>
@@ -107,8 +126,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	removeFromCallbackQueue: () => dispatch(removeFromCallbackQueue()),
 	addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
-	spin: () => dispatch(spin()),
-	spinBack: () => dispatch(spinBack()),
+	changeCallstackState: (toState) => dispatch(changeCallstackState(toState)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container)

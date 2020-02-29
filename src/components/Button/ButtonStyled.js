@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { borderRadius, layout, space, typography } from 'styled-system'
 
 import { variable } from '../../styles/variable'

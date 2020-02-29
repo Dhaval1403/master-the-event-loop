@@ -30,14 +30,8 @@
 }
 
 .spin {
-	-webkit-transform: rotate(-360deg);
-	-ms-transform: rotate(-360deg);
-	transform: rotate(-360deg);
+	-webkit-transform: rotate(-720deg);
+	-ms-transform: rotate(-720deg);
+	transform: rotate(-720deg);
 	transition: all 0.5s ease-in-out;
-}
-
-.spin-back {
-	-webkit-transform: rotate(360deg);
-	-ms-transform: rotate(360deg);
-	transform: rotate(360deg);
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ConsoleBox, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 // For testing actions
@@ -11,40 +11,32 @@ import {
 } from './../../redux/callbackQueue/callbackQueue.actions'
 
 class CallbackQueue extends Component {
-	constructor(props) {
-		super(props)
-
-		// For demonstration and testing
-		const { enqueue, dequeue } = this.props
-		enqueue('func1')
-		enqueue('func2')
-		enqueue('func3')
-		enqueue('func4')
-		enqueue('func5')
-		dequeue()
-	}
-
 	render() {
-		const values = this.props.callbackQueue.map((value, i) => <ListItem key={i}>{value}</ListItem>)
+		const stack = this.props.callbackQueue.map((currLine, i) => (
+			<ListItem key={`callback_queue_item${i}`}>{currLine.name}</ListItem>
+		))
 
 		return (
-			<ConsoleBox>
-				<Box display="flex" justifyContent="center" alignItems="center">
-					<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
-				</Box>
+			<>
+				<ConsoleHeader>
+					<Box display="flex" justifyContent="center" alignItems="center">
+						<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
+					</Box>
+				</ConsoleHeader>
+				<ConsoleBox>
+					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
-				<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-				<Box display="flex" justifyContent="center" m="20px 0">
-					<QueueList>{values}</QueueList>
-				</Box>
-			</ConsoleBox>
+					<Box display="flex" justifyContent="center" m="20px 0">
+						<QueueList>{stack}</QueueList>
+					</Box>
+				</ConsoleBox>
+			</>
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
-	callbackQueue: state.callbackQueue,
+	callbackQueue: state.callbackQueue.stack,
 })
 
 // For testing the actions
