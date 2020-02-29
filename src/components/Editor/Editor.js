@@ -391,6 +391,9 @@ class Editor extends Component {
 						<Box display="flex" justifyContent="center" alignItems="center">
 							<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
 						</Box>
+						<Box display="flex" justifyContent="flex-end" alignItems="center">
+							<Controls />
+						</Box>
 					</ConsoleHeader>
 
 					<ConsoleData>

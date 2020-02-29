@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-import { scrollbar } from './scroll'
 import { variable } from './variable'
 
 export const Normalize = createGlobalStyle`
