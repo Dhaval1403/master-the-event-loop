@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import './Help.styles.css'
 import { connect } from 'react-redux'
 import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions'
 import helpImage from '../../assets/master-the-event-loop.png'
@@ -11,8 +10,11 @@ import gif_4 from '../../assets/animation4.gif'
 import gif_5 from '../../assets/animation5.gif'
 import playButton from '../../assets/play.png'
 
+import { HelpStyled } from './HelpStyled'
+
 import { Button } from '../Button/Button'
 import { Flex, Box } from '../../styles/flex'
+import { Cell } from '../../styles/grid'
 import { Wrap } from '../../styles/layout'
 import { P, Title4, Title5 } from '../../styles/text'
 
@@ -31,6 +33,7 @@ class Help extends Component {
 				{isHelp ? (
 					<Flex
 						alignItems="center"
+						backgroundColor="colorGrayDarkTransparent"
 						display="flex"
 						id="mdc"
 						justifyContent="center"
@@ -47,6 +50,7 @@ class Help extends Component {
 								borderRadius="4px 4px 0 0"
 								borderStyle="solid"
 								color="colorBlue"
+								display="flex"
 								justifyContent="space-between"
 								mb="0.8rem"
 								p="0.5rem 0.8rem"
@@ -58,13 +62,13 @@ class Help extends Component {
 									HOW DOES JAVASCRIPT EVENT LOOP WORKS?
 								</Title4>
 
-								<Button display="inline-flex" onClick={toggleHelp} className="cls-btn" ml="150px">
+								<Button display="inline-flex" onClick={toggleHelp}>
 									Close
 								</Button>
 							</Box>
 
-							<div id="mdb" className="modal-body">
-								<div className="modal-content">
+							<HelpStyled>
+								<Box>
 									<P>
 										JavaScript is single-threaded: only one task can run at a time. Usually that’s no big
 										deal, but now imagine you’re running a task which takes 30 seconds.. Ya.. During that task
@@ -85,16 +89,30 @@ class Help extends Component {
 										button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
 										Let's get started
 									</P>
-								</div>
+								</Box>
 
-								<div className="resources">
+								<Cell
+									display="grid"
+									justifyItems="center"
+									gridGap="25px"
+									gridTemplateColumns="1fr"
+									mb="0.8rem"
+								>
 									<P>
 										Below are the some really cool animations which will show you how the event loop works in
 										5 steps.
 									</P>
 
-									<div className="resources">
-										<span className="resource-title">Animations</span>
+									<Cell
+										display="grid"
+										justifyItems="center"
+										gridGap="25px"
+										gridTemplateColumns="1fr"
+										mb="0.8rem"
+									>
+										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+											Animations
+										</Title5>
 										<img className="resource-item" src={gif_1} alt="animations" />
 										<img className="resource-item" src={gif_2} alt="animations" />
 										<img className="resource-item" src={gif_3} alt="animations" />
@@ -111,14 +129,20 @@ class Help extends Component {
 											</a>
 											)
 										</P>
-									</div>
+									</Cell>
 
 									<P>
 										Below attached are some extra resources for you if you want to dive deep into the topic.
 										It includes some images, articles and youtube videos.
 									</P>
 
-									<div className="resources">
+									<Cell
+										display="grid"
+										justifyItems="center"
+										gridGap="25px"
+										gridTemplateColumns="1fr"
+										mb="0.8rem"
+									>
 										<Title5>Images</Title5>
 										<img className="resource-item" src={helpImage} alt="master the event loop" />
 
@@ -148,9 +172,9 @@ class Help extends Component {
 												here
 											</a>
 										</P>
-									</div>
-								</div>
-							</div>
+									</Cell>
+								</Cell>
+							</HelpStyled>
 						</Wrap>
 					</Flex>
 				) : null}
