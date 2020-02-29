@@ -14,61 +14,7 @@ import { Normalize } from '../../styles/normalize'
 import { theme } from '../../styles/theme'
 import Help from '../Help/Help'
 
-import { connect } from 'react-redux'
-
-import { removeFromCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
-import {
-	addFunctionToCallstack,
-	changeCallstackState,
-} from '../../redux/callstack/callstack.actions'
-
-const testdata = [
-	{
-		name: 'console.log',
-		delay: 0,
-		webApi: false,
-		message: 'Test Console log',
-	},
-	{
-		name: 'console.warn',
-		delay: 0,
-		webApi: false,
-		message: 'Test Console warn',
-	},
-	{
-		name: 'fetch',
-		delay: 2000,
-		webApi: true,
-		message: undefined,
-	},
-	{
-		name: 'setTimout',
-		delay: 1000,
-		webApi: true,
-		message: undefined,
-	},
-	{
-		name: 'customFunc',
-		delay: 0,
-		webApi: false,
-		message: undefined,
-	},
-]
-
 class Container extends Component {
-	componentDidMount() {
-		this.timerId = setInterval(() => this.pipeIntoCallStack(), 2000)
-		this.props.changeCallstackState(true)
-	}
-
-	pipeIntoCallStack = () => {
-		if (testdata.length > 0) {
-			this.props.addFunctionToCallstack(testdata.pop())
-		} else {
-			clearInterval(this.timerId)
-			this.props.changeCallstackState(false)
-		}
-	}
 
 	render() {
 		return (
@@ -118,15 +64,5 @@ class Container extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	callstack: state.callstack.stack,
-	callbackQueue: state.callbackQueue,
-})
 
-const mapDispatchToProps = (dispatch) => ({
-	removeFromCallbackQueue: () => dispatch(removeFromCallbackQueue()),
-	addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
-	changeCallstackState: (toState) => dispatch(changeCallstackState(toState)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Container)
+export default Container
