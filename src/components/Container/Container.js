@@ -83,7 +83,7 @@ class Container extends Component {
 					<Grid
 						display="grid"
 						gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
-						gridTemplateRows="45vh 25vh"
+						gridTemplateRows="40vh 30vh"
 						gridGap="25px"
 						gridRowGap="10vh"
 						m="25px"

@@ -409,6 +409,8 @@ class Editor extends Component {
 									theme: 'material',
 									tabSize: 2,
 									lineNumbers: true,
+									scrollbarStyle: null,
+									lineWrapping: true,
 								}}
 								onCursor={this.handleCursor}
 								onBeforeChange={(editor, data, value) => this.props.setData(value)}
