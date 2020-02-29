@@ -148,6 +148,7 @@ class Help extends Component {
 
 										<Title5>Videos</Title5>
 										<iframe
+											title="How Does Javascript Work? - Andrei Neagoie"
 											className="resource-video"
 											src="https://www.youtube.com/embed/hGSHfObcVf4"
 										></iframe>

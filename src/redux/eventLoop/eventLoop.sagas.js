@@ -25,7 +25,7 @@ export function* eventLoop() {
 
 export function* pullFromCallbackQueue() {
 	while (true) {
-		const action = yield take(TOGGLE_SPIN)
+		yield take(TOGGLE_SPIN)
 		const state = yield select()
 		console.error('CAN I HANDLE IT?', state.callstack.isOccupied)
 		if (!state.callstack.isOccupied && state.callbackQueue.stack.length > 0) {

@@ -157,17 +157,17 @@ class Editor extends Component {
 	getStringValue = (editor, startLineAndIndex, endLineAndIndex) => {
 		let tokens = editor.getLineTokens(startLineAndIndex[0])
 		let stringValue = ''
-		;(function() {
-			let foundInitialiser = false
-			let i = startLineAndIndex[1] - 1
-			while (!foundInitialiser) {
-				if (tokens[i].string !== ' ') {
-					foundInitialiser = true
+			; (function () {
+				let foundInitialiser = false
+				let i = startLineAndIndex[1] - 1
+				while (!foundInitialiser) {
+					if (tokens[i].string !== ' ') {
+						foundInitialiser = true
+					}
+					stringValue += tokens[i].string + ' '
+					i--
 				}
-				stringValue += tokens[i].string + ' '
-				i--
-			}
-		})()
+			})()
 		if (startLineAndIndex[1] !== 0) {
 			for (let i = startLineAndIndex[1]; i < tokens.length; i++) {
 				stringValue += tokens[i].string
@@ -390,6 +390,9 @@ class Editor extends Component {
 					<ConsoleHeader>
 						<Box display="flex" justifyContent="center" alignItems="center">
 							<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+						</Box>
+						<Box display="flex" justifyContent="flex-end" alignItems="center">
+							<Controls />
 						</Box>
 					</ConsoleHeader>
 
