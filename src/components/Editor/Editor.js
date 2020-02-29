@@ -449,40 +449,6 @@ const mapDispatchToProps = (dispatch) => {
 		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 	}
 	// editorMount
-	/* 	return (
-		<ConsoleBox>
-			<Box display="flex" justifyContent="center" alignItems="center">
-				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
-				<Controls />
-			</Box>
-
-			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-			<Box>
-				<div className={Classes.container}>
-					<CodeMirror
-						className={Classes.codeMirror}
-						value={data}
-						editorDidMount={() => {}}
-						options={{
-							mode: 'javascript',
-							theme: 'material',
-							tabSize: 2,
-							lineNumbers: true,
-						}}
-						onCursor={handleCursor}
-						onBeforeChange={(editor, data, value) => updateData(value)}
-						onChange={handleChange}
-						onGutterClick={(editor, number, gutter, str) => {
-							console.log(findOPeningAndClosing(editor, 3))
-							// console.log(closingCurlyBrace(editor, number + 1));
-						}}
-					/>
-				</div>
-			</Box>
-		</ConsoleBox>
-	)
- */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

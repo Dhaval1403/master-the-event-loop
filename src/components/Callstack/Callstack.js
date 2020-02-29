@@ -5,8 +5,7 @@ import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.a
 import { pushToConsole } from './../../redux/Console/Console.actions'
 import { addToWebApi } from './../../redux/WebApiRedux/wepApi.actions'
 
-import { List, ListItem } from '../../styles/callstack'
-import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
+import { ConsoleBox, ConsoleHeader, ConsoleTitle, List, ListItem } from '../../styles/console'
 
 import { Box } from '../../styles/flex'
 

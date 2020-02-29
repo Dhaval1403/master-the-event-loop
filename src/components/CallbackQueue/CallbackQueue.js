@@ -23,6 +23,7 @@ class CallbackQueue extends Component {
 						<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
 					</Box>
 				</ConsoleHeader>
+
 				<ConsoleBox>
 					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
 
