@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { ConsoleBox, ConsoleHeader, ConsoleTitle, QueueList, ListItem } from '../../styles/console'
+import {
+	ConsoleContainer,
+	ConsoleData,
+	ConsoleHeader,
+	ConsoleTitle,
+	QueueList,
+	ListItem,
+} from '../../styles/console'
 import { Box } from '../../styles/flex'
 
 // For testing actions
@@ -18,18 +25,19 @@ class CallbackQueue extends Component {
 
 		return (
 			<>
-				<ConsoleHeader>
-					<Box display="flex" justifyContent="center" alignItems="center">
-						<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
-					</Box>
-				</ConsoleHeader>
-				<ConsoleBox>
-					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
+				<ConsoleContainer>
+					<ConsoleHeader>
+						<Box display="flex" justifyContent="center" alignItems="center">
+							<ConsoleTitle p="10px">Callback Queue</ConsoleTitle>
+						</Box>
+					</ConsoleHeader>
 
-					<Box display="flex" justifyContent="center" m="20px 0">
-						<QueueList>{stack}</QueueList>
-					</Box>
-				</ConsoleBox>
+					<ConsoleData>
+						<Box display="flex" justifyContent="center" m="20px 0">
+							<QueueList>{stack}</QueueList>
+						</Box>
+					</ConsoleData>
+				</ConsoleContainer>
 			</>
 		)
 	}

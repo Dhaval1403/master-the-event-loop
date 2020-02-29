@@ -5,8 +5,14 @@ import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.a
 import { pushToConsole } from './../../redux/Console/Console.actions'
 import { addToWebApi } from './../../redux/WebApiRedux/wepApi.actions'
 
-import { List, ListItem } from '../../styles/callstack'
-import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
+import {
+	ConsoleContainer,
+	ConsoleData,
+	ConsoleHeader,
+	ConsoleTitle,
+	List,
+	ListItem,
+} from '../../styles/console'
 
 import { Box } from '../../styles/flex'
 
@@ -27,22 +33,19 @@ class Callstack extends Component {
 	render() {
 		return (
 			<>
-				<ConsoleHeader>
-					<Box display="flex" justifyContent="center" alignItems="center">
-						<ConsoleTitle p="10px">Callstack</ConsoleTitle>
-					</Box>
-				</ConsoleHeader>
+				<ConsoleContainer>
+					<ConsoleHeader>
+						<Box display="flex" justifyContent="center" alignItems="center">
+							<ConsoleTitle p="10px">Callstack</ConsoleTitle>
+						</Box>
+					</ConsoleHeader>
 
-				<ConsoleBox>
-					{/* 	<Box display="flex" justifyContent="center" alignItems="center">
-						<ConsoleTitle p="10px">Callstack</ConsoleTitle>
-					</Box> */}
-					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-					<Box display="flex" justifyContent="center" m="20px 0">
-						<List>{this.renderCallstack(this.props)}</List>
-					</Box>
-				</ConsoleBox>
+					<ConsoleData>
+						<Box display="flex" justifyContent="center" m="20px 0">
+							<List>{this.renderCallstack(this.props)}</List>
+						</Box>
+					</ConsoleData>
+				</ConsoleContainer>
 			</>
 		)
 	}

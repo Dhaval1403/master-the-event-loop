@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/editor/editor.actions'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
-import { ConsoleBox, ConsoleHeader, ConsoleTitle } from '../../styles/console'
+import { ConsoleContainer, ConsoleData, ConsoleHeader, ConsoleTitle } from '../../styles/console'
 import { Box } from '../../styles/flex'
 import Controls from '../Controls/Controls'
 
@@ -386,45 +386,42 @@ class Editor extends Component {
 	render() {
 		return (
 			<>
-				<ConsoleHeader>
-					<Box display="flex" justifyContent="center" alignItems="center">
-						<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
-					</Box>
-					<Box display="flex" justifyContent="flex-end" alignItems="center">
-						<Controls />
-					</Box>
-				</ConsoleHeader>
+				<ConsoleContainer>
+					<ConsoleHeader>
+						<Box display="flex" justifyContent="center" alignItems="center">
+							<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+						</Box>
+					</ConsoleHeader>
 
-				<ConsoleBox>
-					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-					<Box>
-						<div className={Classes.container}>
-							<CodeMirror
-								className={Classes.codeMirror}
-								value={this.props.data}
-								editorDidMount={(editor) => {
-									this.loadStateWithCollapsable(editor, 0)
-									this.loadStateWithFunctions(editor, 0)
-								}}
-								options={{
-									mode: 'javascript',
-									theme: 'material',
-									tabSize: 2,
-									lineNumbers: true,
-									scrollbarStyle: null,
-									lineWrapping: true,
-								}}
-								onCursor={this.handleCursor}
-								onBeforeChange={(editor, data, value) => this.props.setData(value)}
-								onChange={this.handleChange}
-								onGutterClick={(editor, number, gutter, str) => {
-									this.findFunctions(editor, number)
-								}}
-							/>
-						</div>
-					</Box>
-				</ConsoleBox>
+					<ConsoleData>
+						<Box>
+							<div className={Classes.container}>
+								<CodeMirror
+									className={Classes.codeMirror}
+									value={this.props.data}
+									editorDidMount={(editor) => {
+										this.loadStateWithCollapsable(editor, 0)
+										this.loadStateWithFunctions(editor, 0)
+									}}
+									options={{
+										mode: 'javascript',
+										theme: 'material',
+										tabSize: 2,
+										lineNumbers: true,
+										scrollbarStyle: null,
+										lineWrapping: true,
+									}}
+									onCursor={this.handleCursor}
+									onBeforeChange={(editor, data, value) => this.props.setData(value)}
+									onChange={this.handleChange}
+									onGutterClick={(editor, number, gutter, str) => {
+										this.findFunctions(editor, number)
+									}}
+								/>
+							</div>
+						</Box>
+					</ConsoleData>
+				</ConsoleContainer>
 			</>
 		)
 	}
@@ -452,40 +449,6 @@ const mapDispatchToProps = (dispatch) => {
 		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 	}
 	// editorMount
-	/* 	return (
-		<ConsoleBox>
-			<Box display="flex" justifyContent="center" alignItems="center">
-				<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
-				<Controls />
-			</Box>
-
-			<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-			<Box>
-				<div className={Classes.container}>
-					<CodeMirror
-						className={Classes.codeMirror}
-						value={data}
-						editorDidMount={() => {}}
-						options={{
-							mode: 'javascript',
-							theme: 'material',
-							tabSize: 2,
-							lineNumbers: true,
-						}}
-						onCursor={handleCursor}
-						onBeforeChange={(editor, data, value) => updateData(value)}
-						onChange={handleChange}
-						onGutterClick={(editor, number, gutter, str) => {
-							console.log(findOPeningAndClosing(editor, 3))
-							// console.log(closingCurlyBrace(editor, number + 1));
-						}}
-					/>
-				</div>
-			</Box>
-		</ConsoleBox>
-	)
- */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

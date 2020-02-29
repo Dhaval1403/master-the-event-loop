@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 
 // import './WebApi.styles.css';
 
-import { ConsoleHeader, ConsoleBox, ConsoleTitle, List, ListItem } from '../../styles/console'
+import {
+	ConsoleContainer,
+	ConsoleData,
+	ConsoleHeader,
+	ConsoleTitle,
+	List,
+	ListItem,
+} from '../../styles/console'
 import { Box } from '../../styles/flex'
 import { connect } from 'react-redux'
 import { addToCallbackQueue } from '../../redux/callbackQueue/callbackQueue.actions'
@@ -17,19 +24,19 @@ class WebApi extends Component {
 	render() {
 		return (
 			<>
-				<ConsoleHeader>
-					<Box display="flex" justifyContent="center" alignItems="center">
-						<ConsoleTitle p="10px">WebApi</ConsoleTitle>
-					</Box>
-				</ConsoleHeader>
+				<ConsoleContainer>
+					<ConsoleHeader>
+						<Box display="flex" justifyContent="center" alignItems="center">
+							<ConsoleTitle p="10px">WebApi</ConsoleTitle>
+						</Box>
+					</ConsoleHeader>
 
-				<ConsoleBox>
-					<Box borderTop={1} borderStyle="solid" color="colorBlue" />
-
-					<Box display="flex" justifyContent="center" m="20px 0">
-						<List>{this.renderWebApi(this.props)}</List>
-					</Box>
-				</ConsoleBox>
+					<ConsoleData>
+						<Box display="flex" justifyContent="center" m="20px 0">
+							<List>{this.renderWebApi(this.props)}</List>
+						</Box>
+					</ConsoleData>
+				</ConsoleContainer>
 			</>
 		)
 	}
