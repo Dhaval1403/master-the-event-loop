@@ -15,7 +15,6 @@ const consoleVariations = [
 
 function* removeFromCallstackAsync(payload) {
 	yield delay(1000)
-	yield console.log('remove from call stack')
 	yield put({ type: REMOVE_FROM_CALLSTACK })
 
 	if (consoleVariations.includes(payload.name)) {
@@ -40,7 +39,6 @@ function* addToWebApi(payload) {
 export function* watchAddToCallStackAsync() {
 	while (true) {
 		const { payload } = yield take(ADD_TO_CALLSTACK)
-		console.log('delay ADD TO CALLSTACK finished')
 		yield call(removeFromCallstackAsync, payload)
 	}
 }

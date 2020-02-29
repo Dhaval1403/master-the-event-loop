@@ -392,7 +392,7 @@ class Editor extends Component {
 							<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
 						</Box>
 						<Box display="flex" justifyContent="flex-end" alignItems="center">
-							<Controls />
+							<Controls loadFunctions={this.loadStateWithFunctions} />
 						</Box>
 					</ConsoleHeader>
 
@@ -405,6 +405,7 @@ class Editor extends Component {
 									editorDidMount={(editor) => {
 										this.loadStateWithCollapsable(editor, 0)
 										this.loadStateWithFunctions(editor, 0)
+										this.props.setEditor(editor)
 									}}
 									options={{
 										mode: 'javascript',
@@ -450,6 +451,7 @@ const mapDispatchToProps = (dispatch) => {
 		addCollapsableLine: (data) => dispatch(actions.addCollapsableLine(data)),
 		removeCollapsableLine: (lineNumber) => dispatch(actions.removeCollapsableLine(lineNumber)),
 		addFunction: (fun) => dispatch(actions.addFunction(fun)),
+		setEditor: (editor) => dispatch(actions.setEditor(editor)),
 	}
 	// editorMount
 }

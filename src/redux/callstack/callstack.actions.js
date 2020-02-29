@@ -10,9 +10,10 @@ export const checkFunctionRelation = (functionName) => ({
 	payload: functionName,
 })
 
-export const changeCallstackState = (toState) => ({
+export const changeCallstackState = (toState, shouldReset = false) => ({
 	type: CHANGE_CALLSTACK_STATE,
 	payload: toState,
+	shouldReset
 })
 
 export const addFunctionToCallstack = (functionName) => ({

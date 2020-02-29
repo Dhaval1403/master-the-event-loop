@@ -17,7 +17,7 @@ export function* eventLoop() {
 	while (true) {
 		yield delay(1000)
 		const state = yield select()
-		if (state.callbackQueue.stack.length > 0 || state.webApiReducer.webApiStack.length > 0) {
+		if ((state.callbackQueue.stack.length > 0 || state.webApiReducer.webApiStack.length > 0 || state.callbackQueue.length > 0) && state.controls.isRunning) {
 			yield put({ type: TOGGLE_SPIN })
 		}
 	}
@@ -27,7 +27,6 @@ export function* pullFromCallbackQueue() {
 	while (true) {
 		yield take(TOGGLE_SPIN)
 		const state = yield select()
-		console.error('CAN I HANDLE IT?', state.callstack.isOccupied)
 		if (!state.callstack.isOccupied && state.callbackQueue.stack.length > 0) {
 			yield put({ type: CHANGE_CALLSTACK_STATE, payload: true })
 			yield call(removeFromCallbackQueue, state.callbackQueue.stack[0])
