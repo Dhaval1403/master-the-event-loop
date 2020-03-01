@@ -1,10 +1,15 @@
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import logger from 'redux-logger'
 
-import rootReducer from './rootReducer';
+import rootReducer from './rootReducer'
+import rootSaga from './rootSaga'
 
 //add middlewares to this array.
-const middlewares = [logger];
-const store = createStore(rootReducer, applyMiddleware(...middlewares));
+const sagaMiddleware = createSagaMiddleware()
+const middlewares = [logger, sagaMiddleware]
+const store = createStore(rootReducer, applyMiddleware(...middlewares))
 
-export default store;
+sagaMiddleware.run(rootSaga)
+
+export default store

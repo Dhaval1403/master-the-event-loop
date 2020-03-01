@@ -9,8 +9,7 @@ export const scrollbar = (
 ) => {
 	return css`
 		&::-webkit-scrollbar {
-			height: 100%;
-			width: ${scrollbarSize};
+			width: 0%;
 		}
 		&::-webkit-scrollbar-button {
 			background-color: ${colorBlack3};
