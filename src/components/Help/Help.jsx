@@ -143,17 +143,23 @@ class Help extends Component {
 										gridTemplateColumns="1fr"
 										mb="0.8rem"
 									>
-										<Title5>Images</Title5>
+										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+											Images
+										</Title5>
 										<img className="resource-item" src={helpImage} alt="master the event loop" />
 
-										<Title5>Videos</Title5>
+										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+											Videos
+										</Title5>
 										<iframe
 											title="How Does Javascript Work? - Andrei Neagoie"
 											className="resource-video"
 											src="https://www.youtube.com/embed/hGSHfObcVf4"
 										></iframe>
 
-										<Title5>Articles</Title5>
+										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+											Articles
+										</Title5>
 										<P>
 											Javascript Visualized Event Loop &nbsp;
 											<a

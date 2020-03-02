@@ -31,7 +31,7 @@ export const variable = {
 	colorGray4: 'rgba(192, 198, 204, 1)',
 	colorGrayDark: 'rgba(36, 36, 36, 1)',
 	colorGrayDark2: 'rgba(55, 55, 55, 1)',
-	colorGrayDarkTransparent: 'rgba(55, 55, 55, 0.3)',
+	colorGrayDarkTransparent: 'rgba(55, 55, 55, 0.2)',
 	colorGrayLight: 'rgba(210, 210, 210, 1)',
 	colorGrayLight2: 'rgba(216, 221, 225, 1)',
 	colorGrayLight3: 'rgba(230, 230, 230, 1)',

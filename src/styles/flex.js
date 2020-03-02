@@ -25,4 +25,7 @@ export const Flex = styled.div`
 	${position};
 	${space};
 	${typography};
+	background-color: ${({ backgroundColor }) =>
+		backgroundColor ? variable[backgroundColor] : 'transparent'};
+	${({ color }) => color && `color: ${variable[color]}`};
 `
