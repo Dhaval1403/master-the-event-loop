@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
 import { connect } from 'react-redux'
 import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions'
@@ -8,7 +9,6 @@ import gif_2 from '../../assets/animation2.gif'
 import gif_3 from '../../assets/animation3.gif'
 import gif_4 from '../../assets/animation4.gif'
 import gif_5 from '../../assets/animation5.gif'
-import playButton from '../../assets/play.png'
 
 import { HelpStyled } from './HelpStyled'
 
@@ -18,7 +18,22 @@ import { Cell } from '../../styles/grid'
 import { Wrap } from '../../styles/layout'
 import { P, Title4, Title5 } from '../../styles/text'
 
+const modalRoot = document.getElementById('modal-root')
+
 class Help extends Component {
+	constructor(props) {
+		super(props)
+		this.el = document.createElement('div')
+	}
+
+	componentDidMount() {
+		modalRoot.appendChild(this.el)
+	}
+
+	componentWillUnmount() {
+		modalRoot.removeChild(this.el)
+	}
+
 	currentTarget = (e) => {
 		if (e.currentTarget === e.target) {
 			this.props.toggleHelp()
@@ -28,7 +43,8 @@ class Help extends Component {
 	}
 	render() {
 		const { isHelp, toggleHelp } = this.props
-		return (
+
+		const modal = (
 			<React.Fragment>
 				{isHelp ? (
 					<Flex
@@ -37,7 +53,8 @@ class Help extends Component {
 						display="flex"
 						id="mdc"
 						justifyContent="center"
-						minHeight="100%"
+						minHeight="100vh"
+						minWidth="100vw"
 						onClick={this.currentTarget}
 						position="fixed"
 						top="0"
@@ -85,7 +102,9 @@ class Help extends Component {
 										language, it means that it can handle one thing at a time. Don't worry, we have tried our
 										best to explain this topic in the easiest way possible with some cool animations &
 										visuals. To get started write some code in the 'Code Editor' & hit that
-										<img className="play-button" src={playButton} alt="Play Button" />
+										<Button padding="8px 8px" margin="4px" display="inline-block">
+											Play
+										</Button>
 										button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
 										Let's get started
 									</P>
@@ -186,6 +205,12 @@ class Help extends Component {
 					</Flex>
 				) : null}
 			</React.Fragment>
+		)
+
+		return ReactDOM.createPortal(
+			modal,
+			// A DOM element
+			this.el
 		)
 	}
 }

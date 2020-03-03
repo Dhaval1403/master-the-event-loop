@@ -18,6 +18,6 @@ console.warn('Test Console warn');
 console.log('Test Console log');
 console.error('Test Console error');
 console.time('Test Console time');
-console.time('Test Console info');
+console.info('Test Console info');
 
 `
