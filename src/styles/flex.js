@@ -30,5 +30,4 @@ export const Flex = styled.div`
 	min-width: ${({ minWidth }) => (minWidth ? minWidth : '100%')};
 	min-height: ${({ minHeight }) => (minHeight ? minHeight : '100%')};
 	${({ color }) => color && `color: ${variable[color]}`};
-
 `
