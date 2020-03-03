@@ -39,7 +39,7 @@ We use the fork approach for collaboration. Fork the repository first and sync i
 #### Inital setup 🛫
 
 - Clone your forked version
-  `git clone <UrlToTheForgetVersion>`
+  `git clone <UrlToTheForKedVersion>`
 
 - Update the remote Url in order to sync your fork with the original repo
   `git remote add upstream https://github.com/Dhaval1403/master-the-event-loop.git`
