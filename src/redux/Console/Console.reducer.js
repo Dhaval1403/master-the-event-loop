@@ -11,6 +11,11 @@ export const consoleReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				messages: [...state.messages, action.payload],
 			}
+		case consoleTypes.CLEAR_CONSOLE:
+			return {
+				...state,
+				messages: [],
+			}
 		default:
 			return state
 	}
