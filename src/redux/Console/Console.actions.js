@@ -7,3 +7,7 @@ export const pushToConsole = (message) => ({
 		delay: 1000,
 	},
 })
+
+export const clearConsole = () => ({
+	type: consoleTypes.CLEAR_CONSOLE,
+})

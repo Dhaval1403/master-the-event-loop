@@ -17,7 +17,10 @@ export function* eventLoop() {
 	while (true) {
 		yield delay(1000)
 		const state = yield select()
-		if ((state.callbackQueue.stack.length > 0 || state.webApiReducer.webApiStack.length > 0 || state.callbackQueue.length > 0) && state.controls.isRunning) {
+		if (
+			(state.callbackQueue.stack.length > 0 || state.webApiReducer.webApiStack.length > 0) &&
+			state.controls.isRunning
+		) {
 			yield put({ type: TOGGLE_SPIN })
 		}
 	}

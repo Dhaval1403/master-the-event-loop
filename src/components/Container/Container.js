@@ -15,7 +15,6 @@ import { theme } from '../../styles/theme'
 import Help from '../Help/Help'
 
 class Container extends Component {
-
 	render() {
 		return (
 			<>
@@ -30,7 +29,7 @@ class Container extends Component {
 						display="grid"
 						gridTemplateColumns={{ d: '1fr', md: '2fr 1fr 1fr' }}
 						gridTemplateRows="45vh 35vh"
-						gridGap="25px"
+						gridGap="15px"
 						m="25px"
 					>
 						<Cell>
@@ -62,6 +61,5 @@ class Container extends Component {
 		)
 	}
 }
-
 
 export default Container

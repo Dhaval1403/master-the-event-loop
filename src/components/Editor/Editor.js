@@ -7,6 +7,16 @@ import { ConsoleContainer, ConsoleData, ConsoleHeader, ConsoleTitle } from '../.
 import { Box } from '../../styles/flex'
 import Controls from '../Controls/Controls'
 
+import {
+	addFunctionToCallstack,
+	changeCallstackState,
+} from './../../redux/callstack/callstack.actions'
+import {
+	playAnimation,
+	pauseAnimation,
+	stopAnimation,
+} from './../../redux/controls/controls.actions'
+
 require('codemirror/lib/codemirror.css')
 require('codemirror/theme/material.css')
 require('codemirror/theme/neat.css')
@@ -59,7 +69,7 @@ class Editor extends Component {
 	) => {
 		let check = { open: 0, lastOpenTokenIndex: null, close: 0 }
 		const tokens = editor.getLineTokens(lineNumber)
-		let fistOpenIndex
+		let firstOpenIndex
 		let lastCloseIndex
 		let found = false
 		let isOpen = false
@@ -77,7 +87,7 @@ class Editor extends Component {
 				if (tokens[i].string === character) {
 					found = true
 					if (check.open === 0) {
-						fistOpenIndex = { lineNo: lineNo, tokenIndex: i }
+						firstOpenIndex = { lineNo: lineNo, tokenIndex: i }
 					}
 
 					if (constraint) {
@@ -105,7 +115,7 @@ class Editor extends Component {
 						tokenIndex: i,
 						lineNo,
 						tokens: tokens,
-						fistOpenIndex,
+						firstOpenIndex,
 						lastCloseIndex,
 					}
 				}
@@ -157,17 +167,17 @@ class Editor extends Component {
 	getStringValue = (editor, startLineAndIndex, endLineAndIndex) => {
 		let tokens = editor.getLineTokens(startLineAndIndex[0])
 		let stringValue = ''
-			; (function () {
-				let foundInitialiser = false
-				let i = startLineAndIndex[1] - 1
-				while (!foundInitialiser) {
-					if (tokens[i].string !== ' ') {
-						foundInitialiser = true
-					}
-					stringValue += tokens[i].string + ' '
-					i--
+		;(function() {
+			let foundInitialiser = false
+			let i = startLineAndIndex[1] - 1
+			while (!foundInitialiser) {
+				if (tokens[i].string !== ' ') {
+					foundInitialiser = true
 				}
-			})()
+				stringValue += tokens[i].string + ' '
+				i--
+			}
+		})()
 		if (startLineAndIndex[1] !== 0) {
 			for (let i = startLineAndIndex[1]; i < tokens.length; i++) {
 				stringValue += tokens[i].string
@@ -202,11 +212,14 @@ class Editor extends Component {
 		if (firstLineTokens) {
 			const result = this.findOPeningAndClosing(editor, startLineAndIndex[0], startLineAndIndex[1])
 
-			return this.getStringValue(
-				editor,
-				[startLineAndIndex[0], startLineAndIndex[1]],
-				Object.values(result.lastCloseIndex)
-			)
+			return {
+				parameters: result,
+				functionString: this.getStringValue(
+					editor,
+					[startLineAndIndex[0], startLineAndIndex[1]],
+					Object.values(result.lastCloseIndex)
+				),
+			}
 		}
 	}
 
@@ -285,7 +298,7 @@ class Editor extends Component {
 		}
 		if (es5Function && es5Function.found) {
 			const res = this.findFunctionName(es5Function.tokens, es5Function.tokenIndex, line, true)
-			res.functionString = this.getFunctionStringValue(editor, [res.line, res.tokenIndex])
+			res.functionDetails = this.getFunctionStringValue(editor, [res.line, res.tokenIndex])
 			res.es5 = true
 			this.props.addFunction(res)
 		}
@@ -383,19 +396,169 @@ class Editor extends Component {
 		}
 	}
 
+	returnOpeningAndClosingLine = ({
+		functionDetails: {
+			parameters: { firstOpenIndex, lastCloseIndex },
+		},
+	}) => ({ start: firstOpenIndex.lineNo, end: lastCloseIndex.lineNo })
+
+	iterateThroughLines = function* it(editor) {
+		let currentLine = 0
+		let preservedLine = null
+
+		this.props.changeCallstackState(true)
+		this.props.playAnimation()
+
+		while (currentLine < editor.lineCount()) {
+			let startHighlight = currentLine
+			let endHighlight = currentLine
+			editor.scrollIntoView({ line: currentLine, ch: 0 })
+			const isFunctionCall =
+				editor.getLine(currentLine) !== undefined ? editor.getLine(currentLine).split('(') : ['']
+			console.warn(isFunctionCall)
+			const isWebApi =
+				isFunctionCall[0] !== '' && (window[isFunctionCall[0]] || isFunctionCall[0].includes('.then'))
+					? true
+					: false
+
+			// Check if line is a function which is already registered in state
+			let checkIfNamedFunction = Object.values(this.props.functions.named).filter(
+				(value) => value.line === currentLine
+			)
+			let checkIfAnonymouseFunction = Object.values(this.props.functions.anonymous).filter(
+				(value) => value.line === currentLine
+			)
+
+			// If the current line is not a function declaration
+			if (!isFunctionCall[0].includes('function')) {
+				// if we found a function name within the named function hash table
+				if (checkIfNamedFunction.length > 0) {
+					const { start, end } = this.returnOpeningAndClosingLine(checkIfNamedFunction[0])
+
+					startHighlight = start
+					endHighlight = end
+					preservedLine = currentLine
+					currentLine = end
+				} else {
+					// if we found a anonymouse function within the anonymouse function hash table
+					if (checkIfAnonymouseFunction.length > 0) {
+						const { start, end } = this.returnOpeningAndClosingLine(checkIfAnonymouseFunction[0])
+						const mainMethod =
+							editor.getLine(currentLine) !== undefined ? editor.getLine(currentLine).split('(') : ['']
+						console.warn('ANONYNMOUSE FUNCTION DETECTED ', checkIfAnonymouseFunction, mainMethod)
+						startHighlight = start - 1
+						endHighlight = end
+						currentLine = end
+
+						this.props.addFunctionToCallstack({
+							name: mainMethod[0],
+							delay: 1000,
+							webApi: isWebApi,
+							message: undefined,
+							block: false,
+						})
+					}
+
+					if (
+						isFunctionCall[0] !== '' &&
+						!isFunctionCall[0].includes('function') &&
+						!isFunctionCall[0].includes('}')
+					) {
+						const callFunction = this.props.functions.named[isFunctionCall[0]]
+
+						if (isFunctionCall[0].includes('console')) {
+							this.props.addFunctionToCallstack({
+								name: isFunctionCall[0],
+								delay: 1000,
+								webApi: isWebApi,
+								message: isFunctionCall[1].split(')')[0],
+								block: false,
+							})
+						} else {
+							if (callFunction) {
+								const { start, end } = this.returnOpeningAndClosingLine(callFunction)
+								startHighlight = start
+								endHighlight = end
+								this.higlightCharacters(editor, currentLine)
+
+								this.props.addFunctionToCallstack({
+									name: isFunctionCall[0],
+									delay: 1000,
+									webApi: isWebApi,
+									message: undefined,
+									block: false,
+								})
+								setTimeout(() => {
+									this.removeHiglightFromCharacters(editor, currentLine, currentLine)
+								}, 500)
+							}
+						}
+					}
+				}
+				this.higlightCharacters(editor, startHighlight, endHighlight)
+
+				setTimeout(() => {
+					this.removeHiglightFromCharacters(editor, startHighlight, endHighlight)
+				}, 500)
+				yield console.error('EDITOR LINE: ', currentLine)
+			} else {
+				if (checkIfNamedFunction.length > 0) {
+					const { start, end } = this.returnOpeningAndClosingLine(checkIfNamedFunction[0])
+
+					startHighlight = start
+					endHighlight = end
+					currentLine = end
+				}
+				if (checkIfAnonymouseFunction.length > 0) {
+					const { start, end } = this.returnOpeningAndClosingLine(checkIfAnonymouseFunction[0])
+
+					startHighlight = start
+					endHighlight = end
+					currentLine = end
+				}
+				this.higlightCharacters(editor, startHighlight, endHighlight)
+
+				setTimeout(() => {
+					this.removeHiglightFromCharacters(editor, startHighlight, endHighlight)
+				}, 500)
+			}
+			currentLine++
+		}
+
+		while (this.props.callbackQueue.stack.length > 0) {
+			console.error('CALLBACKQUEUE LENGTH ', this.props.callbackQueue.stack.length)
+			if (this.props.callbackQueue.stack.length > 0) {
+				this.props.changeCallstackState(false)
+			}
+			yield 'playing'
+		}
+
+		yield this.props.stopAnimation()
+	}
+
+	editorDidMount = () => {
+		const editor = this.props.editor
+		const highlightedLine = this.props.highlightedLines[0] ? this.props.highlightedLines[0] : 0
+		this.unHiglightLine(editor, highlightedLine)
+		this.loadStateWithCollapsable(editor, 0)
+		this.loadStateWithFunctions(editor, 0)
+		const generator = this.iterateThroughLines(editor)
+		//console.log(generator)
+		setInterval(() => generator.next(), 1500)
+	}
+
 	render() {
 		return (
 			<>
-				<ConsoleContainer>
+				<ConsoleContainer style={{ padding: '5px' }}>
 					<ConsoleHeader>
-						<Box display="flex" justifyContent="center" alignItems="center">
+						<Box display="flex" justifyContent="space-around" alignItems="center">
 							<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
 						</Box>
 						<Box display="flex" justifyContent="flex-end" alignItems="center">
-							<Controls loadFunctions={this.loadStateWithFunctions} />
+							<Controls loadFunctions={this.editorDidMount} />
 						</Box>
 					</ConsoleHeader>
-
 					<ConsoleData>
 						<Box>
 							<div className={Classes.container}>
@@ -403,9 +566,9 @@ class Editor extends Component {
 									className={Classes.codeMirror}
 									value={this.props.data}
 									editorDidMount={(editor) => {
-										this.loadStateWithCollapsable(editor, 0)
-										this.loadStateWithFunctions(editor, 0)
 										this.props.setEditor(editor)
+										//this.editorDidMount
+										//editor.setSize('100%', '100%')
 									}}
 									options={{
 										mode: 'javascript',
@@ -419,7 +582,7 @@ class Editor extends Component {
 									onBeforeChange={(editor, data, value) => this.props.setData(value)}
 									onChange={this.handleChange}
 									onGutterClick={(editor, number, gutter, str) => {
-										this.findFunctions(editor, number)
+										//this.findFunctions(editor, number)
 									}}
 								/>
 							</div>
@@ -433,13 +596,19 @@ class Editor extends Component {
 
 const mapStateToProps = (state) => {
 	const {
-		editor: { editor, highlightedLines, collapsableLines, data },
+		editor: { editor, highlightedLines, collapsableLines, data, functions },
+		callstack: { isOccupied },
+		callbackQueue,
 	} = state
+
 	return {
 		data,
 		editor,
 		highlightedLines,
 		collapsableLines,
+		functions,
+		isOccupied,
+		callbackQueue,
 	}
 }
 
@@ -452,6 +621,11 @@ const mapDispatchToProps = (dispatch) => {
 		removeCollapsableLine: (lineNumber) => dispatch(actions.removeCollapsableLine(lineNumber)),
 		addFunction: (fun) => dispatch(actions.addFunction(fun)),
 		setEditor: (editor) => dispatch(actions.setEditor(editor)),
+		addFunctionToCallstack: (func) => dispatch(addFunctionToCallstack(func)),
+		changeCallstackState: (toState) => dispatch(changeCallstackState(toState)),
+		playAnimation: () => dispatch(playAnimation()),
+		pauseAnimation: () => dispatch(pauseAnimation()),
+		stopAnimation: () => dispatch(stopAnimation()),
 	}
 	// editorMount
 }
