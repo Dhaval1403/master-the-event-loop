@@ -5,9 +5,9 @@ import { variable } from '../../styles/variable'
 export const HelpStyled = styled.div`
 	height: 75vh;
 	overflow-y: auto;
-	padding: 1rem;
+	padding: 0.8rem;
 	border-radius: 0 0 4px 4px;
-	width: 95%;
+	width: 97%;
 	margin: 0 auto;
 
 	::-webkit-scrollbar {
@@ -41,6 +41,6 @@ export const HelpStyled = styled.div`
 
 	.resource-video {
 		width: 75%;
-		height: 250px;
+		height: 450px;
 	}
 `
