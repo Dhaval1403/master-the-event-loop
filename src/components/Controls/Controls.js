@@ -43,7 +43,7 @@ class Controls extends React.Component {
 					padding="8px 8px"
 					margin="2px"
 					onClick={this.startInterval}
-					disabled={this.state.timerId ? true : false}
+					disabled={this.props.controls.isRunning ? true : false}
 				>
 					Play
 				</ButtonStyled>
@@ -62,6 +62,7 @@ const mapStateToProps = (state) => ({
 	callstack: state.callstack.stack,
 	callbackQueue: state.callbackQueue.stack,
 	editor: state.editor,
+	controls: state.controls,
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -70,10 +70,10 @@ export const callstackReducer = (state = initalState, action) => {
 			return { ...state, stack, isOccupied: action.payload }
 		case ADD_TO_CALLSTACK:
 			// return { ...state, stack: [...state.stack, action.payload], isOccupied: true }
-			return { ...state, stack: [action.payload, ...state.stack] }
+			return { ...state, stack: [...state.stack, action.payload] }
 		case REMOVE_FROM_CALLSTACK:
 			const changeStack = [...state.stack]
-			changeStack.shift()
+			changeStack.pop()
 			return { ...state, stack: [...changeStack] }
 		default:
 			return state
