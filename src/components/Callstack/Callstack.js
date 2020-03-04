@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { removeFunctionFromCallstack } from './../../redux/callstack/callstack.actions'
-import { pushToConsole } from './../../redux/Console/Console.actions'
-import { addToWebApi } from './../../redux/WebApiRedux/wepApi.actions'
-
 import {
 	ConsoleContainer,
 	ConsoleData,
@@ -53,13 +49,6 @@ class Callstack extends Component {
 
 const mapStateToProps = (state) => ({
 	callstack: state.callstack.stack,
-	isOccupied: state.callstack.isOccupied,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-	removeFunctionFromCallstack: () => dispatch(removeFunctionFromCallstack()),
-	consoleApi: (message) => dispatch(pushToConsole(message)),
-	addToWebApi: (funcData) => dispatch(addToWebApi(funcData)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Callstack)
+export default connect(mapStateToProps, null)(Callstack)

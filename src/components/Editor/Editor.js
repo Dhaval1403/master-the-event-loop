@@ -4,12 +4,14 @@ import * as actions from '../../redux/editor/editor.actions'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import Classes from './editor.module.css'
 import { ConsoleContainer, ConsoleData, ConsoleHeader, ConsoleTitle } from '../../styles/console'
+
 import { Box } from '../../styles/flex'
 import Controls from '../Controls/Controls'
 
 import {
 	addFunctionToCallstack,
 	changeCallstackState,
+	removeFunctionFromCallstack,
 } from './../../redux/callstack/callstack.actions'
 import {
 	playAnimation,
@@ -402,19 +404,60 @@ class Editor extends Component {
 		},
 	}) => ({ start: firstOpenIndex.lineNo, end: lastCloseIndex.lineNo })
 
-	iterateThroughLines = function* it(editor) {
-		let currentLine = 0
-		let preservedLine = null
+	//!-------------------------------------------------------------------------------------------
 
-		this.props.changeCallstackState(true)
-		this.props.playAnimation()
+	highLightAndUnhighLightLine = (editor, start, end, scrollTo) => {
+		this.higlightCharacters(editor, start, end)
+		editor.scrollIntoView({ line: scrollTo, ch: 0 })
+		//this.props.editor.scrollIntoView({ left: 0, top: scrollTo, right: 0, bottom: 0 }, 10)
+		setTimeout(() => {
+			this.removeHiglightFromCharacters(editor, start, end)
+		}, 500)
+	}
 
-		while (currentLine < editor.lineCount()) {
+	handleThreats = (start, end) => {
+		const functionBodyGenerator = this.iterateThroughLines(end, start + 1)
+
+		this.threadStates[this.threadStates.length - 1] = false
+		this.threadStates.push(true)
+		this.currentThreadStateId = this.threadStates.length - 1
+		console.warn('INIT NEW THREAD:', this.threadStates, this.currentThreadStateId)
+		const subLevel = setInterval(() => {
+			const generatorValues = functionBodyGenerator.next()
+
+			console.error('Generatorvalues: ', generatorValues)
+			if (!generatorValues.done) {
+				this.threadStates[this.currentThreadStateId] = true
+			} else {
+				clearInterval(subLevel)
+				this.threadStates.pop()
+				this.currentThreadStateId--
+				this.threadStates[this.currentThreadStateId] = true
+				this.props.removeFunctionFromCallstack()
+				console.warn('NEW THREAD DESTROYED:', this.threadStates, this.currentThreadStateId)
+			}
+		}, this.props.animationDuration)
+	}
+
+	threadStates = [true]
+	currentThreadStateId = 0
+
+	iterateThroughLines = function* it(editorLineCount, startLine = 0) {
+		let currentLine = startLine
+		const editor = this.props.editor
+		console.error('STARTED THE GENERATOR WITH, ', editorLineCount, startLine)
+
+		if (this.threadStates[0]) {
+			this.props.changeCallstackState(true)
+			this.props.playAnimation()
+		}
+
+		while (currentLine < editorLineCount) {
 			let startHighlight = currentLine
 			let endHighlight = currentLine
-			editor.scrollIntoView({ line: currentLine, ch: 0 })
 			const isFunctionCall =
 				editor.getLine(currentLine) !== undefined ? editor.getLine(currentLine).split('(') : ['']
+			isFunctionCall[0] = isFunctionCall[0].trim()
 			console.warn(isFunctionCall)
 			const isWebApi =
 				isFunctionCall[0] !== '' && (window[isFunctionCall[0]] || isFunctionCall[0].includes('.then'))
@@ -433,11 +476,10 @@ class Editor extends Component {
 			if (!isFunctionCall[0].includes('function')) {
 				// if we found a function name within the named function hash table
 				if (checkIfNamedFunction.length > 0) {
-					const { start, end } = this.returnOpeningAndClosingLine(checkIfNamedFunction[0])
+					const { start, end } = this.returnOpeningAndClosingLine(checkIfNamedFunction[0].trim())
 
 					startHighlight = start
 					endHighlight = end
-					preservedLine = currentLine
 					currentLine = end
 				} else {
 					// if we found a anonymouse function within the anonymouse function hash table
@@ -451,7 +493,7 @@ class Editor extends Component {
 						currentLine = end
 
 						this.props.addFunctionToCallstack({
-							name: mainMethod[0],
+							name: mainMethod[0].trim(),
 							delay: 1000,
 							webApi: isWebApi,
 							message: undefined,
@@ -477,30 +519,23 @@ class Editor extends Component {
 						} else {
 							if (callFunction) {
 								const { start, end } = this.returnOpeningAndClosingLine(callFunction)
-								startHighlight = start
-								endHighlight = end
-								this.higlightCharacters(editor, currentLine)
+
+								this.highLightAndUnhighLightLine(editor, currentLine, currentLine, currentLine)
 
 								this.props.addFunctionToCallstack({
-									name: isFunctionCall[0],
+									name: isFunctionCall[0].trim(),
 									delay: 1000,
 									webApi: isWebApi,
 									message: undefined,
-									block: false,
+									block: true,
 								})
-								setTimeout(() => {
-									this.removeHiglightFromCharacters(editor, currentLine, currentLine)
-								}, 500)
+
+								this.handleThreats(start, end)
+								this.highLightAndUnhighLightLine(editor, start, end, start)
 							}
 						}
 					}
 				}
-				this.higlightCharacters(editor, startHighlight, endHighlight)
-
-				setTimeout(() => {
-					this.removeHiglightFromCharacters(editor, startHighlight, endHighlight)
-				}, 500)
-				yield console.error('EDITOR LINE: ', currentLine)
 			} else {
 				if (checkIfNamedFunction.length > 0) {
 					const { start, end } = this.returnOpeningAndClosingLine(checkIfNamedFunction[0])
@@ -516,24 +551,32 @@ class Editor extends Component {
 					endHighlight = end
 					currentLine = end
 				}
-				this.higlightCharacters(editor, startHighlight, endHighlight)
-
-				setTimeout(() => {
-					this.removeHiglightFromCharacters(editor, startHighlight, endHighlight)
-				}, 500)
 			}
+			this.highLightAndUnhighLightLine(editor, startHighlight, endHighlight, endHighlight)
 			currentLine++
+			yield 'go on'
 		}
+		yield 'outside of the gernator loop'
 
-		while (this.props.callbackQueue.stack.length > 0) {
-			console.error('CALLBACKQUEUE LENGTH ', this.props.callbackQueue.stack.length)
-			if (this.props.callbackQueue.stack.length > 0) {
-				this.props.changeCallstackState(false)
+		if (this.threadStates[0]) {
+			//!this.threadStates.length === 1 &&
+			while (this.props.callbackQueue.stack.length > 0) {
+				console.error('CALLBACKQUEUE LENGTH ', this.props.callbackQueue.stack.length)
+				if (this.props.callbackQueue.stack.length > 0) {
+					this.props.changeCallstackState(false)
+				}
+				yield 'playing'
 			}
-			yield 'playing'
-		}
 
-		yield this.props.stopAnimation()
+			yield this.props.stopAnimation()
+		} else {
+			let yieldThroughThreads = 0
+			while (yieldThroughThreads <= this.threadStates.length) {
+				yield yieldThroughThreads
+				yieldThroughThreads++
+			}
+		}
+		return
 	}
 
 	editorDidMount = () => {
@@ -542,9 +585,15 @@ class Editor extends Component {
 		this.unHiglightLine(editor, highlightedLine)
 		this.loadStateWithCollapsable(editor, 0)
 		this.loadStateWithFunctions(editor, 0)
-		const generator = this.iterateThroughLines(editor)
+		const generator = this.iterateThroughLines(editor.lineCount())
 		//console.log(generator)
-		setInterval(() => generator.next(), 1500)
+		const interv = setInterval(() => {
+			if (this.threadStates[0]) {
+				if (generator.next().done) {
+					clearInterval(interv)
+				}
+			}
+		}, this.props.animationDuration)
 	}
 
 	render() {
@@ -552,30 +601,32 @@ class Editor extends Component {
 			<>
 				<ConsoleContainer style={{ padding: '5px' }}>
 					<ConsoleHeader>
-						<Box display="flex" justifyContent="space-around" alignItems="center">
-							<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
-						</Box>
-						<Box display="flex" justifyContent="flex-end" alignItems="center">
-							<Controls loadFunctions={this.editorDidMount} />
-						</Box>
+						<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+							<Box display="flex" justifyContent="space-around" alignItems="center" />
+							<Box display="flex" justifyContent="space-around" alignItems="center">
+								<ConsoleTitle p="10px">Code Editor</ConsoleTitle>
+							</Box>
+							<Box display="flex" justifyContent="flex-end" alignItems="center">
+								<Controls loadFunctions={this.editorDidMount} />
+							</Box>
+						</div>
 					</ConsoleHeader>
-					<ConsoleData>
+					<ConsoleData style={{ height: '400px' }}>
 						<Box>
 							<div className={Classes.container}>
 								<CodeMirror
 									className={Classes.codeMirror}
 									value={this.props.data}
 									editorDidMount={(editor) => {
+										editor.setSize('100%', '350px')
 										this.props.setEditor(editor)
-										//this.editorDidMount
-										//editor.setSize('100%', '100%')
 									}}
 									options={{
 										mode: 'javascript',
 										theme: 'material',
 										tabSize: 2,
 										lineNumbers: true,
-										scrollbarStyle: null,
+										//scrollbarStyle: null,
 										lineWrapping: true,
 									}}
 									onCursor={this.handleCursor}
@@ -599,6 +650,7 @@ const mapStateToProps = (state) => {
 		editor: { editor, highlightedLines, collapsableLines, data, functions },
 		callstack: { isOccupied },
 		callbackQueue,
+		controls: { animationDuration },
 	} = state
 
 	return {
@@ -609,6 +661,7 @@ const mapStateToProps = (state) => {
 		functions,
 		isOccupied,
 		callbackQueue,
+		animationDuration,
 	}
 }
 
@@ -626,6 +679,7 @@ const mapDispatchToProps = (dispatch) => {
 		playAnimation: () => dispatch(playAnimation()),
 		pauseAnimation: () => dispatch(pauseAnimation()),
 		stopAnimation: () => dispatch(stopAnimation()),
+		removeFunctionFromCallstack: () => dispatch(removeFunctionFromCallstack()),
 	}
 	// editorMount
 }
