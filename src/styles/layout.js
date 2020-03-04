@@ -23,6 +23,11 @@ export const Main = styled.main`
 export const Wrap = styled.div`
 	background-color: ${({ backgroundColor }) =>
 		backgroundColor ? variable[backgroundColor] : variable.colorWhite};
-	width: 60%;
+	width: 70%;
 	border-radius: 4px;
+
+	@media screen and (max-width: 500px) {
+		font-size: 0.9rem;
+		width: 90%;
+	}
 `

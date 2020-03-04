@@ -13,10 +13,31 @@ export const ConsoleContainer = styled.div`
 	letter-spacing: 1px;
 	line-height: 1.5;
 	height: 100%;
-	overflow-y: auto;
+	overflow-y: hidden;
 `
 
-export const ConsoleData = styled.div``
+export const ConsoleData = styled.div`
+	height: 30vh;
+	overflow-y: auto;
+	::-webkit-scrollbar {
+		background-color: transparent;
+		width: 5px;
+		cursor: pointer;
+	}
+
+	::-webkit-scrollbar-thumb {
+		border-radius: 50px;
+		box-shadow: inset 0 0 6px ${variable.colorBlackTransparent3};
+		-webkit-box-shadow: inset 0 0 6px ${variable.colorBlackTransparent3};
+		background-color: ${variable.colorBlue};
+		background-clip: content-box;
+	}
+
+	::-webkit-scrollbar-track {
+		border-radius: 10px;
+		background-color: transparent;
+	}
+`
 
 export const ConsoleHeader = styled.div`
 	border-bottom: 1px solid ${variable.colorBlue};
