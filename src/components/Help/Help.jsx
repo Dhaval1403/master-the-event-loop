@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { connect } from 'react-redux'
 import { toggleHelp } from '../../redux/helpToggle/helpToggle.actions'
 import helpImage from '../../assets/master-the-event-loop.png'
@@ -46,164 +47,168 @@ class Help extends Component {
 
 		const modal = (
 			<React.Fragment>
-				{isHelp ? (
-					<Flex
-						alignItems="center"
-						backgroundColor="colorGrayDarkTransparent"
-						display="flex"
-						id="mdc"
-						justifyContent="center"
-						minHeight="100vh"
-						minWidth="100vw"
-						onClick={this.currentTarget}
-						position="fixed"
-						top="0"
-						zIndex="100000"
-					>
-						<Wrap>
-							<Box
+				<TransitionGroup>
+					{isHelp ? (
+						<CSSTransition timeout={100} classNames="step">
+							<Flex
 								alignItems="center"
-								borderBottom={2}
-								borderRadius="4px 4px 0 0"
-								borderStyle="solid"
-								color="colorBlue"
+								backgroundColor="colorGrayDarkTransparent"
 								display="flex"
-								justifyContent="space-between"
-								mb="0.8rem"
-								p="0.5rem 0.8rem"
-								position="sticky"
+								id="mdc"
+								justifyContent="center"
+								minHeight="100vh"
+								minWidth="100vw"
+								onClick={this.currentTarget}
+								position="fixed"
 								top="0"
-								zIndex="1"
+								zIndex="100000"
 							>
-								<Title4 color="colorBlue" display="inline-flex" fontSize="20px">
-									HOW DOES JAVASCRIPT EVENT LOOP WORKS?
-								</Title4>
+								<Wrap>
+									<Box
+										alignItems="center"
+										borderBottom={2}
+										borderRadius="4px 4px 0 0"
+										borderStyle="solid"
+										color="colorBlue"
+										display="flex"
+										justifyContent="space-between"
+										mb="0.8rem"
+										p="0.5rem 0.8rem"
+										position="sticky"
+										top="0"
+										zIndex="1"
+									>
+										<Title4 color="colorBlue" display="inline-flex" fontSize="20px">
+											HOW DOES JAVASCRIPT EVENT LOOP WORKS?
+										</Title4>
 
-								<Button display="inline-flex" onClick={toggleHelp}>
-									Close
-								</Button>
-							</Box>
-
-							<HelpStyled>
-								<Box>
-									<P>
-										JavaScript is single-threaded: only one task can run at a time. Usually that’s no big
-										deal, but now imagine you’re running a task which takes 30 seconds.. Ya.. During that task
-										we’re waiting for 30 seconds before anything else can happen (JavaScript runs on the
-										browser’s main thread by default, so the entire UI is stuck) It’s 2020, no one wants a
-										slow, unresponsive website.
-									</P>
-
-									<P>
-										This project is based on how the Javascript event loop works under the hood. It is the
-										visual representation which shows you that how Javascript works internally. What exactly
-										happens when javascript encounters something like 'setTimeout', 'setInterval' or 'fetch'?
-										How Javascript deals with this asynchronous code because Javascript is a single threaded
-										language, it means that it can handle one thing at a time. Don't worry, we have tried our
-										best to explain this topic in the easiest way possible with some cool animations &
-										visuals. To get started write some code in the 'Code Editor' & hit that
-										<Button padding="8px 8px" margin="4px" display="inline-block">
-											Play
+										<Button display="inline-flex" onClick={toggleHelp}>
+											Close
 										</Button>
-										button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
-										Let's get started
-									</P>
-								</Box>
+									</Box>
 
-								<Cell
-									display="grid"
-									justifyItems="center"
-									gridGap="25px"
-									gridTemplateColumns="1fr"
-									mb="0.8rem"
-								>
-									<P>
-										Below are the some really cool animations which will show you how the event loop works in
-										5 steps.
-									</P>
+									<HelpStyled>
+										<Box>
+											<P>
+												JavaScript is single-threaded: only one task can run at a time. Usually that’s no big
+												deal, but now imagine you’re running a task which takes 30 seconds.. Ya.. During that
+												task we’re waiting for 30 seconds before anything else can happen (JavaScript runs on
+												the browser’s main thread by default, so the entire UI is stuck) It’s 2020, no one wants
+												a slow, unresponsive website.
+											</P>
 
-									<Cell
-										display="grid"
-										justifyItems="center"
-										gridGap="25px"
-										gridTemplateColumns="1fr"
-										mb="0.8rem"
-									>
-										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
-											Animations
-										</Title5>
-										<img className="resource-item" src={gif_1} alt="animations" />
-										<img className="resource-item" src={gif_2} alt="animations" />
-										<img className="resource-item" src={gif_3} alt="animations" />
-										<img className="resource-item" src={gif_4} alt="animations" />
-										<img className="resource-item" src={gif_5} alt="animations" />
+											<P>
+												This project is based on how the Javascript event loop works under the hood. It is the
+												visual representation which shows you that how Javascript works internally. What exactly
+												happens when javascript encounters something like 'setTimeout', 'setInterval' or
+												'fetch'? How Javascript deals with this asynchronous code because Javascript is a single
+												threaded language, it means that it can handle one thing at a time. Don't worry, we have
+												tried our best to explain this topic in the easiest way possible with some cool
+												animations & visuals. To get started write some code in the 'Code Editor' & hit that
+												<Button padding="8px 8px" margin="4px" display="inline-block">
+													Play
+												</Button>
+												button. Woohooo!! See the magic that javascript does for us behind the scenes. Excited?
+												Let's get started
+											</P>
+										</Box>
 
-										<P>
-											(Source of animations: &nbsp;
-											<a
-												style={{ color: 'blue' }}
-												href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+										<Cell
+											display="grid"
+											justifyItems="center"
+											gridGap="25px"
+											gridTemplateColumns="1fr"
+											mb="0.8rem"
+										>
+											<P>
+												Below are the some really cool animations which will show you how the event loop works
+												in 5 steps.
+											</P>
+
+											<Cell
+												display="grid"
+												justifyItems="center"
+												gridGap="25px"
+												gridTemplateColumns="1fr"
+												mb="0.8rem"
 											>
-												this awesome article
-											</a>
-											)
-										</P>
-									</Cell>
+												<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+													Animations
+												</Title5>
+												<img className="resource-item" src={gif_1} alt="animations" />
+												<img className="resource-item" src={gif_2} alt="animations" />
+												<img className="resource-item" src={gif_3} alt="animations" />
+												<img className="resource-item" src={gif_4} alt="animations" />
+												<img className="resource-item" src={gif_5} alt="animations" />
 
-									<P>
-										Below attached are some extra resources for you if you want to dive deep into the topic.
-										It includes some images, articles and youtube videos.
-									</P>
+												<P>
+													(Source of animations: &nbsp;
+													<a
+														style={{ color: 'blue' }}
+														href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+													>
+														this awesome article
+													</a>
+													)
+												</P>
+											</Cell>
 
-									<Cell
-										display="grid"
-										justifyItems="center"
-										gridGap="25px"
-										gridTemplateColumns="1fr"
-										mb="0.8rem"
-									>
-										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
-											Images
-										</Title5>
-										<img className="resource-item" src={helpImage} alt="master the event loop" />
+											<P>
+												Below attached are some extra resources for you if you want to dive deep into the topic.
+												It includes some images, articles and youtube videos.
+											</P>
 
-										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
-											Videos
-										</Title5>
-										<iframe
-											title="How Does Javascript Work? - Andrei Neagoie"
-											className="resource-video"
-											src="https://www.youtube.com/embed/hGSHfObcVf4"
-										></iframe>
-
-										<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
-											Articles
-										</Title5>
-										<P>
-											Javascript Visualized Event Loop &nbsp;
-											<a
-												style={{ color: 'blue' }}
-												href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+											<Cell
+												display="grid"
+												justifyItems="center"
+												gridGap="25px"
+												gridTemplateColumns="1fr"
+												mb="0.8rem"
 											>
-												here
-											</a>
-										</P>
+												<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+													Images
+												</Title5>
+												<img className="resource-item" src={helpImage} alt="master the event loop" />
 
-										<P>
-											How Javascript Works? &nbsp;
-											<a
-												style={{ color: 'blue' }}
-												href="https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5"
-											>
-												here
-											</a>
-										</P>
-									</Cell>
-								</Cell>
-							</HelpStyled>
-						</Wrap>
-					</Flex>
-				) : null}
+												<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+													Videos
+												</Title5>
+												<iframe
+													title="How Does Javascript Work? - Andrei Neagoie"
+													className="resource-video"
+													src="https://www.youtube.com/embed/hGSHfObcVf4"
+												></iframe>
+
+												<Title5 fontWeight="bold" fontSize="1.8em" mb="0.5rem">
+													Articles
+												</Title5>
+												<P>
+													Javascript Visualized Event Loop &nbsp;
+													<a
+														style={{ color: 'blue' }}
+														href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif"
+													>
+														here
+													</a>
+												</P>
+
+												<P>
+													How Javascript Works? &nbsp;
+													<a
+														style={{ color: 'blue' }}
+														href="https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5"
+													>
+														here
+													</a>
+												</P>
+											</Cell>
+										</Cell>
+									</HelpStyled>
+								</Wrap>
+							</Flex>
+						</CSSTransition>
+					) : null}
+				</TransitionGroup>
 			</React.Fragment>
 		)
 

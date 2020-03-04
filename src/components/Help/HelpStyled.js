@@ -5,9 +5,9 @@ import { variable } from '../../styles/variable'
 export const HelpStyled = styled.div`
 	height: 75vh;
 	overflow-y: auto;
-	padding: 1rem;
+	padding: 0.8rem;
 	border-radius: 0 0 4px 4px;
-	width: 95%;
+	width: 97%;
 	margin: 0 auto;
 
 	::-webkit-scrollbar {
@@ -41,6 +41,34 @@ export const HelpStyled = styled.div`
 
 	.resource-video {
 		width: 75%;
-		height: 250px;
+		height: 450px;
+	}
+
+	.step-enter {
+		opacity: 0;
+		transform: translate(-500px, 0);
+		transform: translate3d(-500px, 0, 0);
+	}
+	.step-enter.step-enter-active {
+		opacity: 1;
+		transition: opacity 2s ease;
+		transform: translate(0, 0);
+		transform: translate3d(0, 0, 0);
+		transition-property: transform, opacity;
+		transition-duration: 100ms;
+		transition-timing-function: cubic-bezier(0.175, 0.665, 0.32, 1), linear;
+	}
+	.step-exit {
+		opacity: 1;
+		transform: translate(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+		transition-property: transform, opacity;
+		transition-duration: 100ms;
+		transition-timing-function: cubic-bezier(0.175, 0.665, 0.32, 1), linear;
+	}
+	.step-exit.step-exit-active {
+		opacity: 0;
+		transform: translate(500px, 0);
+		transform: translate3d(500px, 0, 0);
 	}
 `

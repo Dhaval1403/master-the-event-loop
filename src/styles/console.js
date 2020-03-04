@@ -17,7 +17,7 @@ export const ConsoleContainer = styled.div`
 `
 
 export const ConsoleData = styled.div`
-	height: 300px;
+	height: 30vh;
 	overflow-y: auto;
 	::-webkit-scrollbar {
 		background-color: transparent;
