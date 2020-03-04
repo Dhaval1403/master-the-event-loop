@@ -29,6 +29,6 @@
 
 .collapsableLine + div :nth-child(1)::before {
 	content: '\27A9';
-	display: inline-block;
+	display: none;
 	transform: rotate(90deg);
 }
