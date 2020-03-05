@@ -4,29 +4,54 @@
 	height: 125px;
 }
 
-.circle {
+.half-circle-right {
 	position: absolute;
 	box-sizing: border-box;
 	height: 125px;
 	width: 125px;
 	border: 7px solid #00a1de;
 	border-radius: 50%;
-	clip-path: inset(0 0 0 50%);
+	clip-path: inset(0 0 0 60%);
 }
 
-.triangle {
+.half-circle-left {
+	position: absolute;
+	box-sizing: border-box;
+	height: 125px;
+	width: 125px;
+	border: 7px solid #00a1de;
+	border-radius: 50%;
+	clip-path: inset(0 60% 0 0);
+}
+
+.triangle-right {
 	position: absolute;
 	width: 30px;
 	height: 20px;
 	background: #00a1de;
 	margin-top: -7px;
-	margin-left: 38px;
+	margin-left: 50px;
 	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
 	-moz-transform: rotate(-90deg);
 	-webkit-transform: rotate(-90deg);
 	-o-transform: rotate(-90deg);
 	-ms-transform: rotate(-90deg);
 	transform: rotate(-90deg);
+}
+
+.triangle-left {
+	position: absolute;
+	width: 30px;
+	height: 20px;
+	background: #00a1de;
+	margin-top: 111px;
+	margin-left: 45px;
+	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
 }
 
 .spin {

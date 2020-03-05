@@ -7,12 +7,13 @@ import { addFunctionToCallstack } from '../../redux/callstack/callstack.actions'
 import { toggleSpin } from '../../redux/eventLoop/eventLoop.actions'
 
 class EventLoop extends Component {
-
 	render() {
 		return (
 			<div className={'spinner-container' + (this.props.spinArrow ? ' spin' : '')}>
-				<div className="circle" />
-				<div className="triangle" />
+				<div className="half-circle-right" />
+				<div className="triangle-right" />
+				<div className="half-circle-left" />
+				<div className="triangle-left" />
 			</div>
 		)
 	}
