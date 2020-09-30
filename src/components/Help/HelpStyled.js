@@ -1,3 +1,4 @@
+best way to write
 import styled from 'styled-components'
 
 import { variable } from '../../styles/variable'
