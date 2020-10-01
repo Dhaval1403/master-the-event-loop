@@ -1,12 +1,13 @@
 # Master The Event Loop
 
 ## TL;DR
+Best   Website you will love it
 
 #### [![](https://img.shields.io/badge/REACT%20%26%20REDUX%20WEB%20APP%20PROJECT-MASTER%20THE%20EVENT%20LOOP-ffa100?style=for-the-badge&logo=REACT)](https://github.com/r4pt0s/master_the_event_loop)
 
 > _If you are a Javascript developer then you are already familiar with how Javascript works, right?_
-> Well, it might not be the case. You are maybe writing Javascript code since years but still don't understand how the language works under the hood. You may have heard about terms such as "Call Stack, Callback Queue, Event Loop" but what's the deal with them?
-> Did you ask yourself, _Why is that, that javascript executes my code not in order if I use a callback function with a settimeout with a delay of 0 right before the console.log?_
+> Well, it might not be the case. You are maybe  Javascript code since years but still don't understand how the language works under the hood. You may have heard about terms such as "Call Stack, Callback Queue, Event Loop" but what's the deal with them?
+> Did you ask yourself, _Why is that, that javascript executes my code not in  if I use a callback function with a settimeout with a delay of 0 right before the console.log?_
 >
 > If you are finding answers to the above questions then you found the right place. This project exactly addresses this fact & tries to explain this fundamental process visually and words.
 >
@@ -16,7 +17,7 @@
 
 ## Work on the project locally
 
-In order to work and run the project locally you need NodeJs and npm installed on your system.
+In  to work and run the project locally you need NodeJs and npm installed on your system.
 Perform the following steps:
 
 ```
@@ -30,9 +31,9 @@ Perform the following steps:
 
 # Git Workflow
 
-## Fork first 🍴
+##  first 🍴
 
-We use the fork approach for collaboration. Fork the repository first and sync it with the original repository.
+We use the  approach for collaboration.  the repository first and sync it with the original repository.
 
 ### Steps to keep the local version up-to-date 🔄
 
@@ -41,7 +42,7 @@ We use the fork approach for collaboration. Fork the repository first and sync i
 - Clone your forked version
   `git clone <UrlToTheForKedVersion>`
 
-- Update the remote Url in order to sync your fork with the original repo
+- Update the remote Url in  to sync your  with the original repo
   `git remote add upstream https://github.com/Dhaval1403/master-the-event-loop.git`
   or by using ssh
   `git remote add upstream git@github.com:Dhaval1403/master-the-event-loop.git`
@@ -64,7 +65,7 @@ Before starting to work on the files
 - Get the latest version of the master branch
   `git pull upstream master`
 - Make sure that you made your changes always in the dev branch.
-- Check in which branch you currently are
+-  in which branch you currently are
   `git branch`
   Then you will see something like this:
   ```
@@ -86,10 +87,10 @@ Before starting to work on the files
 
 #### Creating PRs 🆕
 
-In order to tell us which changes you want to make in our project, push your changes to your fork to the **dev branch** and create a pull request to the original repository. This makes sure that we always have a working and stable master branch after we tested your changes.
+In  to tell us which changes you want to make in our project, push your changes to your  to the **dev branch** and create a pull request to the original repository. This makes sure that we always have a working and stable master branch after we tested your changes.
 If we made our tests and the **dev branch** is stable, we will merge the **dev branch** into the master branch without closing the **dev branch**.
 
-In order to make a PR on Github, follow this steps:
+In  to make a PR on Github, follow this steps:
 
 - Add your files for staging with
   `git add .` for adding all files or
@@ -106,7 +107,7 @@ The goal of this project is, to show new developers what happen if they write ja
 
 ## Data flow diagram
 
-In order to better understand the data flow of our app, we created this little diagram.
+In  to better understand the data flow of our app, we created this little diagram.
 ![data_flow](static_assets/images/data_flow.png)
 
 [Online version](https://whimsical.com/tkMQEQUTV5KpWkJVuD2wc)
