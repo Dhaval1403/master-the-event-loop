@@ -16,17 +16,13 @@
 
 ## Work on the project locally
 
-In order to work and run the project locally you need NodeJs and npm installed on your system.
+In order to work and run the project locally you need [NodeJs](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed on your system.
 Perform the following steps:
 
-```
- git clone https://github.com/Dhaval1403/master-the-event-loop.git
-
- cd master_the_event_loop
-
- npm install
- npm start
-```
+* `git clone https://github.com/Dhaval1403/master-the-event-loop.git`
+* `cd master_the_event_loop`
+* `npm install`
+* `npm start`
 
 # Git Workflow
 
